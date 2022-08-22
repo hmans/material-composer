@@ -7,10 +7,11 @@ import { Time } from "shader-composer"
 import {
   Color,
   Group,
-  MeshStandardMaterial,
+  Mesh,
   Object3D,
   PerspectiveCamera,
   Scene,
+  SphereGeometry,
   WebGLRenderer
 } from "three"
 import { loop } from "./lib/loop"
@@ -26,11 +27,11 @@ const vanillaCode = (
 
   const modules = [Modules.SetColor({ color: new Color("hotpink") })]
 
-  const material = new ComposableMaterial({
-    baseMaterial: new MeshStandardMaterial({ color: "hotpink" }),
-    modules
-  })
+  const material = new ComposableMaterial({ modules })
   material.compileModules()
+
+  const sphere = new Mesh(new SphereGeometry(), material)
+  parent.add(sphere)
 
   /* Create mesh and add it to the scene. */
   const stopLoop = loop((dt) => {
@@ -40,15 +41,8 @@ const vanillaCode = (
   return () => {
     stopLoop()
 
-    // parent.remove(particles)
-    // parent.remove(particles2)
-
-    // particles.geometry.dispose()
-    // particles.dispose()
-
-    // particles2.geometry.dispose()
-    // particles2.dispose()
-
+    parent.remove(sphere)
+    sphere.geometry.dispose()
     material.dispose()
   }
 }

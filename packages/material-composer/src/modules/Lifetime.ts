@@ -1,5 +1,5 @@
 import { $, Input, Vec3 } from "shader-composer"
-import { ModuleFactory } from "."
+import { ModuleFactory } from ".."
 
 export const Lifetime: ModuleFactory<{ progress: Input<"float"> }> = ({
   progress

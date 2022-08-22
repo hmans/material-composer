@@ -1,6 +1,6 @@
 import { Input, Mul, Unit } from "shader-composer"
 import { Softness as SoftnessUnit } from "shader-composer-toybox"
-import { ModuleFactory } from "."
+import { ModuleFactory } from ".."
 
 export const Softness: ModuleFactory<{
   softness: Input<"float">
