@@ -13,9 +13,11 @@ import { MeshStandardMaterial, Scene, WebGLRenderer } from "three"
 import CustomShaderMaterial, {
   iCSMParams
 } from "three-custom-shader-material/vanilla"
-import { ModulePipe, ModuleState, pipeModules } from "./modules"
+import { ModulePipe, ModuleState, pipeModules } from "."
 
-export type ComposableMaterialArgs = iCSMParams & {
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
+
+export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
   modules: ModulePipe
 }
 

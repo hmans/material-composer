@@ -1,27 +1,17 @@
-import { useVersion } from "@hmans/use-version"
 import { extend, useFrame, useThree } from "@react-three/fiber"
-import {
-  ComposableMaterial as ComposableMaterialImpl,
-  Module
-} from "material-composer"
+import { ComposableMaterial as ComposableMaterialImpl } from "material-composer"
 import React, {
-  createContext,
   forwardRef,
-  useCallback,
-  useContext,
-  useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef
 } from "react"
 import { MeshStandardMaterial } from "three"
 import { iCSMProps } from "three-custom-shader-material"
-
-const Context = createContext<{
-  addModule: (module: Module) => void
-  removeModule: (module: Module) => void
-}>(null!)
-
-export const useMaterialContext = () => useContext(Context)
+import {
+  ModuleRegistrationContext,
+  provideModuleRegistration
+} from "./moduleRegistration"
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -46,26 +36,14 @@ export const ComposableMaterial = forwardRef<
   const renderer = useThree((s) => s.gl)
 
   const material = useRef<ComposableMaterialImpl>(null!)
-  const [version, bumpVersion] = useVersion()
+
+  const [modules, api] = provideModuleRegistration()
 
   /* Recompile on version change */
-  useEffect(() => {
+  useLayoutEffect(() => {
+    material.current.modules = modules
     material.current.compileModules()
-  }, [version])
-
-  const addModule = useCallback((module: Module) => {
-    if (!material.current) return
-    material.current.modules = [...material.current.modules, module]
-    bumpVersion()
-  }, [])
-
-  const removeModule = useCallback((module: Module) => {
-    if (!material.current) return
-    material.current.modules = material.current.modules.filter(
-      (m) => m !== module
-    )
-    bumpVersion()
-  }, [])
+  }, [modules])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)
@@ -83,9 +61,9 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <Context.Provider value={{ addModule, removeModule }}>
+      <ModuleRegistrationContext.Provider value={api}>
         {children}
-      </Context.Provider>
+      </ModuleRegistrationContext.Provider>
     </composableMaterial>
   )
 })

@@ -1,4 +1,4 @@
-import { ModuleFactory } from "."
+import { ModuleFactory } from ".."
 import { Input, Mul } from "shader-composer"
 
 type ScaleProps = {

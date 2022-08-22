@@ -1,7 +1,7 @@
-import { FC, useEffect, useMemo } from "react"
-import * as Modules from "material-composer/modules"
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
-import { useMaterialContext } from "./ComposableMaterial"
+import * as Modules from "material-composer/modules"
+import { FC, useMemo } from "react"
+import { useModuleRegistration } from "./moduleRegistration"
 
 type Modules = typeof Modules
 
@@ -21,14 +21,7 @@ const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
 ) => (props: P) => {
   const module = useMemo(() => fac(props), [props])
-
-  const { addModule, removeModule } = useMaterialContext()
-
-  useEffect(() => {
-    addModule(module)
-    return () => removeModule(module)
-  }, [module])
-
+  useModuleRegistration(module)
   return null
 }
 
