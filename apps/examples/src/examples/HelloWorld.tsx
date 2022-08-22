@@ -22,7 +22,7 @@ export default function HelloWorld() {
 
       <Description>
         A simple example with a material that will fade back and forth between
-        through colors.
+        two colors.
       </Description>
     </group>
   )
