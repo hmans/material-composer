@@ -43,6 +43,7 @@ const vanillaCode = (
     transparent: true,
     side: DoubleSide
   })
+
   material.compileModules()
 
   const sphere = new Mesh(new SphereGeometry(), material)

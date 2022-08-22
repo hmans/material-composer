@@ -1,7 +1,6 @@
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
-import { SetColor } from "material-composer/modules"
-import { Time } from "shader-composer"
-import { Color, DoubleSide, MeshStandardMaterial } from "three"
+import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
+import { DoubleSide } from "three"
 
 export default function LayersExample() {
   const time = Time()
@@ -13,15 +12,15 @@ export default function LayersExample() {
       <mesh>
         <icosahedronGeometry args={[1, 8]} />
 
-        <ComposableMaterial
-          baseMaterial={MeshStandardMaterial}
-          transparent
-          side={DoubleSide}
-        >
-          <Modules.SetColor color={new Color("hotpink")} />
+        <ComposableMaterial transparent side={DoubleSide}>
+          <Layer>
+            <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
+            <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+          </Layer>
 
-          <Layer mix={1}>
-            <Modules.SetColor color={new Color("yellow")} />
+          <Layer mix={NormalizePlusMinusOne(Sin(time))}>
+            <Modules.DistortSurface offset={Mul(time, -0.5)} amplitude={0.8} />
+            <Modules.Plasma offset={Mul(time, -0.3)} />
           </Layer>
         </ComposableMaterial>
       </mesh>
