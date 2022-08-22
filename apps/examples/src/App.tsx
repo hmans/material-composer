@@ -8,6 +8,7 @@ import {
 import "r3f-stage/styles.css"
 import FireballExample from "./examples/Fireball"
 import HelloWorld from "./examples/HelloWorld"
+import LayersExample from "./examples/Layers"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
 import Vanilla from "./examples/Vanilla"
@@ -21,8 +22,12 @@ export default () => (
         <HelloWorld />
       </Example>
 
-      <Example path="vanilla" title="Vanilla Three.js" makeDefault>
+      <Example path="vanilla" title="Vanilla Three.js">
         <Vanilla />
+      </Example>
+
+      <Example path="layers" title="Layers">
+        <LayersExample />
       </Example>
 
       <Heading>Animations</Heading>
