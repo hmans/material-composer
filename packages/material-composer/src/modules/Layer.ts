@@ -6,10 +6,9 @@ export type LayerProps = {
   mix?: Input<"float">
 }
 
-export const Layer: ModuleFactory<LayerProps> = ({
-  modules = [],
-  mix = 0.5
-}) => (state) => {
+export const Layer: ModuleFactory<LayerProps> = ({ modules = [], mix = 1 }) => (
+  state
+) => {
   // TODO: each layer should start with the intitial state!
   const newState = pipeModules(
     {

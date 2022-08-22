@@ -26,7 +26,10 @@ const vanillaCode = (
   const time = Time()
 
   const modules = [
-    Modules.Plasma({ offset: Mul(time, -0.2) }),
+    Modules.Layer({
+      modules: [Modules.Plasma({ offset: Mul(time, -0.2) })]
+    }),
+
     Modules.Layer({
       mix: NormalizePlusMinusOne(Sin(time)),
       modules: [
