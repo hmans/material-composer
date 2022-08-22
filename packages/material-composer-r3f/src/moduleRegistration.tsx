@@ -1,6 +1,6 @@
+import { useList } from "@hmans/use-list"
 import { Module } from "material-composer"
 import { createContext, useContext, useLayoutEffect, useMemo } from "react"
-import { useList } from "./lib/use-list"
 
 export const ModuleRegistrationContext = createContext<{
   addModule: (module: Module) => void
