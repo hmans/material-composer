@@ -13,6 +13,7 @@ import React, {
   useImperativeHandle,
   useRef
 } from "react"
+import { MeshStandardMaterial } from "three"
 import { iCSMProps } from "three-custom-shader-material"
 
 const Context = createContext<{
@@ -22,7 +23,9 @@ const Context = createContext<{
 
 export const useMaterialContext = () => useContext(Context)
 
-export type ComposableMaterialProps = iCSMProps
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
+
+export type ComposableMaterialProps = Optional<iCSMProps, "baseMaterial">
 
 extend({ ComposableMaterial: ComposableMaterialImpl })
 
@@ -37,7 +40,7 @@ declare global {
 export const ComposableMaterial = forwardRef<
   ComposableMaterialImpl,
   ComposableMaterialProps
->(({ children, ...props }, ref) => {
+>(({ children, baseMaterial = MeshStandardMaterial, ...props }, ref) => {
   const scene = useThree((s) => s.scene)
   const camera = useThree((s) => s.camera)
   const renderer = useThree((s) => s.gl)
@@ -73,8 +76,13 @@ export const ComposableMaterial = forwardRef<
   })
 
   return (
-    // @ts-ignore
-    <composableMaterial attach="material" ref={material} {...props}>
+    <composableMaterial
+      attach="material"
+      // @ts-ignore
+      ref={material}
+      baseMaterial={baseMaterial}
+      {...props}
+    >
       <Context.Provider value={{ addModule, removeModule }}>
         {children}
       </Context.Provider>

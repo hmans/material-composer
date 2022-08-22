@@ -1,7 +1,7 @@
 import { ComposableMaterial, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { Mix, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
-import { Color, MeshStandardMaterial } from "three"
+import { Color } from "three"
 
 export default function HelloWorld() {
   return (
@@ -9,7 +9,7 @@ export default function HelloWorld() {
       <mesh position-y={1.5}>
         <sphereGeometry />
 
-        <ComposableMaterial baseMaterial={MeshStandardMaterial}>
+        <ComposableMaterial>
           <Modules.SetColor
             color={Mix(
               new Color("hotpink"),

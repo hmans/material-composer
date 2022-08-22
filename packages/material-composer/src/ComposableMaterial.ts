@@ -51,8 +51,13 @@ export class ComposableMaterial extends CustomShaderMaterial {
    */
   public shaderRoot?: Unit
 
-  constructor(args: ComposableMaterialArgs = {} as ComposableMaterialArgs) {
-    super({ ...args })
+  constructor(
+    {
+      baseMaterial,
+      ...args
+    }: ComposableMaterialArgs = {} as ComposableMaterialArgs
+  ) {
+    super({ baseMaterial: baseMaterial || MeshStandardMaterial, ...args })
     this.modules = args.modules || []
   }
 
