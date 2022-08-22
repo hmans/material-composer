@@ -16,12 +16,12 @@ import React, {
 import { MeshStandardMaterial } from "three"
 import { iCSMProps } from "three-custom-shader-material"
 
-const Context = createContext<{
+const ModulePipeContext = createContext<{
   addModule: (module: Module) => void
   removeModule: (module: Module) => void
 }>(null!)
 
-export const useMaterialContext = () => useContext(Context)
+export const useMaterialContext = () => useContext(ModulePipeContext)
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -83,9 +83,9 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <Context.Provider value={{ addModule, removeModule }}>
+      <ModulePipeContext.Provider value={{ addModule, removeModule }}>
         {children}
-      </Context.Provider>
+      </ModulePipeContext.Provider>
     </composableMaterial>
   )
 })
