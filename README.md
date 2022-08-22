@@ -2,7 +2,7 @@
 
 ## Summary
 
-Material Composer allows you to assemble GPU-based Three.js materials from a collection of provided modules (or your own, custom modules.) Modules are authored using [Shader Composer], which will compile them into one combined shader.
+Use Material Composer to assemble GPU-based Three.js materials from a collection of provided modules (or your own, custom-built ones.) Modules are authored using [Shader Composer], which will compile them into one combined shader.
 
 ## Ecosystem
 
