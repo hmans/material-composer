@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef
 } from "react"
 import { MeshStandardMaterial } from "three"
@@ -45,7 +46,7 @@ export const ComposableMaterial = forwardRef<
   } = provideModuleRegistration()
 
   /* Recompile on version change */
-  useEffect(() => {
+  useLayoutEffect(() => {
     material.current.modules = modules
     material.current.compileModules()
   }, [version])

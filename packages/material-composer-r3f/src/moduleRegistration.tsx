@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useState
 } from "react"
 
@@ -26,7 +27,6 @@ export const provideModuleRegistration = () => {
 
   const removeModule = useCallback((module: Module) => {
     setModules((modules) => modules.filter((m) => m !== module))
-
     bumpVersion()
   }, [])
 
@@ -36,7 +36,7 @@ export const provideModuleRegistration = () => {
 export const useModuleRegistration = (module: Module) => {
   const { addModule, removeModule } = useMaterialContext()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     addModule(module)
     return () => removeModule(module)
   }, [module])
