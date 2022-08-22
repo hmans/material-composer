@@ -1,5 +1,5 @@
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
-import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
+import { Cos, Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import { DoubleSide } from "three"
 
 export default function LayersExample() {
@@ -14,13 +14,12 @@ export default function LayersExample() {
 
         <ComposableMaterial transparent side={DoubleSide}>
           <Layer>
-            <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
-            <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+            <Modules.Plasma offset={Mul(time, -0.3)} />
           </Layer>
 
           <Layer mix={NormalizePlusMinusOne(Sin(time))}>
-            <Modules.DistortSurface offset={Mul(time, -0.5)} amplitude={0.8} />
-            <Modules.Plasma offset={Mul(time, -0.3)} />
+            <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
+            <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
           </Layer>
         </ComposableMaterial>
       </mesh>
