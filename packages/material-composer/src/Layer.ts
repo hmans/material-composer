@@ -1,14 +1,15 @@
 import { Input, Mix } from "shader-composer"
 import { ModuleFactory, ModulePipe, pipeModules } from "."
 
-export type LayerProps = {
+export type LayerOptions = {
   modules?: ModulePipe
   mix?: Input<"float">
 }
 
-export const Layer: ModuleFactory<LayerProps> = ({ modules = [], mix = 1 }) => (
-  state
-) => {
+export const Layer: ModuleFactory<LayerOptions> = ({
+  modules = [],
+  mix = 1
+}) => (state) => {
   // TODO: each layer should start with the intitial state!
   const newState = pipeModules(
     {

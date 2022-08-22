@@ -1,6 +1,6 @@
-import { ComposableMaterial, Modules } from "material-composer-r3f"
-import { Cos, Mul, Time } from "shader-composer"
-import { DoubleSide, MeshStandardMaterial } from "three"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { Time } from "shader-composer"
+import { Color, DoubleSide, MeshStandardMaterial } from "three"
 
 export default function LayersExample() {
   const time = Time()
@@ -17,11 +17,11 @@ export default function LayersExample() {
           transparent
           side={DoubleSide}
         >
-          <Modules.DistortSurface
-            offset={Mul(time, 0.5)}
-            amplitude={Mul(Cos(time), 0.2)}
-          />
-          <Modules.Plasma offset={Mul(time, 0.3)} />
+          <Modules.SetColor color={new Color("hotpink")} />
+
+          <Layer mix={1}>
+            <Modules.SetColor color={new Color("yellow")} />
+          </Layer>
         </ComposableMaterial>
       </mesh>
     </group>
