@@ -1,5 +1,25 @@
 # Material Composer
 
+## Summary
+
+Material Composer allows you to assemble GPU-based Three.js materials from a collection of provided modules (or your own, custom modules.) Modules are authored using [Shader Composer], which will compile them into one combined shader.
+
+## Ecosystem
+
+### Packages
+
+This project provides multiple packages. Please refer to each individual package for further documentation.
+
+- **[material-composer](https://github.com/hmans/material-composer/tree/main/packages/material-composer)**  
+  Core package for use with vanilla Three.js.
+- **[material-composer-r3f](https://github.com/hmans/material-composer/tree/main/packages/material-composer-r3f)**  
+  Bindings for react-three-fiber.
+
+### Projects using Material Composer
+
+- **[VFX Composer](https://github.com/hmans/vfx-composer)**  
+  A high-performance GPU particle engine for Three.js.
+
 ## License
 
 ```
@@ -24,3 +44,5 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
+
+[shader composer]: https://github.com/hmans/shader-composer
