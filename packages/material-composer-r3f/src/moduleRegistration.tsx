@@ -11,10 +11,12 @@ export const useMaterialContext = () => useContext(ModuleRegistrationContext)
 
 export const provideModuleRegistration = () => {
   const [modules, addModule, removeModule] = useList<Module>()
+
   const api = useMemo(() => ({ addModule, removeModule }), [
     addModule,
     removeModule
   ])
+
   return [modules, api] as const
 }
 
