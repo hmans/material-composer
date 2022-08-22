@@ -1,29 +1,17 @@
-import { useVersion } from "@hmans/use-version"
 import { extend, useFrame, useThree } from "@react-three/fiber"
-import {
-  ComposableMaterial as ComposableMaterialImpl,
-  Module
-} from "material-composer"
+import { ComposableMaterial as ComposableMaterialImpl } from "material-composer"
 import React, {
-  createContext,
   forwardRef,
-  useCallback,
-  useContext,
   useEffect,
   useImperativeHandle,
-  useRef,
-  useState
+  useRef
 } from "react"
 import { MeshStandardMaterial } from "three"
 import { iCSMProps } from "three-custom-shader-material"
-import { provideModuleRegistration } from "./moduleRegistration"
-
-const ModulePipeContext = createContext<{
-  addModule: (module: Module) => void
-  removeModule: (module: Module) => void
-}>(null!)
-
-export const useMaterialContext = () => useContext(ModulePipeContext)
+import {
+  ModuleRegistrationContext,
+  provideModuleRegistration
+} from "./moduleRegistration"
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -78,9 +66,9 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <ModulePipeContext.Provider value={{ addModule, removeModule }}>
+      <ModuleRegistrationContext.Provider value={{ addModule, removeModule }}>
         {children}
-      </ModulePipeContext.Provider>
+      </ModuleRegistrationContext.Provider>
     </composableMaterial>
   )
 })

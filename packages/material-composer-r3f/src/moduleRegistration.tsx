@@ -1,7 +1,19 @@
 import { useVersion } from "@hmans/use-version"
 import { Module } from "material-composer"
-import { useCallback, useEffect, useState } from "react"
-import { useMaterialContext } from "./ComposableMaterial"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react"
+
+export const ModuleRegistrationContext = createContext<{
+  addModule: (module: Module) => void
+  removeModule: (module: Module) => void
+}>(null!)
+
+export const useMaterialContext = () => useContext(ModuleRegistrationContext)
 
 export const provideModuleRegistration = () => {
   const [version, bumpVersion] = useVersion()
