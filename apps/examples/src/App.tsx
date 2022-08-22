@@ -7,15 +7,22 @@ import {
 } from "r3f-stage"
 import "r3f-stage/styles.css"
 import FireballExample from "./examples/Fireball"
+import HelloWorld from "./examples/HelloWorld"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
 
 export default () => (
   <Application>
     <FlatStage>
+      <Heading>Simple Examples</Heading>
+
+      <Example path="hello-world" title="Hello World" makeDefault>
+        <HelloWorld />
+      </Example>
+
       <Heading>Animations</Heading>
 
-      <Example path="fireball" title="Fireball" makeDefault>
+      <Example path="fireball" title="Fireball">
         <FireballExample />
 
         <Description>
@@ -29,6 +36,7 @@ export default () => (
       </Example>
 
       <Heading>Experiments</Heading>
+
       <Example path="playground" title="Playground">
         <Playground />
       </Example>
