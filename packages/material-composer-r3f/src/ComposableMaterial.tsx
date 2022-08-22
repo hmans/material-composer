@@ -11,10 +11,12 @@ import React, {
   useContext,
   useEffect,
   useImperativeHandle,
-  useRef
+  useRef,
+  useState
 } from "react"
 import { MeshStandardMaterial } from "three"
 import { iCSMProps } from "three-custom-shader-material"
+import { provideModuleRegistration } from "./moduleRegistration"
 
 const ModulePipeContext = createContext<{
   addModule: (module: Module) => void
@@ -46,26 +48,19 @@ export const ComposableMaterial = forwardRef<
   const renderer = useThree((s) => s.gl)
 
   const material = useRef<ComposableMaterialImpl>(null!)
-  const [version, bumpVersion] = useVersion()
+
+  const {
+    version,
+    modules,
+    addModule,
+    removeModule
+  } = provideModuleRegistration()
 
   /* Recompile on version change */
   useEffect(() => {
+    material.current.modules = modules
     material.current.compileModules()
   }, [version])
-
-  const addModule = useCallback((module: Module) => {
-    if (!material.current) return
-    material.current.modules = [...material.current.modules, module]
-    bumpVersion()
-  }, [])
-
-  const removeModule = useCallback((module: Module) => {
-    if (!material.current) return
-    material.current.modules = material.current.modules.filter(
-      (m) => m !== module
-    )
-    bumpVersion()
-  }, [])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)
