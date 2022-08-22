@@ -15,7 +15,6 @@ import { Heat, HeatOptions } from "../units"
 
 export * from "./Acceleration"
 export * from "./Billboard"
-export * from "./Layer"
 export * from "./Lifetime"
 export * from "./Rotate"
 export * from "./Scale"

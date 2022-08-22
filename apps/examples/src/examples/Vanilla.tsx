@@ -1,11 +1,10 @@
 import { useThree } from "@react-three/fiber"
-import { ComposableMaterial } from "material-composer"
+import { ComposableMaterial, Layer } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
 import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import {
-  Color,
   DoubleSide,
   Group,
   Mesh,
@@ -26,11 +25,11 @@ const vanillaCode = (
   const time = Time()
 
   const modules = [
-    Modules.Layer({
+    Layer({
       modules: [Modules.Plasma({ offset: Mul(time, -0.2) })]
     }),
 
-    Modules.Layer({
+    Layer({
       mix: NormalizePlusMinusOne(Sin(time)),
       modules: [
         Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),

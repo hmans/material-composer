@@ -1,6 +1,7 @@
 import { Input, pipe } from "shader-composer"
 
 export * from "./ComposableMaterial"
+export * from "./Layer"
 
 /**
  * ModuleState describes the state going into a module (and returned by it.)

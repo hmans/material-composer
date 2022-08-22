@@ -1,5 +1,5 @@
 import { Input, Mix } from "shader-composer"
-import { ModuleFactory, ModulePipe, pipeModules } from ".."
+import { ModuleFactory, ModulePipe, pipeModules } from "."
 
 export type LayerProps = {
   modules?: ModulePipe
