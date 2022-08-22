@@ -2,7 +2,6 @@ import { extend, useFrame, useThree } from "@react-three/fiber"
 import { ComposableMaterial as ComposableMaterialImpl } from "material-composer"
 import React, {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useLayoutEffect,
   useRef
@@ -38,18 +37,13 @@ export const ComposableMaterial = forwardRef<
 
   const material = useRef<ComposableMaterialImpl>(null!)
 
-  const {
-    version,
-    modules,
-    addModule,
-    removeModule
-  } = provideModuleRegistration()
+  const { modules, addModule, removeModule } = provideModuleRegistration()
 
   /* Recompile on version change */
   useLayoutEffect(() => {
     material.current.modules = modules
     material.current.compileModules()
-  }, [version])
+  }, [modules])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)
