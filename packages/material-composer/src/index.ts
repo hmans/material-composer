@@ -2,6 +2,11 @@ import { Input, pipe } from "shader-composer"
 
 export * from "./ComposableMaterial"
 
+/**
+ * ModuleState describes the state going into a module (and returned by it.)
+ * Modules are encouraged to change the values they're interested in, but can
+ * also just pass through others without changing them.
+ */
 export type ModuleState = {
   position: Input<"vec3">
   normal: Input<"vec3">
