@@ -10,6 +10,7 @@ import FireballExample from "./examples/Fireball"
 import HelloWorld from "./examples/HelloWorld"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
+import Vanilla from "./examples/Vanilla"
 
 export default () => (
   <Application>
@@ -18,6 +19,10 @@ export default () => (
 
       <Example path="hello-world" title="Hello World" makeDefault>
         <HelloWorld />
+      </Example>
+
+      <Example path="vanilla" title="Vanilla Three.js" makeDefault>
+        <Vanilla />
       </Example>
 
       <Heading>Animations</Heading>

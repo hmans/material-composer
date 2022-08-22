@@ -43,6 +43,7 @@ export const pipeModules = (initial: ModuleState, ...modules: Module[]) =>
 
 export * from "./Acceleration"
 export * from "./Billboard"
+export * from "./Layer"
 export * from "./Lifetime"
 export * from "./Rotate"
 export * from "./Scale"
