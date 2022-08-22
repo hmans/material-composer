@@ -1,5 +1,5 @@
 import { Module } from "material-composer"
-import { createContext, useContext, useLayoutEffect } from "react"
+import { createContext, useContext, useLayoutEffect, useMemo } from "react"
 import { useList } from "./lib/use-list"
 
 export const ModuleRegistrationContext = createContext<{
@@ -11,7 +11,11 @@ export const useMaterialContext = () => useContext(ModuleRegistrationContext)
 
 export const provideModuleRegistration = () => {
   const [modules, addModule, removeModule] = useList<Module>()
-  return { modules, addModule, removeModule }
+  const api = useMemo(() => ({ addModule, removeModule }), [
+    addModule,
+    removeModule
+  ])
+  return [modules, api] as const
 }
 
 export const useModuleRegistration = (module: Module) => {

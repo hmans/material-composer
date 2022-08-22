@@ -37,7 +37,7 @@ export const ComposableMaterial = forwardRef<
 
   const material = useRef<ComposableMaterialImpl>(null!)
 
-  const { modules, addModule, removeModule } = provideModuleRegistration()
+  const [modules, api] = provideModuleRegistration()
 
   /* Recompile on version change */
   useLayoutEffect(() => {
@@ -61,7 +61,7 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <ModuleRegistrationContext.Provider value={{ addModule, removeModule }}>
+      <ModuleRegistrationContext.Provider value={api}>
         {children}
       </ModuleRegistrationContext.Provider>
     </composableMaterial>

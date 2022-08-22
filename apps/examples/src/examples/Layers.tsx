@@ -1,4 +1,5 @@
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { SetColor } from "material-composer/modules"
 import { Time } from "shader-composer"
 import { Color, DoubleSide, MeshStandardMaterial } from "three"
 
