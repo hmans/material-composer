@@ -3,9 +3,10 @@ import { ComposableMaterial } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
-import { Time } from "shader-composer"
+import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import {
   Color,
+  DoubleSide,
   Group,
   Mesh,
   Object3D,
@@ -22,15 +23,28 @@ const vanillaCode = (
   scene: Scene,
   renderer: WebGLRenderer
 ) => {
-  /* Create a Lifetime module. */
   const time = Time()
 
-  const modules = [Modules.SetColor({ color: new Color("hotpink") })]
+  const modules = [
+    Modules.Plasma({ offset: Mul(time, -0.2) }),
+    Modules.Layer({
+      mix: NormalizePlusMinusOne(Sin(time)),
+      modules: [
+        Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
+        Modules.Lava({ offset: Mul(time, 0.2) })
+      ]
+    })
+  ]
 
-  const material = new ComposableMaterial({ modules })
+  const material = new ComposableMaterial({
+    modules,
+    transparent: true,
+    side: DoubleSide
+  })
   material.compileModules()
 
   const sphere = new Mesh(new SphereGeometry(), material)
+  sphere.position.y = 1.5
   parent.add(sphere)
 
   /* Create mesh and add it to the scene. */
