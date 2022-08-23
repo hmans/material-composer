@@ -6,6 +6,7 @@ import {
   Heading
 } from "r3f-stage"
 import "r3f-stage/styles.css"
+import ColorExample from "./examples/Color"
 import FireballExample from "./examples/Fireball"
 import Fresnel from "./examples/Fresnel"
 import HelloWorld from "./examples/HelloWorld"
@@ -33,8 +34,8 @@ export default () => (
 
       <Heading>Modules</Heading>
 
-      <Example path="modules/colors" title="Colors" makeDefault>
-        <HelloWorld />
+      <Example path="modules/color" title="Color" makeDefault>
+        <ColorExample />
       </Example>
 
       <Example path="modules/fresnel" title="Fresnel" makeDefault>
