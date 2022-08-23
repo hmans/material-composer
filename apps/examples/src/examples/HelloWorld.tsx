@@ -15,6 +15,7 @@ export default function HelloWorld() {
 
         <ComposableMaterial>
           <Modules.Color color={new Color("hotpink")} />
+
           <Layer mix={mix}>
             <Modules.Color color={new Color("yellow")} />
           </Layer>
@@ -22,8 +23,8 @@ export default function HelloWorld() {
       </mesh>
 
       <Description>
-        A simple example with a material that will fade back and forth between
-        two colors.
+        A simple example with a material that can blend between two colors,
+        steered by a uniform value.
       </Description>
     </group>
   )
