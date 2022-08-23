@@ -33,7 +33,7 @@ export const GradientLayer = (props: LayerProps) => {
 export default function Combined() {
   return (
     <group position-y={1.5}>
-      <mesh>
+      <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
         <ComposableMaterial>
