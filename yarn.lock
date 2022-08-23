@@ -6329,7 +6329,7 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
 
-shader-composer-r3f@0.2.0, shader-composer-r3f@^0.2.0:
+shader-composer-r3f@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/shader-composer-r3f/-/shader-composer-r3f-0.2.0.tgz#21c2e5473f3644993a02c711debbed20b6e5d36b"
   integrity sha512-cXiERfUGKaFf4kfEApT7bPqA/IqB1SlCL1sQydnZguUg8klnWegYAef//KY2VALfEGxl3uiYwaEWHTFQtopyHQ==
