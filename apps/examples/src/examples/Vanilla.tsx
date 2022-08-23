@@ -44,8 +44,6 @@ const vanillaCode = (
     side: DoubleSide
   })
 
-  material.compileModules()
-
   const sphere = new Mesh(new SphereGeometry(), material)
   sphere.position.y = 1.5
   parent.add(sphere)

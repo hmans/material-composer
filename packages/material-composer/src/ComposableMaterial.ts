@@ -24,16 +24,6 @@ export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
 export class ComposableMaterial extends CustomShaderMaterial {
   private _modules: ModulePipe = []
 
-  get modules() {
-    return this._modules
-  }
-
-  set modules(v: ModulePipe) {
-    if (this._modules !== v) {
-      this._modules = v
-    }
-  }
-
   /**
    * The per-frame update function returned by compileShader.
    */
@@ -60,10 +50,13 @@ export class ComposableMaterial extends CustomShaderMaterial {
     }: ComposableMaterialArgs = {} as ComposableMaterialArgs
   ) {
     super({ baseMaterial: baseMaterial || MeshStandardMaterial, ...args })
-    this.modules = args.modules || []
+    if (args.modules) this.compileModules(args.modules)
   }
 
-  public compileModules() {
+  public compileModules(modules: ModulePipe) {
+    if (this._modules === modules) return
+    this._modules = modules
+
     /* If we've already had a shader, dispose of it. */
     this.shaderMeta?.dispose()
 
