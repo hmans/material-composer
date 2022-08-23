@@ -16,7 +16,7 @@ import Vanilla from "./examples/Vanilla"
 export default () => (
   <Application>
     <FlatStage>
-      <Heading>Simple Examples</Heading>
+      <Heading>The Basics</Heading>
 
       <Example path="hello-world" title="Hello World" makeDefault>
         <HelloWorld />
@@ -28,6 +28,12 @@ export default () => (
 
       <Example path="layers" title="Layers">
         <LayersExample />
+      </Example>
+
+      <Heading>Modules</Heading>
+
+      <Example path="modules/colors" title="Colors" makeDefault>
+        <HelloWorld />
       </Example>
 
       <Heading>Animations</Heading>
