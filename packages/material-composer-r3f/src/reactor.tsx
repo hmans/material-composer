@@ -17,7 +17,7 @@ type ModuleComponentProxy = {
     : never
 }
 
-const makeModuleComponent = <P extends ModuleFactoryProps>(
+export const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
 ) =>
   memo((props: P) => {
