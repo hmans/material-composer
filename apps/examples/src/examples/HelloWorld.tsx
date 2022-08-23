@@ -1,5 +1,5 @@
 import { useControls } from "leva"
-import { ComposableMaterial, Modules } from "material-composer-r3f"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
@@ -15,7 +15,9 @@ export default function HelloWorld() {
 
         <ComposableMaterial>
           <Modules.Color color={new Color("hotpink")} />
-          <Modules.Color color={new Color("yellow")} mix={mix} />
+          <Layer mix={mix}>
+            <Modules.Color color={new Color("yellow")} />
+          </Layer>
         </ComposableMaterial>
       </mesh>
 
