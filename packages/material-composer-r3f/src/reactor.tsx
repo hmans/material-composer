@@ -1,6 +1,6 @@
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
-import { FC, useMemo } from "react"
+import { FC, memo, useMemo } from "react"
 import { useModuleRegistration } from "./moduleRegistration"
 
 type Modules = typeof Modules
@@ -19,11 +19,12 @@ type ModuleComponentProxy = {
 
 const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
-) => (props: P) => {
-  const module = useMemo(() => fac(props), [props])
-  useModuleRegistration(module)
-  return null
-}
+) =>
+  memo((props: P) => {
+    const module = useMemo(() => fac(props), [props])
+    useModuleRegistration(module)
+    return null
+  })
 
 export const ModuleReactor = new Proxy<ModuleComponentProxy>(
   {} as ModuleComponentProxy,

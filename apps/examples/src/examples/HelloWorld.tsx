@@ -4,6 +4,9 @@ import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
 
+const color1 = new Color("white")
+const color2 = new Color("green")
+
 export default function HelloWorld() {
   const controls = useControls({ mix: { value: 0.5, min: 0, max: 1 } })
   const mix = useUniformUnit("float", controls.mix)
@@ -14,10 +17,10 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.Color color={new Color("hotpink")} />
+          <Modules.Color color={color1} />
 
           <Layer mix={mix}>
-            <Modules.Color color={new Color("yellow")} />
+            <Modules.Color color={color2} />
           </Layer>
         </ComposableMaterial>
       </mesh>
