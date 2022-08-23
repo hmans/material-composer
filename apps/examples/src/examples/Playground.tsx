@@ -32,7 +32,7 @@ export default function Playground() {
   return (
     <group position-y={1.5}>
       <mesh>
-        <sphereGeometry />
+        <icosahedronGeometry args={[1, 8]} />
         <ComposableMaterial metalness={0.7} roughness={0.3}>
           <Modules.Color color={new Color("#495057")} />
           <Rust />
