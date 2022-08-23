@@ -65,22 +65,22 @@ export class ComposableMaterial extends CustomShaderMaterial {
       position: VertexPosition,
       normal: VertexNormal,
       color: Vec3($`csm_DiffuseColor.rgb`),
-      alpha: Float($`csm_DiffuseColor.a`)
+      alpha: Float($`csm_DiffuseColor.a`),
+      roughness: Float($`csm_Roughness`),
+      metalness: Float($`csm_Metalness`)
     }
 
     /* Transform state with given modules. */
-    const { position, normal, color, alpha } = pipeModules(
-      initialState,
-      ...(this._modules || [])
-    )
+    const state = pipeModules(initialState, ...(this._modules || []))
 
     /* Create a shader root. We're currently using CSM for everything, so
     always pick a CustomShaderMaterialMaster. */
     this.shaderRoot = CustomShaderMaterialMaster({
-      position,
-      normal,
-      diffuseColor: color,
-      alpha
+      position: state.position,
+      normal: state.normal,
+      diffuseColor: state.color,
+      alpha: state.alpha,
+      roughness: state.roughness
     })
 
     /* And finally compile a shader from the state. */
