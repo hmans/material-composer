@@ -14,8 +14,8 @@ export const GradientLayer = (props: LayerProps) => {
   const controls = useControls("Gradient", {
     mix: { value: 0.5, min: 0, max: 1 },
     contrast: { value: 1, min: 0, max: 10 },
-    colorA: "#fee440",
-    colorB: "#00bbf9"
+    colorA: "#00bbf9",
+    colorB: "#fee440"
   })
 
   const mix = useUniformUnit("float", controls.mix)
