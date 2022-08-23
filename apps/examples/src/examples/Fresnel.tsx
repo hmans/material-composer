@@ -11,8 +11,8 @@ import { Color } from "three"
 
 export const FresnelLayer = (props: LayerProps) => {
   const controls = useControls("Fresnel", {
-    mix: { value: 1, min: 0, max: 1 },
-    intensity: { value: 1, min: 0, max: 3 },
+    mix: { value: 0.5, min: 0, max: 1 },
+    intensity: { value: 5, min: 0, max: 10 },
     power: { value: 4, min: 0, max: 8 }
   })
 
