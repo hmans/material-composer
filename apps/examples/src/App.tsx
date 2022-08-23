@@ -6,10 +6,8 @@ import {
   Heading
 } from "r3f-stage"
 import "r3f-stage/styles.css"
-import ColorExample from "./examples/Color"
-import Combined from "./examples/Combined"
+import Combined from "./examples/CombinedModules"
 import FireballExample from "./examples/Fireball"
-import Fresnel from "./examples/Fresnel"
 import HelloWorld from "./examples/HelloWorld"
 import LayersExample from "./examples/Layers"
 import PlasmaBallExample from "./examples/PlasmaBall"
@@ -29,21 +27,7 @@ export default () => (
         <Vanilla />
       </Example>
 
-      <Example path="layers" title="Layers">
-        <LayersExample />
-      </Example>
-
-      <Heading>Modules</Heading>
-
-      <Example path="modules/color" title="Color" makeDefault>
-        <ColorExample />
-      </Example>
-
-      <Example path="modules/fresnel" title="Fresnel" makeDefault>
-        <Fresnel />
-      </Example>
-
-      <Example path="modules/combined" title="Combined" makeDefault>
+      <Example path="modules" title="Modules!" makeDefault>
         <Combined />
       </Example>
 
@@ -60,6 +44,10 @@ export default () => (
 
       <Example path="plasmaball" title="Plasma Ball">
         <PlasmaBallExample />
+      </Example>
+
+      <Example path="layers" title="Animation Layers">
+        <LayersExample />
       </Example>
 
       <Heading>Experiments</Heading>

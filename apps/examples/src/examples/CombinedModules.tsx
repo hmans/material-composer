@@ -7,8 +7,22 @@ import {
 } from "material-composer-r3f"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
-import { ColorLayer } from "./Color"
-import { FresnelLayer } from "./Fresnel"
+
+export const ColorLayer = (props: LayerProps) => {
+  const controls = useControls("Color", {
+    mix: { value: 1, min: 0, max: 1 },
+    color: "#b10000"
+  })
+
+  const mix = useUniformUnit("float", controls.mix)
+  const color = useUniformUnit("vec3", new Color(controls.color))
+
+  return (
+    <Layer mix={mix} {...props}>
+      <Modules.Color color={color} />
+    </Layer>
+  )
+}
 
 export const GradientLayer = (props: LayerProps) => {
   const controls = useControls("Gradient", {
@@ -45,7 +59,25 @@ export const GradientLayer = (props: LayerProps) => {
   )
 }
 
-export default function Combined() {
+export const FresnelLayer = (props: LayerProps) => {
+  const controls = useControls("Fresnel", {
+    mix: { value: 0.5, min: 0, max: 1 },
+    intensity: { value: 5, min: 0, max: 10 },
+    power: { value: 4, min: 0, max: 8 }
+  })
+
+  const mix = useUniformUnit("float", controls.mix)
+  const intensity = useUniformUnit("float", controls.intensity)
+  const power = useUniformUnit("float", controls.power)
+
+  return (
+    <Layer mix={mix} {...props}>
+      <Modules.Fresnel intensity={intensity} power={power} />
+    </Layer>
+  )
+}
+
+export default function CombinedModules() {
   return (
     <group position-y={1.5}>
       <mesh castShadow>
