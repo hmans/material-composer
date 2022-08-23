@@ -1,22 +1,21 @@
+import { useControls } from "leva"
 import { ComposableMaterial, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
-import { Mix, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
+import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
 
 export default function HelloWorld() {
+  const controls = useControls({ mix: { value: 0.5, min: 0, max: 1 } })
+  const mix = useUniformUnit("float", controls.mix)
+
   return (
     <group>
       <mesh position-y={1.5}>
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.SetColor
-            color={Mix(
-              new Color("hotpink"),
-              new Color("yellow"),
-              NormalizePlusMinusOne(Sin(Time()))
-            )}
-          />
+          <Modules.Color color={new Color("hotpink")} />
+          <Modules.Color color={new Color("yellow")} mix={mix} />
         </ComposableMaterial>
       </mesh>
 

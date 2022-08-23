@@ -9,26 +9,19 @@ import {
   Unit
 } from "shader-composer"
 import { PSRDNoise3D } from "shader-composer-toybox"
-import { Color } from "three"
+import * as THREE from "three"
 import { Module, ModuleFactory } from ".."
 import { Heat, HeatOptions } from "../units"
 
 export * from "./Acceleration"
 export * from "./Billboard"
+export * from "./Color"
 export * from "./Lifetime"
 export * from "./Rotate"
 export * from "./Scale"
 export * from "./Softness"
 export * from "./Translate"
 export * from "./Velocity"
-
-/* TODO: overriding color is very bad because it will override Lifetime's actions. Find a better solution! */
-export const SetColor = ({ color }: { color: Input<"vec3"> }): Module => (
-  state
-) => ({
-  ...state,
-  color
-})
 
 export const SetAlpha = ({ alpha }: { alpha: Input<"float"> }): Module => (
   state
@@ -47,14 +40,14 @@ export const Lava: ModuleFactory<LavaProps> = ({
   color = (heat) =>
     Gradient(
       heat,
-      [new Color("#03071E"), 0],
-      [new Color("#03071E"), 0.1],
-      [new Color("#DC2F02"), 0.5],
-      [new Color("#E85D04"), 0.6],
-      [new Color("#FFBA08").multiplyScalar(2), 0.65],
-      [new Color("white").multiplyScalar(2), 0.97],
-      [new Color("white").multiplyScalar(2), 0.99],
-      [new Color("white").multiplyScalar(2), 1]
+      [new THREE.Color("#03071E"), 0],
+      [new THREE.Color("#03071E"), 0.1],
+      [new THREE.Color("#DC2F02"), 0.5],
+      [new THREE.Color("#E85D04"), 0.6],
+      [new THREE.Color("#FFBA08").multiplyScalar(2), 0.65],
+      [new THREE.Color("white").multiplyScalar(2), 0.97],
+      [new THREE.Color("white").multiplyScalar(2), 0.99],
+      [new THREE.Color("white").multiplyScalar(2), 1]
     ),
   ...opts
 }) => (state) => {
@@ -74,9 +67,9 @@ export const Plasma: ModuleFactory<PlasmaProps> = ({
   color = (heat: Input<"float">) =>
     Gradient(
       heat,
-      [new Color("#457b9d"), 0.85],
-      [new Color("#a2d2ff"), 0.95],
-      [new Color("white").multiplyScalar(3), 0.975]
+      [new THREE.Color("#457b9d"), 0.85],
+      [new THREE.Color("#a2d2ff"), 0.95],
+      [new THREE.Color("white").multiplyScalar(3), 0.975]
     ),
   offset,
   scale = 0.5,
