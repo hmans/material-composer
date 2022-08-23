@@ -1,19 +1,9 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
-import { memo, ReactNode, useMemo } from "react"
-import {
-  Cos,
-  Input,
-  Mul,
-  NormalizePlusMinusOne,
-  Sin,
-  Smoothstep,
-  Step,
-  Time,
-  VertexPosition
-} from "shader-composer"
+import { ReactNode, useMemo } from "react"
+import { Mul, Step, Time, VertexPosition } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
-import { Color, DoubleSide, Vector3 } from "three"
+import { DoubleSide } from "three"
 
 const Memoize = ({ children }: { children?: ReactNode }) => {
   const r = useMemo(() => children, [])
@@ -38,7 +28,7 @@ export default function LayersExample() {
           <Memoize>
             <Modules.Plasma offset={Mul(time, -0.3)} />
 
-            <Layer mix={Step(mix, VertexPosition.y)}>
+            <Layer mix={Step(mix, VertexPosition.x)}>
               <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
               <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
             </Layer>
