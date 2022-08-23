@@ -12,7 +12,7 @@ import { Color } from "three"
 export const ColorLayer = (props: LayerProps) => {
   const controls = useControls("Color", {
     mix: { value: 1, min: 0, max: 1 },
-    color: "#e9edc9"
+    color: "#b10000"
   })
 
   const mix = useUniformUnit("float", controls.mix)
