@@ -12,7 +12,7 @@ import { FresnelLayer } from "./Fresnel"
 
 export const GradientLayer = (props: LayerProps) => {
   const controls = useControls("Gradient", {
-    mix: { value: 1, min: 0, max: 1 },
+    mix: { value: 0.5, min: 0, max: 1 },
     contrast: { value: 1, min: 0, max: 10 },
     colorA: "#fee440",
     colorB: "#00bbf9"
