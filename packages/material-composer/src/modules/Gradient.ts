@@ -9,6 +9,8 @@ import {
 } from "shader-composer"
 import { ModuleFactory } from ".."
 
+/* TODO: Use new GradientStops type once SC 0.3.1+ lands */
+
 export type GradientArgs = {
   /** The gradient, as defined by a list of vec3 gradient stops. */
   stops: GradientStop<"vec3">[]
