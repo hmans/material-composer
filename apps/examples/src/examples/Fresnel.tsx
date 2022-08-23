@@ -1,18 +1,33 @@
 import { useControls } from "leva"
-import { ComposableMaterial, Modules } from "material-composer-r3f"
+import {
+  ComposableMaterial,
+  Layer,
+  LayerProps,
+  Modules
+} from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
 
-export default function Fresnel() {
-  const controls = useControls({
+export const FresnelLayer = (props: LayerProps) => {
+  const controls = useControls("Fresnel", {
+    mix: { value: 1, min: 0, max: 1 },
     intensity: { value: 1, min: 0, max: 3 },
     power: { value: 4, min: 0, max: 8 }
   })
 
+  const mix = useUniformUnit("float", controls.mix)
   const intensity = useUniformUnit("float", controls.intensity)
   const power = useUniformUnit("float", controls.power)
 
+  return (
+    <Layer mix={mix} {...props}>
+      <Modules.Fresnel intensity={intensity} power={power} />
+    </Layer>
+  )
+}
+
+export default function Fresnel() {
   return (
     <group position-y={1.5}>
       <mesh>
@@ -20,7 +35,7 @@ export default function Fresnel() {
 
         <ComposableMaterial>
           <Modules.Color color={new Color("#6a040f")} />
-          <Modules.Fresnel intensity={intensity} power={power} />
+          <FresnelLayer />
         </ComposableMaterial>
       </mesh>
 

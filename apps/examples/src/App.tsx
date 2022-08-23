@@ -7,6 +7,7 @@ import {
 } from "r3f-stage"
 import "r3f-stage/styles.css"
 import ColorExample from "./examples/Color"
+import Combined from "./examples/Combined"
 import FireballExample from "./examples/Fireball"
 import Fresnel from "./examples/Fresnel"
 import HelloWorld from "./examples/HelloWorld"
@@ -40,6 +41,10 @@ export default () => (
 
       <Example path="modules/fresnel" title="Fresnel" makeDefault>
         <Fresnel />
+      </Example>
+
+      <Example path="modules/combined" title="Combined" makeDefault>
+        <Combined />
       </Example>
 
       <Heading>Animations</Heading>
