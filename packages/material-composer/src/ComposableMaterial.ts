@@ -6,6 +6,7 @@ import {
   Input,
   Master,
   Unit,
+  vec3,
   Vec3,
   VertexNormal,
   VertexPosition
@@ -89,7 +90,8 @@ export class ComposableMaterial extends CustomShaderMaterial {
       color: Vec3($`csm_DiffuseColor.rgb`),
       alpha: Float($`csm_DiffuseColor.a`),
       roughness: Float($`csm_Roughness`),
-      metalness: Float($`csm_Metalness`)
+      metalness: Float($`csm_Metalness`),
+      fragNormal: vec3(0.0, 0.0, 1.0)
     }
 
     /* Transform state with given modules. */
@@ -131,6 +133,7 @@ export type CustomShaderMaterialMasterProps = {
   diffuseColor?: Input<"vec3">
   emissiveColor?: Input<"vec3">
   fragColor?: Input<"vec3">
+  fragNormal?: Input<"vec3">
   alpha?: Input<"float">
   roughness?: Input<"float">
   metalness?: Input<"float">
@@ -142,6 +145,7 @@ export const CustomShaderMaterialMaster = ({
   diffuseColor,
   emissiveColor,
   fragColor,
+  fragNormal,
   roughness,
   metalness,
   alpha
@@ -159,8 +163,7 @@ export const CustomShaderMaterialMaster = ({
     fragment: {
       header: $`vec3 csm_FragNormal;`,
       body: $`
-        csm_FragNormal = vec3(0.0, 0.0, 1.0);
-
+        ${fragNormal !== undefined ? $`csm_FragNormal = ${fragNormal};` : ""}
         ${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
 				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
 				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}

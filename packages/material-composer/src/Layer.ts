@@ -25,6 +25,7 @@ export const Layer: ModuleFactory<LayerOptions> = ({
     alpha: Mix(state.alpha, newState.alpha, mix),
     color: Mix(state.color, newState.color, mix),
     metalness: Mix(state.metalness, newState.metalness, mix),
-    roughness: Mix(state.roughness, newState.roughness, mix)
+    roughness: Mix(state.roughness, newState.roughness, mix),
+    fragNormal: Mix(state.fragNormal, newState.fragNormal, mix)
   }
 }
