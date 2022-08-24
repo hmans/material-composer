@@ -14,6 +14,8 @@ import {
 import { PSRDNoise3D } from "shader-composer-toybox"
 import { Color } from "three"
 
+const NoiseImpl: ModuleFactory = () => (state) => state
+
 const RustImpl: ModuleFactory = ({}) => (state) => {
   const rust = Smoothstep(0, 0.3, PSRDNoise3D(Mul(VertexPosition, 1.3)))
   const rust2 = NormalizePlusMinusOne(PSRDNoise3D(Mul(VertexPosition, 38)))
@@ -27,6 +29,7 @@ const RustImpl: ModuleFactory = ({}) => (state) => {
 }
 
 const Rust = makeModuleComponent(RustImpl)
+const Noise = makeModuleComponent(NoiseImpl)
 
 export default function Playground() {
   return (
@@ -35,7 +38,8 @@ export default function Playground() {
         <icosahedronGeometry args={[1, 8]} />
         <ComposableMaterial metalness={0.7} roughness={0.3}>
           <Modules.Color color={new Color("#495057")} />
-          <Rust />
+          {/* <Rust /> */}
+          <Noise />
         </ComposableMaterial>
       </mesh>
     </group>
