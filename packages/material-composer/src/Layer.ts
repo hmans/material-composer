@@ -1,5 +1,5 @@
 import { Input, Mix } from "shader-composer"
-import { ModuleFactory, ModulePipe, pipeModules } from "."
+import { initialModuleState, ModuleFactory, ModulePipe, pipeModules } from "."
 
 export type LayerOptions = {
   modules?: ModulePipe
@@ -10,14 +10,7 @@ export const Layer: ModuleFactory<LayerOptions> = ({
   modules = [],
   mix = 1
 }) => (state) => {
-  // TODO: each layer should start with the intitial state!
-  const newState = pipeModules(
-    {
-      ...state,
-      alpha: 1
-    },
-    ...modules
-  )
+  const newState = pipeModules(initialModuleState(), ...modules)
 
   return {
     position: Mix(state.position, newState.position, mix),
