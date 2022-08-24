@@ -26,7 +26,14 @@ const PATCHMAP = {
   csm_FragmentNormal: {
     "#include <normal_fragment_maps>": `
     #include <normal_fragment_maps>
-    normal = normal + csm_FragmentNormal;
+
+    csm_FragmentNormal.xy *= normalScale;
+
+    #ifdef USE_TANGENT
+      normal = normalize( vTBN * csm_FragmentNormal );
+    #else
+      normal = perturbNormal2Arb( - vViewPosition, normal, csm_FragmentNormal, faceDirection );
+    #endif
     `
   }
 }
@@ -152,7 +159,7 @@ export const CustomShaderMaterialMaster = ({
     fragment: {
       header: $`vec3 csm_FragmentNormal;`,
       body: $`
-        vec3 csm_FragmentNormal = vNormal;
+        csm_FragmentNormal = vec3(0.0, 0.0, 1.0);
 
         ${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
 				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
