@@ -9,7 +9,7 @@ import "r3f-stage/styles.css"
 import Combined from "./examples/CombinedModules"
 import FireballExample from "./examples/Fireball"
 import HelloWorld from "./examples/HelloWorld"
-import LayersExample from "./examples/Layers"
+import MemoizationExample from "./examples/Memoization"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
 import Vanilla from "./examples/Vanilla"
@@ -46,8 +46,10 @@ export default () => (
         <PlasmaBallExample />
       </Example>
 
-      <Example path="layers" title="Animation Layers">
-        <LayersExample />
+      <Heading>Advanced</Heading>
+
+      <Example path="memoization" title="Memoization">
+        <MemoizationExample />
       </Example>
 
       <Heading>Experiments</Heading>
