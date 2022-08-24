@@ -1,16 +1,11 @@
 import { useControls } from "leva"
-import {
-  ComposableMaterial,
-  ComposableMaterialProps,
-  Layer,
-  Modules
-} from "material-composer-r3f"
-import { DependencyList, ReactNode, useMemo } from "react"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { memo, useMemo } from "react"
 import {
   Add,
+  Input,
   Mul,
   Smoothstep,
-  Step,
   Sub,
   Time,
   VertexPosition
@@ -18,24 +13,12 @@ import {
 import { useUniformUnit } from "shader-composer-r3f"
 import { DoubleSide } from "three"
 
-const Memoize = ({
-  children,
-  deps = []
-}: {
-  children?: ReactNode
-  deps?: DependencyList
-}) => {
-  const r = useMemo(() => children, deps)
-  return <>{r}</>
-}
-
 export default function LayersExample() {
   const controls = useControls("Layers", {
     mix: { value: 0, min: -1, max: 1 }
   })
 
   const mix = useUniformUnit("float", controls.mix)
-  const time = useMemo(() => Time(), [])
 
   return (
     <group position-y={1.5}>
@@ -43,19 +26,23 @@ export default function LayersExample() {
 
       <mesh>
         <icosahedronGeometry args={[1, 8]} />
-        <ComposableMaterial transparent side={DoubleSide}>
-          <Memoize>
-            <Modules.Plasma offset={Mul(time, -0.3)} />
-
-            <Layer
-              mix={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}
-            >
-              <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
-              <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
-            </Layer>
-          </Memoize>
-        </ComposableMaterial>
+        <MyMaterial mix={mix} />
       </mesh>
     </group>
   )
 }
+
+const MyMaterial = memo(({ mix }: { mix: Input<"float"> }) => {
+  const time = useMemo(() => Time(), [])
+
+  return (
+    <ComposableMaterial transparent side={DoubleSide}>
+      <Modules.Plasma offset={Mul(time, -0.3)} />
+
+      <Layer mix={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}>
+        <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
+        <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+      </Layer>
+    </ComposableMaterial>
+  )
+})
