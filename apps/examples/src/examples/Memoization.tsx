@@ -13,7 +13,7 @@ import {
 import { useUniformUnit } from "shader-composer-r3f"
 import { DoubleSide } from "three"
 
-export default function LayersExample() {
+export default function MemoizationExample() {
   const controls = useControls("Layers", {
     mix: { value: 0, min: -1, max: 1 }
   })
