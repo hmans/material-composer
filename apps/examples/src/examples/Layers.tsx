@@ -29,12 +29,6 @@ const Memoize = ({
   return <>{r}</>
 }
 
-const MemoizedComposableMaterial = (props: ComposableMaterialProps) => (
-  <Memoize>
-    <ComposableMaterial {...props} />
-  </Memoize>
-)
-
 export default function LayersExample() {
   const controls = useControls("Layers", {
     mix: { value: 0, min: -1, max: 1 }
@@ -49,16 +43,18 @@ export default function LayersExample() {
 
       <mesh>
         <icosahedronGeometry args={[1, 8]} />
-        <MemoizedComposableMaterial transparent side={DoubleSide}>
-          <Modules.Plasma offset={Mul(time, -0.3)} />
+        <ComposableMaterial transparent side={DoubleSide}>
+          <Memoize>
+            <Modules.Plasma offset={Mul(time, -0.3)} />
 
-          <Layer
-            mix={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}
-          >
-            <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
-            <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
-          </Layer>
-        </MemoizedComposableMaterial>
+            <Layer
+              mix={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}
+            >
+              <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
+              <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+            </Layer>
+          </Memoize>
+        </ComposableMaterial>
       </mesh>
     </group>
   )
