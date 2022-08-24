@@ -13,7 +13,7 @@ import { MeshStandardMaterial, Scene, WebGLRenderer } from "three"
 import CustomShaderMaterial, {
   iCSMParams
 } from "three-custom-shader-material/vanilla"
-import { ModulePipe, ModuleState, pipeModules } from "."
+import { initialModuleState, ModulePipe, ModuleState, pipeModules } from "."
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -60,18 +60,8 @@ export class ComposableMaterial extends CustomShaderMaterial {
     /* If we've already had a shader, dispose of it. */
     this.shaderMeta?.dispose()
 
-    /* Define an initial module state. */
-    const initialState: ModuleState = {
-      position: VertexPosition,
-      normal: VertexNormal,
-      color: Vec3($`csm_DiffuseColor.rgb`),
-      alpha: Float($`csm_DiffuseColor.a`),
-      roughness: Float($`csm_Roughness`),
-      metalness: Float($`csm_Metalness`)
-    }
-
     /* Transform state with given modules. */
-    const state = pipeModules(initialState, ...(this._modules || []))
+    const state = pipeModules(initialModuleState(), ...(this._modules || []))
 
     /* Create a shader root. We're currently using CSM for everything, so
     always pick a CustomShaderMaterialMaster. */
