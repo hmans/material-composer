@@ -1,12 +1,18 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
-import { ReactNode, useMemo } from "react"
+import { DependencyList, ReactNode, useMemo } from "react"
 import { Mul, Step, Time, VertexPosition } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
 import { DoubleSide } from "three"
 
-const Memoize = ({ children }: { children?: ReactNode }) => {
-  const r = useMemo(() => children, [])
+const Memoize = ({
+  children,
+  deps = []
+}: {
+  children?: ReactNode
+  deps?: DependencyList
+}) => {
+  const r = useMemo(() => children, deps)
   return <>{r}</>
 }
 
