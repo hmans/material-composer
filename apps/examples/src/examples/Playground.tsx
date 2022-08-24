@@ -1,3 +1,4 @@
+import { useTexture } from "@react-three/drei"
 import { ModuleFactory } from "material-composer"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { makeModuleComponent } from "material-composer-r3f/src/reactor"
@@ -5,7 +6,6 @@ import { Smoothstep, VertexPosition } from "shader-composer"
 import { PSRDNoise3D } from "shader-composer-toybox"
 import { Color, TangentSpaceNormalMap } from "three"
 import rustNormalTextureUrl from "./textures/rust-normal.jpeg"
-import { useTexture } from "@react-three/drei"
 
 const RustImpl: ModuleFactory = ({}) => (state) => {
   return {
@@ -34,9 +34,9 @@ export default function Playground() {
         >
           <Modules.Color color={new Color("#495057")} />
 
-          {/* <Layer mix={Smoothstep(-0.1, 0.4, PSRDNoise3D(VertexPosition))}>
+          <Layer mix={Smoothstep(-0.1, 0.4, PSRDNoise3D(VertexPosition))}>
             <Rust />
-          </Layer> */}
+          </Layer>
 
           <Modules.Fresnel />
         </ComposableMaterial>
