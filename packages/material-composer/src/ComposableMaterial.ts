@@ -24,32 +24,9 @@ export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
 
 const PATCHMAP = {
   csm_FragmentNormal: {
-    "#include <normal_fragment_begin>": `
-    float faceDirection = gl_FrontFacing ? 1.0 : - 1.0;
-    #ifdef FLAT_SHADED
-      // Workaround for Adreno GPUs not able to do dFdx( vViewPosition )
-      vec3 fdx = vec3( dFdx( vViewPosition.x ), dFdx( vViewPosition.y ), dFdx( vViewPosition.z ) );
-      vec3 fdy = vec3( dFdy( vViewPosition.x ), dFdy( vViewPosition.y ), dFdy( vViewPosition.z ) );
-      vec3 normal = normalize( cross( fdx, fdy ) );
-    #else
-      vec3 normal = normalize( vNormal * csm_FragmentNormal );
-      #ifdef DOUBLE_SIDED
-        normal = normal * faceDirection;
-      #endif
-      #ifdef USE_TANGENT
-        vec3 tangent = normalize( vTangent );
-        vec3 bitangent = normalize( vBitangent );
-        #ifdef DOUBLE_SIDED
-          tangent = tangent * faceDirection;
-          bitangent = bitangent * faceDirection;
-        #endif
-        #if defined( TANGENTSPACE_NORMALMAP ) || defined( USE_CLEARCOAT_NORMALMAP )
-          mat3 vTBN = mat3( tangent, bitangent, normal );
-        #endif
-      #endif
-    #endif
-    // non perturbed normal for clearcoat among others
-    vec3 geometryNormal = normal;
+    "#include <normal_fragment_maps>": `
+    #include <normal_fragment_maps>
+    normal = normal + csm_FragmentNormal;
     `
   }
 }
@@ -173,6 +150,7 @@ export const CustomShaderMaterialMaster = ({
     },
 
     fragment: {
+      header: $`vec3 csm_FragmentNormal;`,
       body: $`
         vec3 csm_FragmentNormal = vNormal;
 
@@ -184,7 +162,6 @@ export const CustomShaderMaterialMaster = ({
             ? $`csm_FragColor = vec4(${fragColor}, ${alpha});`
             : ""
         }
-
 
         #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
           ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
