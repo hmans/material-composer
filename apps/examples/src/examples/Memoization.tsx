@@ -1,5 +1,6 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { Description } from "r3f-stage"
 import { memo, useMemo } from "react"
 import {
   Add,
@@ -28,6 +29,13 @@ export default function MemoizationExample() {
         <icosahedronGeometry args={[1, 8]} />
         <MyMaterial mix={mix} />
       </mesh>
+
+      <Description>
+        This example implements a material that feeds a couple of Shader
+        Composer subtrees into module properties, which, on a re-render, would
+        always make the material recompile its shader. To prevent this, the
+        material is wrapped into its own <strong>memoized component</strong>.
+      </Description>
     </group>
   )
 }
