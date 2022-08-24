@@ -19,8 +19,6 @@ const RustImpl: ModuleFactory = ({}) => (state) => {
 const Rust = makeModuleComponent(RustImpl)
 
 export default function Playground() {
-  const rustNormalMap = useTexture(rustNormalTextureUrl)
-
   return (
     <group position-y={1.5}>
       <mesh castShadow>
@@ -30,7 +28,7 @@ export default function Playground() {
           baseMaterial={MeshPhysicalMaterial}
           metalness={1}
           roughness={0.3}
-          normalMap={rustNormalMap}
+          normalMap={useTexture(rustNormalTextureUrl)}
           normalMapType={TangentSpaceNormalMap}
         >
           <Modules.Color color={new Color("#495057")} />
