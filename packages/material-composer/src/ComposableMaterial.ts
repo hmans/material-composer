@@ -23,16 +23,16 @@ export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
 }
 
 const PATCHMAP = {
-  csm_FragmentNormal: {
+  csm_FragNormal: {
     "#include <normal_fragment_maps>": `
     #include <normal_fragment_maps>
 
-    csm_FragmentNormal.xy *= normalScale;
+    csm_FragNormal.xy *= normalScale;
 
     #ifdef USE_TANGENT
-      normal = normalize( vTBN * csm_FragmentNormal );
+      normal = normalize( vTBN * csm_FragNormal );
     #else
-      normal = perturbNormal2Arb( - vViewPosition, normal, csm_FragmentNormal, faceDirection );
+      normal = perturbNormal2Arb( - vViewPosition, normal, csm_FragNormal, faceDirection );
     #endif
     `
   }
@@ -157,9 +157,9 @@ export const CustomShaderMaterialMaster = ({
     },
 
     fragment: {
-      header: $`vec3 csm_FragmentNormal;`,
+      header: $`vec3 csm_FragNormal;`,
       body: $`
-        csm_FragmentNormal = vec3(0.0, 0.0, 1.0);
+        csm_FragNormal = vec3(0.0, 0.0, 1.0);
 
         ${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
 				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
