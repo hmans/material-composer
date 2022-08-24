@@ -1,45 +1,33 @@
 import { ModuleFactory } from "material-composer"
-import { ComposableMaterial, Modules } from "material-composer-r3f"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { makeModuleComponent } from "material-composer-r3f/src/reactor"
-import {
-  Clamp,
-  Lerp,
-  Mul,
-  NormalizePlusMinusOne,
-  OneMinus,
-  Remap,
-  Smoothstep,
-  VertexPosition
-} from "shader-composer"
+import { Lerp, Smoothstep, VertexPosition } from "shader-composer"
 import { PSRDNoise3D } from "shader-composer-toybox"
-import { Color } from "three"
-
-const NoiseImpl: ModuleFactory = () => (state) => state
+import { Color, MeshPhysicalMaterial } from "three"
 
 const RustImpl: ModuleFactory = ({}) => (state) => {
-  const rust = Smoothstep(0, 0.3, PSRDNoise3D(Mul(VertexPosition, 1.3)))
-  const rust2 = NormalizePlusMinusOne(PSRDNoise3D(Mul(VertexPosition, 38)))
-
   return {
     ...state,
-    color: Lerp(state.color, new Color("#370617"), Clamp(rust, 0, 0.8)),
-    metalness: Lerp(state.metalness, 1, OneMinus(rust)),
-    roughness: Lerp(state.roughness, 1, Mul(Remap(rust, 0, 1, 0, 1), rust2))
+    color: new Color("#370617"),
+    metalness: 0.2,
+    roughness: 0.8
   }
 }
 
 const Rust = makeModuleComponent(RustImpl)
-const Noise = makeModuleComponent(NoiseImpl)
 
 export default function Playground() {
   return (
     <group position-y={1.5}>
       <mesh>
         <icosahedronGeometry args={[1, 8]} />
-        <ComposableMaterial metalness={0.7} roughness={0.3}>
+
+        <ComposableMaterial metalness={1} roughness={0.3}>
           <Modules.Color color={new Color("#495057")} />
-          {/* <Rust /> */}
-          <Noise />
+
+          <Layer mix={Smoothstep(-0.1, 0.4, PSRDNoise3D(VertexPosition))}>
+            <Rust />
+          </Layer>
         </ComposableMaterial>
       </mesh>
     </group>

@@ -80,7 +80,8 @@ export class ComposableMaterial extends CustomShaderMaterial {
       normal: state.normal,
       diffuseColor: state.color,
       alpha: state.alpha,
-      roughness: state.roughness
+      roughness: state.roughness,
+      metalness: state.metalness
     })
 
     /* And finally compile a shader from the state. */
