@@ -15,7 +15,6 @@ export type ModuleState = {
   alpha: Input<"float">
   roughness: Input<"float">
   metalness: Input<"float">
-  fragNormal: Input<"vec3">
 }
 
 /**

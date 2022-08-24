@@ -2,11 +2,9 @@ import { Camera } from "@react-three/fiber"
 import {
   $,
   compileShader,
+  CustomShaderMaterialMaster,
   Float,
-  Input,
-  Master,
   Unit,
-  vec3,
   Vec3,
   VertexNormal,
   VertexPosition
@@ -21,22 +19,6 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
   modules: ModulePipe
-}
-
-const PATCHMAP = {
-  csm_FragNormal: {
-    "#include <normal_fragment_maps>": `
-    #include <normal_fragment_maps>
-
-    csm_FragNormal.xy *= normalScale;
-
-    #ifdef USE_TANGENT
-      normal = normalize( vTBN * csm_FragNormal );
-    #else
-      normal = perturbNormal2Arb( - vViewPosition, normal, csm_FragNormal, faceDirection );
-    #endif
-    `
-  }
 }
 
 export class ComposableMaterial extends CustomShaderMaterial {
@@ -67,12 +49,7 @@ export class ComposableMaterial extends CustomShaderMaterial {
       ...args
     }: ComposableMaterialArgs = {} as ComposableMaterialArgs
   ) {
-    super({
-      baseMaterial: baseMaterial || MeshStandardMaterial,
-      ...args,
-      patchMap: PATCHMAP
-    })
-
+    super({ baseMaterial: baseMaterial || MeshStandardMaterial, ...args })
     if (args.modules) this.compileModules(args.modules)
   }
 
@@ -90,8 +67,7 @@ export class ComposableMaterial extends CustomShaderMaterial {
       color: Vec3($`csm_DiffuseColor.rgb`),
       alpha: Float($`csm_DiffuseColor.a`),
       roughness: Float($`csm_Roughness`),
-      metalness: Float($`csm_Metalness`),
-      fragNormal: vec3(0.0, 0.0, 1.0)
+      metalness: Float($`csm_Metalness`)
     }
 
     /* Transform state with given modules. */
@@ -126,57 +102,3 @@ export class ComposableMaterial extends CustomShaderMaterial {
     super.dispose()
   }
 }
-
-export type CustomShaderMaterialMasterProps = {
-  position?: Input<"vec3">
-  normal?: Input<"vec3">
-  diffuseColor?: Input<"vec3">
-  emissiveColor?: Input<"vec3">
-  fragColor?: Input<"vec3">
-  fragNormal?: Input<"vec3">
-  alpha?: Input<"float">
-  roughness?: Input<"float">
-  metalness?: Input<"float">
-}
-
-export const CustomShaderMaterialMaster = ({
-  position,
-  normal,
-  diffuseColor,
-  emissiveColor,
-  fragColor,
-  fragNormal,
-  roughness,
-  metalness,
-  alpha
-}: CustomShaderMaterialMasterProps = {}) =>
-  Master({
-    name: "CustomShaderMaterial Master",
-
-    vertex: {
-      body: $`
-				${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
-				${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
-			`
-    },
-
-    fragment: {
-      header: $`vec3 csm_FragNormal;`,
-      body: $`
-        ${fragNormal !== undefined ? $`csm_FragNormal = ${fragNormal};` : ""}
-        ${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
-				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
-				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}
-				${
-          fragColor !== undefined
-            ? $`csm_FragColor = vec4(${fragColor}, ${alpha});`
-            : ""
-        }
-
-        #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
-          ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
-          ${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
-        #endif
-			`
-    }
-  })
