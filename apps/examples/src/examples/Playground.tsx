@@ -4,7 +4,7 @@ import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { makeModuleComponent } from "material-composer-r3f/src/reactor"
 import { Smoothstep, VertexPosition } from "shader-composer"
 import { PSRDNoise3D } from "shader-composer-toybox"
-import { Color, TangentSpaceNormalMap } from "three"
+import { Color, MeshPhysicalMaterial, TangentSpaceNormalMap } from "three"
 import rustNormalTextureUrl from "./textures/rust-normal.jpeg"
 
 const RustImpl: ModuleFactory = ({}) => (state) => {
@@ -27,6 +27,7 @@ export default function Playground() {
         <icosahedronGeometry args={[1, 8]} />
 
         <ComposableMaterial
+          baseMaterial={MeshPhysicalMaterial}
           metalness={1}
           roughness={0.3}
           normalMap={rustNormalMap}

@@ -2,8 +2,9 @@ import { Camera } from "@react-three/fiber"
 import {
   $,
   compileShader,
-  CustomShaderMaterialMaster,
   Float,
+  Input,
+  Master,
   Unit,
   Vec3,
   VertexNormal,
@@ -19,6 +20,38 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
   modules: ModulePipe
+}
+
+const PATCHMAP = {
+  csm_FragmentNormal: {
+    "#include <normal_fragment_begin>": `
+    float faceDirection = gl_FrontFacing ? 1.0 : - 1.0;
+    #ifdef FLAT_SHADED
+      // Workaround for Adreno GPUs not able to do dFdx( vViewPosition )
+      vec3 fdx = vec3( dFdx( vViewPosition.x ), dFdx( vViewPosition.y ), dFdx( vViewPosition.z ) );
+      vec3 fdy = vec3( dFdy( vViewPosition.x ), dFdy( vViewPosition.y ), dFdy( vViewPosition.z ) );
+      vec3 normal = normalize( cross( fdx, fdy ) );
+    #else
+      vec3 normal = normalize( vNormal * csm_FragmentNormal );
+      #ifdef DOUBLE_SIDED
+        normal = normal * faceDirection;
+      #endif
+      #ifdef USE_TANGENT
+        vec3 tangent = normalize( vTangent );
+        vec3 bitangent = normalize( vBitangent );
+        #ifdef DOUBLE_SIDED
+          tangent = tangent * faceDirection;
+          bitangent = bitangent * faceDirection;
+        #endif
+        #if defined( TANGENTSPACE_NORMALMAP ) || defined( USE_CLEARCOAT_NORMALMAP )
+          mat3 vTBN = mat3( tangent, bitangent, normal );
+        #endif
+      #endif
+    #endif
+    // non perturbed normal for clearcoat among others
+    vec3 geometryNormal = normal;
+    `
+  }
 }
 
 export class ComposableMaterial extends CustomShaderMaterial {
@@ -49,7 +82,12 @@ export class ComposableMaterial extends CustomShaderMaterial {
       ...args
     }: ComposableMaterialArgs = {} as ComposableMaterialArgs
   ) {
-    super({ baseMaterial: baseMaterial || MeshStandardMaterial, ...args })
+    super({
+      baseMaterial: baseMaterial || MeshStandardMaterial,
+      ...args,
+      patchMap: PATCHMAP
+    })
+
     if (args.modules) this.compileModules(args.modules)
   }
 
@@ -102,3 +140,56 @@ export class ComposableMaterial extends CustomShaderMaterial {
     super.dispose()
   }
 }
+
+export type CustomShaderMaterialMasterProps = {
+  position?: Input<"vec3">
+  normal?: Input<"vec3">
+  diffuseColor?: Input<"vec3">
+  emissiveColor?: Input<"vec3">
+  fragColor?: Input<"vec3">
+  alpha?: Input<"float">
+  roughness?: Input<"float">
+  metalness?: Input<"float">
+}
+
+export const CustomShaderMaterialMaster = ({
+  position,
+  normal,
+  diffuseColor,
+  emissiveColor,
+  fragColor,
+  roughness,
+  metalness,
+  alpha
+}: CustomShaderMaterialMasterProps = {}) =>
+  Master({
+    name: "CustomShaderMaterial Master",
+
+    vertex: {
+      body: $`
+				${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
+				${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
+			`
+    },
+
+    fragment: {
+      body: $`
+        vec3 csm_FragmentNormal = vNormal;
+
+        ${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
+				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
+				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}
+				${
+          fragColor !== undefined
+            ? $`csm_FragColor = vec4(${fragColor}, ${alpha});`
+            : ""
+        }
+
+
+        #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
+          ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
+          ${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
+        #endif
+			`
+    }
+  })
