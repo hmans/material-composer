@@ -1,14 +1,43 @@
-import { ComposableMaterial, Modules } from "material-composer-r3f"
-import { Mul, Time } from "shader-composer"
-import { Color, MeshStandardMaterial } from "three"
+import { useTexture } from "@react-three/drei"
+import { ModuleFactory } from "material-composer"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { makeModuleComponent } from "material-composer-r3f/src/reactor"
+import { Smoothstep, VertexPosition } from "shader-composer"
+import { PSRDNoise3D } from "shader-composer-toybox"
+import { Color, MeshPhysicalMaterial, TangentSpaceNormalMap } from "three"
+import rustNormalTextureUrl from "./textures/rust-normal.jpeg"
+
+const RustImpl: ModuleFactory = ({}) => (state) => {
+  return {
+    ...state,
+    color: new Color("#370617"),
+    metalness: 0.2,
+    roughness: 0.8
+  }
+}
+
+const Rust = makeModuleComponent(RustImpl)
 
 export default function Playground() {
   return (
-    <group>
-      <mesh>
-        <sphereGeometry />
-        <ComposableMaterial baseMaterial={MeshStandardMaterial}>
-          <Modules.Color color={Mul(new Color("hotpink"), Time())} />
+    <group position-y={1.5}>
+      <mesh castShadow>
+        <icosahedronGeometry args={[1, 8]} />
+
+        <ComposableMaterial
+          baseMaterial={MeshPhysicalMaterial}
+          metalness={1}
+          roughness={0.3}
+          normalMap={useTexture(rustNormalTextureUrl)}
+          normalMapType={TangentSpaceNormalMap}
+        >
+          <Modules.Color color={new Color("#495057")} />
+
+          <Layer mix={Smoothstep(-0.1, 0.4, PSRDNoise3D(VertexPosition))}>
+            <Rust />
+          </Layer>
+
+          <Modules.Fresnel />
         </ComposableMaterial>
       </mesh>
     </group>

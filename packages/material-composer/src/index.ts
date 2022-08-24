@@ -13,6 +13,8 @@ export type ModuleState = {
   normal: Input<"vec3">
   color: Input<"vec3">
   alpha: Input<"float">
+  roughness: Input<"float">
+  metalness: Input<"float">
 }
 
 /**
