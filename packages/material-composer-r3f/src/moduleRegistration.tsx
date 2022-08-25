@@ -1,35 +1,27 @@
-import { useList } from "@hmans/use-list"
 import { Module } from "material-composer"
-import { createContext, useContext, useLayoutEffect, useMemo } from "react"
-import { useComposedMaterialContext } from "./ComposableMaterial"
+import { createContext, useContext, useLayoutEffect } from "react"
+import { MutableListAPI, useMutableList } from "./lib/use-mutable-list"
 
-export const ModuleRegistrationContext = createContext<{
-  addModule: (module: Module) => void
-  removeModule: (module: Module) => void
-}>(null!)
+export const ModuleRegistrationContext = createContext<MutableListAPI<Module>>(
+  null!
+)
 
 export const provideModuleRegistration = () => {
-  const [modules, addModule, removeModule] = useList<Module>()
-
-  const api = useMemo(() => ({ addModule, removeModule }), [
-    addModule,
-    removeModule
-  ])
-
-  return [modules, api] as const
+  const modules = useMutableList<Module>()
+  return modules
 }
 
 export const useModuleRegistration = (module: Module) => {
-  const { version, bumpVersion } = useComposedMaterialContext()
-  const { addModule, removeModule } = useContext(ModuleRegistrationContext)
+  const { addItem, removeItem, version, bumpVersion } = useContext(
+    ModuleRegistrationContext
+  )
 
   useLayoutEffect(() => {
     bumpVersion()
-    return () => bumpVersion()
   }, [])
 
   useLayoutEffect(() => {
-    addModule(module)
-    return () => removeModule(module)
+    addItem(module)
+    return () => removeItem(module)
   }, [version])
 }

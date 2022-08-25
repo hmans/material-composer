@@ -1,9 +1,8 @@
+import { useVersion } from "@hmans/use-version"
 import { extend, useFrame, useThree } from "@react-three/fiber"
 import { ComposableMaterial as ComposableMaterialImpl } from "material-composer"
 import React, {
-  createContext,
   forwardRef,
-  useContext,
   useImperativeHandle,
   useLayoutEffect,
   useRef
@@ -14,7 +13,6 @@ import {
   ModuleRegistrationContext,
   provideModuleRegistration
 } from "./moduleRegistration"
-import { useVersion } from "@hmans/use-version"
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -30,12 +28,6 @@ declare global {
   }
 }
 
-const Context = createContext<{ version: number; bumpVersion: () => void }>(
-  null!
-)
-
-export const useComposedMaterialContext = () => useContext(Context)
-
 export const ComposableMaterial = forwardRef<
   ComposableMaterialImpl,
   ComposableMaterialProps
@@ -46,14 +38,13 @@ export const ComposableMaterial = forwardRef<
 
   const material = useRef<ComposableMaterialImpl>(null!)
 
-  const [version, bumpVersion] = useVersion()
-
-  const [modules, api] = provideModuleRegistration()
+  const modules = provideModuleRegistration()
 
   /* Recompile on version change */
   useLayoutEffect(() => {
-    material.current.compileModules(modules)
-  }, [modules, version])
+    material.current.compileModules(modules.list)
+    console.log(modules.version)
+  }, [modules.version])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)
@@ -71,11 +62,9 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <Context.Provider value={{ version, bumpVersion }}>
-        <ModuleRegistrationContext.Provider value={api}>
-          {children}
-        </ModuleRegistrationContext.Provider>
-      </Context.Provider>
+      <ModuleRegistrationContext.Provider value={modules}>
+        {children}
+      </ModuleRegistrationContext.Provider>
     </composableMaterial>
   )
 })

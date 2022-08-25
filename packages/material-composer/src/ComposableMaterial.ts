@@ -1,19 +1,14 @@
 import { Camera } from "@react-three/fiber"
 import {
-  $,
   compileShader,
   CustomShaderMaterialMaster,
-  Float,
-  Unit,
-  Vec3,
-  VertexNormal,
-  VertexPosition
+  Unit
 } from "shader-composer"
 import { MeshStandardMaterial, Scene, WebGLRenderer } from "three"
 import CustomShaderMaterial, {
   iCSMParams
 } from "three-custom-shader-material/vanilla"
-import { initialModuleState, ModulePipe, ModuleState, pipeModules } from "."
+import { initialModuleState, ModulePipe, pipeModules } from "."
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -56,6 +51,8 @@ export class ComposableMaterial extends CustomShaderMaterial {
   public compileModules(modules: ModulePipe) {
     if (this._modules === modules) return
     this._modules = modules
+
+    console.log("Compiling modules...")
 
     /* If we've already had a shader, dispose of it. */
     this.shaderMeta?.dispose()
