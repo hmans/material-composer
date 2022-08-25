@@ -24,8 +24,8 @@ export const useModuleRegistration = (module: Module) => {
   const { addModule, removeModule } = useContext(ModuleRegistrationContext)
 
   useLayoutEffect(() => {
-    console.log("Bumping")
     bumpVersion()
+    return () => bumpVersion()
   }, [])
 
   useLayoutEffect(() => {

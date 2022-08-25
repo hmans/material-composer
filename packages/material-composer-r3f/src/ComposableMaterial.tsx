@@ -53,7 +53,7 @@ export const ComposableMaterial = forwardRef<
   /* Recompile on version change */
   useLayoutEffect(() => {
     material.current.compileModules(modules)
-  }, [modules])
+  }, [modules, version])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)

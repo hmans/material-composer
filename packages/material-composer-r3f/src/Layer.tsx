@@ -11,12 +11,11 @@ export type LayerProps = LayerOptions & { children?: ReactNode }
 
 export const Layer = ({ children, ...props }: LayerProps) => {
   const [modules, api] = provideModuleRegistration()
-  const { version } = useComposedMaterialContext()
 
   /* Recreate the layer every time the props or modules change */
   const layer = useMemo(() => LayerImpl({ ...props, modules }), [
-    props,
-    modules
+    modules,
+    props
   ])
 
   /* Register it with the parent */
