@@ -7,8 +7,6 @@ export const ModuleRegistrationContext = createContext<{
   removeModule: (module: Module) => void
 }>(null!)
 
-export const useMaterialContext = () => useContext(ModuleRegistrationContext)
-
 export const provideModuleRegistration = () => {
   const [modules, addModule, removeModule] = useList<Module>()
 
@@ -21,7 +19,7 @@ export const provideModuleRegistration = () => {
 }
 
 export const useModuleRegistration = (module: Module) => {
-  const { addModule, removeModule } = useMaterialContext()
+  const { addModule, removeModule } = useContext(ModuleRegistrationContext)
 
   useLayoutEffect(() => {
     addModule(module)
