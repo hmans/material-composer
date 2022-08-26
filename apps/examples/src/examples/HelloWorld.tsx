@@ -1,4 +1,5 @@
 import { useControls } from "leva"
+import { Blend } from "material-composer"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
@@ -19,7 +20,7 @@ export default function HelloWorld() {
             <Modules.Color color="blue" />
           </Layer>
 
-          <Layer blend="add">
+          <Layer blend={Blend.add}>
             <Modules.Fresnel power={3} intensity={1.2} />
           </Layer>
         </ComposableMaterial>
