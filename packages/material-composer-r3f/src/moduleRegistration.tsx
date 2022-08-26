@@ -18,14 +18,18 @@ export const useModuleRegistration = (module: Module) => {
   )
 
   useLayoutEffect(() => {
+    bumpVersion()
+    return () => bumpVersion()
+  }, [module])
+
+  /*
+  Only ever mutate the lists on a version change. This guarantees that we
+  will do it sequentially.
+  */
+  useLayoutEffect(() => {
     if (!module) return
 
-    bumpVersion()
     addItem(module)
-
-    return () => {
-      bumpVersion()
-      removeItem(module)
-    }
-  }, [module])
+    return () => removeItem(module)
+  }, [version])
 }
