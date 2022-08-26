@@ -24,7 +24,6 @@ export const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
 ) => (props: P) => {
   const module = useMemo(() => {
-    console.log("Making new module because props have changed")
     return fac(props)
   }, [...Object.values(props)])
 

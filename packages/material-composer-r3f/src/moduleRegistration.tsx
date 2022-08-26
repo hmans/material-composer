@@ -9,15 +9,11 @@ export const ModuleRegistrationContext = createContext<MutableListAPI<Module>>(
 export const provideModuleRegistration = () => {
   const modules = useMutableList<Module>()
 
-  useLayoutEffect(() => {
-    console.log("Version has been bumped!", modules.version)
-  }, [modules.version])
-
   return modules
 }
 
 export const useModuleRegistration = (module: Module) => {
-  const { addItem, removeItem, version, bumpVersion, updateItem } = useContext(
+  const { addItem, removeItem, version, bumpVersion } = useContext(
     ModuleRegistrationContext
   )
 

@@ -1,5 +1,5 @@
 import { Layer as LayerImpl, LayerOptions } from "material-composer"
-import React, { memo, ReactNode, useMemo } from "react"
+import React, { ReactNode, useMemo } from "react"
 import {
   ModuleRegistrationContext,
   provideModuleRegistration,
@@ -13,7 +13,6 @@ export const Layer = ({ children, ...props }: LayerProps) => {
 
   /* Recreate the layer every time the props or modules change */
   const layer = useMemo(() => {
-    console.log("Making a new layer!")
     return LayerImpl({ ...props, modules: modules.list })
   }, [...Object.values(props)])
 

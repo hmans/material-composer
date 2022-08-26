@@ -4,7 +4,6 @@ export type MutableListAPI<T> = {
   list: T[]
   addItem: (item: T) => void
   removeItem: (item: T) => void
-  updateItem: (item: T) => void
   version: number
   bumpVersion: () => void
 }
@@ -23,15 +22,7 @@ export const useMutableList = <T>(): MutableListAPI<T> => {
     bumpVersion,
 
     addItem: (item: T) => {
-      // console.log("addItem", item)
       state.list.push(item)
-    },
-
-    updateItem: (item: T) => {
-      // console.log("updateItem", item)
-      const index = state.list.findIndex((i) => i === item)
-      if (index === -1) return
-      state.list[index] = item
     },
 
     removeItem: (item: T) => {

@@ -38,8 +38,6 @@ export class ComposableMaterial extends CustomShaderMaterial {
   }
 
   public compileModules(modules: ModulePipe) {
-    console.log("Compiling modules...")
-
     /* If we've already had a shader, dispose of it. */
     this.shaderMeta?.dispose()
 
