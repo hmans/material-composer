@@ -9,10 +9,12 @@ export type BlendFunction = (
 
 export type BlendMode = "normal" | "add" | "discard"
 
+/* TODO: implement additional blend modes */
+
 export const Blend: Record<BlendMode, BlendFunction> = {
   normal: (a, b, f) => Mix(a, b, f),
-  add: (a, b, f) => Vec3($`min(${a} + ${b}, 1.0) * ${f} + ${a} * (1.0 - ${f})`),
-  discard: (a) => a
+  discard: (a) => a,
+  add: (a, b, f) => Vec3($`min(${a} + ${b}, 1.0) * ${f} + ${a} * (1.0 - ${f})`)
 }
 
 export type LayerArgs = {

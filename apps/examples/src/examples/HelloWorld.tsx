@@ -1,6 +1,7 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
+import { Fresnel } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
 
 export default function HelloWorld() {
@@ -19,11 +20,11 @@ export default function HelloWorld() {
             <Modules.Color color="blue" />
           </Layer>
 
-          <Modules.Fresnel />
+          {/* <Modules.Fresnel /> */}
 
-          {/* <Layer mix={Fresnel()}>
+          <Layer mix={Fresnel()} blend="add">
             <Modules.Color color="white" />
-          </Layer> */}
+          </Layer>
         </ComposableMaterial>
       </mesh>
 
