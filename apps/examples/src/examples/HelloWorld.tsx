@@ -1,7 +1,7 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
-import { useUniformUnit } from "./useUniformUnit"
+import { useUniformUnit } from "shader-composer-r3f"
 
 export default function HelloWorld() {
   const controls = useControls({ mix: { value: 0.5, min: 0, max: 1 } })
@@ -13,13 +13,13 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.Color color="blue" />
+          <Modules.Color color="red" />
 
           <Layer mix={mix}>
             <Modules.Color color="green" />
           </Layer>
 
-          <Layer mix={0.5}>
+          <Layer mix={0.3}>
             <Modules.Fresnel />
           </Layer>
         </ComposableMaterial>
