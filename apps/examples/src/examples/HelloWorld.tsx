@@ -13,13 +13,13 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.Color color="blue" />
+          <Modules.Color color="red" />
 
-          <Layer mix={mix}>
-            <Modules.Color color="green" />
+          <Layer mix={mix} blend="normal">
+            <Modules.Color color="blue" />
           </Layer>
 
-          <Modules.Fresnel color="white" blend="normal" />
+          {/* <Modules.Fresnel color="white" blend="normal" /> */}
 
           {/* <Layer mix={Fresnel()}>
             <Modules.Color color="white" />

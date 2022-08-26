@@ -1,4 +1,4 @@
-import { Layer as LayerImpl, LayerOptions } from "material-composer"
+import { Layer as LayerImpl, LayerArgs } from "material-composer"
 import React, { ReactNode, useMemo } from "react"
 import { useDetectShallowChange } from "./lib/use-detect-shallow-change"
 import {
@@ -7,7 +7,7 @@ import {
   useModuleRegistration
 } from "./moduleRegistration"
 
-export type LayerProps = LayerOptions & { children?: ReactNode }
+export type LayerProps = LayerArgs & { children?: ReactNode }
 
 export const Layer = ({ children, ...props }: LayerProps) => {
   const modules = provideModuleRegistration()
