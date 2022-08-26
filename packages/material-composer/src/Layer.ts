@@ -10,7 +10,7 @@ export const Layer: ModuleFactory<LayerOptions> = ({
   modules = [],
   blend = 1
 }) => (state) => {
-  const newState = pipeModules(initialModuleState(), ...modules)
+  const newState = pipeModules(state, ...modules)
 
   return {
     position: Mix(state.position, newState.position, blend),
