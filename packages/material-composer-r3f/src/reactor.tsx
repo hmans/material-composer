@@ -4,7 +4,7 @@ import React, { FC, useMemo } from "react"
 import { Input } from "shader-composer"
 import { useModuleRegistration } from "./moduleRegistration"
 import { useDetectShallowChange } from "./lib/useDetectShallowChange"
-import { Layer } from "./Layer"
+import { Layer, LayerProps } from "./Layer"
 
 type Modules = typeof Modules
 
@@ -22,15 +22,16 @@ type ModuleComponentProxy = {
     : never
 }
 
-const enableBlend = <P extends {}>(Component: FC<P>) => (
-  props: P & { blend?: Input<"float"> }
-) =>
-  props.blend ? (
-    <Layer blend={props.blend}>
-      <Component {...props} />
+const enableBlend = <P extends {}>(Component: FC<P>) => ({
+  blend,
+  ...props
+}: P & LayerProps) =>
+  blend ? (
+    <Layer blend={blend}>
+      <Component {...(props as P)} />
     </Layer>
   ) : (
-    <Component {...props} />
+    <Component {...(props as P)} />
   )
 
 export const makeModuleComponent = <P extends ModuleFactoryProps>(
