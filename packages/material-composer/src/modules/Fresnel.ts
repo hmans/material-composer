@@ -1,9 +1,15 @@
-import { Add, Fresnel as FresnelUnit, FresnelProps } from "shader-composer"
+import { Fresnel as FresnelUnit, FresnelProps } from "shader-composer"
 import { ModuleFactory } from ".."
+import { Layer } from "../Layer"
+import { Color, ColorArgs } from "./Color"
 
-export type FresnelArgs = FresnelProps
+export type FresnelArgs = FresnelProps & ColorArgs
 
-export const Fresnel: ModuleFactory<FresnelArgs> = (props) => (state) => ({
-  ...state,
-  color: Add(state.color, FresnelUnit(props))
-})
+export const Fresnel: ModuleFactory<FresnelArgs> = ({
+  color = "white",
+  ...props
+}) =>
+  Layer({
+    mix: FresnelUnit(props),
+    modules: [Color({ color })]
+  })

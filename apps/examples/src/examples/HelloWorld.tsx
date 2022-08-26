@@ -19,7 +19,11 @@ export default function HelloWorld() {
             <Modules.Color color="green" />
           </Layer>
 
-          <Modules.Fresnel />
+          <Modules.Fresnel color="white" />
+
+          {/* <Layer mix={Fresnel()}>
+            <Modules.Color color="white" />
+          </Layer> */}
         </ComposableMaterial>
       </mesh>
 
