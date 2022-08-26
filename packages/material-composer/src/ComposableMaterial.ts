@@ -29,11 +29,11 @@ export class ComposableMaterial extends CustomShaderMaterial {
 
   constructor(
     {
-      baseMaterial,
+      baseMaterial = MeshStandardMaterial,
       ...args
     }: ComposableMaterialArgs = {} as ComposableMaterialArgs
   ) {
-    super({ baseMaterial: baseMaterial || MeshStandardMaterial, ...args })
+    super({ baseMaterial, ...args })
     if (args.modules) this.compileModules(args.modules)
   }
 
