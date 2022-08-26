@@ -12,20 +12,20 @@ export type BlendMode = "normal" | "add" | "discard"
 /* TODO: implement additional blend modes */
 
 export const Blend: Record<BlendMode, BlendFunction> = {
-  normal: (a, b, f) => Mix(a, b, f),
+  normal: (a, b, f) => (f === 1 ? b : f === 0 ? a : Mix(a, b, f)),
   discard: (a) => a,
   add: (a, b, f) => Vec3($`min(${a} + ${b}, 1.0) * ${f} + ${a} * (1.0 - ${f})`)
 }
 
 export type LayerArgs = {
   modules?: ModulePipe
-  mix?: Input<"float">
+  blendAmount?: Input<"float">
   blend?: BlendFunction | BlendMode
 }
 
 export const Layer: ModuleFactory<LayerArgs> = ({
   modules = [],
-  mix = 1,
+  blendAmount = 1,
   blend = Blend.normal
 }) => (state) => {
   /* Determine new state */
@@ -36,11 +36,6 @@ export const Layer: ModuleFactory<LayerArgs> = ({
 
   return {
     ...newState,
-    color:
-      mix === 0
-        ? state.color
-        : mix === 1
-        ? newState.color
-        : blendFunction(state.color, newState.color, mix)
+    color: blendFunction(state.color, newState.color, blendAmount)
   }
 }
