@@ -2,7 +2,7 @@ import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { FC, useMemo } from "react"
 import { Input } from "shader-composer"
-import { useDetectShallowChange } from "./lib/useDetectShallowChange"
+import { useDetectShallowChange } from "./lib/use-detect-shallow-change"
 import { useModuleRegistration } from "./moduleRegistration"
 
 type Modules = typeof Modules

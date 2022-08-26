@@ -1,6 +1,6 @@
 import { Layer as LayerImpl, LayerOptions } from "material-composer"
 import React, { ReactNode, useMemo } from "react"
-import { useDetectShallowChange } from "./lib/useDetectShallowChange"
+import { useDetectShallowChange } from "./lib/use-detect-shallow-change"
 import {
   ModuleRegistrationContext,
   provideModuleRegistration,
