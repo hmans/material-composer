@@ -18,7 +18,7 @@ export const ColorLayer = (props: LayerProps) => {
   const color = useUniformUnit("vec3", new Color(controls.color))
 
   return (
-    <Layer mix={mix} {...props}>
+    <Layer blend={mix} {...props}>
       <Modules.Color color={color} />
     </Layer>
   )
@@ -46,7 +46,7 @@ export const GradientLayer = (props: LayerProps) => {
   const stopC = useUniformUnit("float", controls.stopC)
 
   return (
-    <Layer mix={mix} {...props}>
+    <Layer blend={mix} {...props}>
       <Modules.Gradient
         stops={[
           [colorA, stopA],
@@ -71,7 +71,7 @@ export const FresnelLayer = (props: LayerProps) => {
   const power = useUniformUnit("float", controls.power)
 
   return (
-    <Layer mix={mix} {...props}>
+    <Layer blend={mix} {...props}>
       <Modules.Fresnel intensity={intensity} power={power} />
     </Layer>
   )

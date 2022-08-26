@@ -16,14 +16,14 @@ export default function HelloWorld() {
         <ComposableMaterial>
           <Modules.Color color="blue" />
 
-          <Layer mix={mix}>
+          <Layer blend={mix}>
             <Modules.Color color="green" />
           </Layer>
 
-          <Layer mix={0.2}>
+          <Layer blend={0.2}>
             <Modules.Fresnel />
 
-            <Layer mix={Sin(Time())}>
+            <Layer blend={Sin(Time())}>
               <Modules.Color color="hotpink" />
             </Layer>
           </Layer>
