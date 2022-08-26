@@ -34,7 +34,7 @@ const vanillaCode = (
       modules: [
         Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
         Modules.Lava({ offset: Mul(time, 0.2) }),
-        Modules.SetAlpha({ alpha: 1 })
+        Modules.Alpha({ alpha: 1 })
       ]
     })
   ]
