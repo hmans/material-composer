@@ -12,7 +12,9 @@ import HelloWorld from "./examples/HelloWorld"
 import MemoizationExample from "./examples/Memoization"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
+import Translate from "./examples/Translate"
 import Vanilla from "./examples/Vanilla"
+import Velocity from "./examples/Velocity"
 
 export default () => (
   <Application>
@@ -32,6 +34,14 @@ export default () => (
       </Example>
 
       <Heading>Animations</Heading>
+
+      <Example path="translation" title="Translation">
+        <Translate />
+      </Example>
+
+      <Example path="velocity" title="Velocity">
+        <Velocity />
+      </Example>
 
       <Example path="fireball" title="Fireball">
         <FireballExample />
