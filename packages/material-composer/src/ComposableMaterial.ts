@@ -17,21 +17,10 @@ export type ComposableMaterialArgs = Optional<iCSMParams, "baseMaterial"> & {
 }
 
 export class ComposableMaterial extends CustomShaderMaterial {
-  private _modules: ModulePipe = []
-
   /**
    * The per-frame update function returned by compileShader.
    */
-  private shaderMeta?: {
-    update: (
-      dt: number,
-      camera: Camera,
-      scene: Scene,
-      renderer: WebGLRenderer
-    ) => void
-
-    dispose: () => void
-  }
+  private shaderMeta?: ReturnType<typeof compileShader>[1]
 
   /**
    * The Shader Composer root node for this material.
@@ -49,26 +38,22 @@ export class ComposableMaterial extends CustomShaderMaterial {
   }
 
   public compileModules(modules: ModulePipe) {
-    if (this._modules === modules) return
-    this._modules = modules
-
     console.log("Compiling modules...")
 
     /* If we've already had a shader, dispose of it. */
     this.shaderMeta?.dispose()
 
     /* Transform state with given modules. */
-    const state = pipeModules(initialModuleState(), ...(this._modules || []))
+    const { color, ...state } = pipeModules(
+      initialModuleState(),
+      ...(modules || [])
+    )
 
     /* Create a shader root. We're currently using CSM for everything, so
     always pick a CustomShaderMaterialMaster. */
     this.shaderRoot = CustomShaderMaterialMaster({
-      position: state.position,
-      normal: state.normal,
-      diffuseColor: state.color,
-      alpha: state.alpha,
-      roughness: state.roughness,
-      metalness: state.metalness
+      ...state,
+      diffuseColor: color
     })
 
     /* And finally compile a shader from the state. */

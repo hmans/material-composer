@@ -1,5 +1,5 @@
 import { useControls } from "leva"
-import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { ComposableMaterial, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
