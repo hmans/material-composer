@@ -1,10 +1,11 @@
 import { Input, Mul } from "shader-composer"
-import { Translate } from "./Translate"
+import { Space, Translate } from "./Translate"
 
 type VelocityProps = {
   velocity: Input<"vec3">
   time: Input<"float">
+  space?: Space
 }
 
-export const Velocity = ({ velocity, time }: VelocityProps) =>
-  Translate({ offset: Mul(velocity, time) })
+export const Velocity = ({ velocity, time, space = "world" }: VelocityProps) =>
+  Translate({ offset: Mul(velocity, time), space })

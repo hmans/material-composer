@@ -1,17 +1,20 @@
 import { Input, Mul, pipe, Pow } from "shader-composer"
 import { ModuleFactory } from ".."
-import { Translate } from "./Translate"
+import { Space, Translate } from "./Translate"
 
 export type AccelerationProps = {
   force: Input<"vec3">
   time: Input<"float">
+  space?: Space
 }
 
 export const Acceleration: ModuleFactory<AccelerationProps> = ({
   force,
-  time
+  time,
+  space = "world"
 }) =>
   Translate({
+    space,
     offset: pipe(
       force,
       (v) => Mul(v, Pow(time, 2)),
