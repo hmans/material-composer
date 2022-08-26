@@ -9,16 +9,24 @@ export type BlendFunction = <T extends BlendableType>(
   opacity: Input<"float">
 ) => Input<T>
 
-export type BlendMode = "normal" | "add" | "discard"
+const blendFunction = (blend: BlendFunction): BlendFunction => (a, b, f) =>
+  f === 0 ? a : blend(a, b, f)
 
 /* TODO: implement additional blend modes */
 
-export const Blend: Record<BlendMode, BlendFunction> = {
-  normal: (a, b, f) => (f === 1 ? b : f === 0 ? a : Mix(a, b, f)),
-  discard: (a) => a,
-  add: (a, b, f) =>
+export const Blend = {
+  normal: blendFunction((a, b, f) =>
+    f === 1 ? b : f === 0 ? a : Mix(a, b, f)
+  ),
+
+  discard: blendFunction((a) => a),
+
+  add: blendFunction((a, b, f) =>
     Unit(type(a), $`min(${a} + ${b}, 1.0) * ${f} + ${a} * (1.0 - ${f})`)
+  )
 }
+
+export type BlendMode = keyof typeof Blend
 
 export type LayerArgs = {
   modules?: ModulePipe
@@ -35,10 +43,11 @@ export const Layer: ModuleFactory<LayerArgs> = ({
   const newState = pipeModules(state, ...modules)
 
   /* Determine blend function */
-  const blendFunction = typeof blend === "string" ? Blend[blend] : blend
+  const blendFun =
+    typeof blend === "string" ? Blend[blend] : blendFunction(blend)
 
   return {
-    color: blendFunction(state.color, newState.color, opacity),
+    color: blendFun(state.color, newState.color, opacity),
     position: Blend.normal(state.position, newState.position, opacity),
     alpha: Blend.normal(state.alpha, newState.alpha, opacity),
     normal: Blend.normal(state.normal, newState.normal, opacity),
