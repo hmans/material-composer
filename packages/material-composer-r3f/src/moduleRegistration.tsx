@@ -6,20 +6,17 @@ export const ModuleRegistrationContext = createContext<MutableListAPI<Module>>(
   null!
 )
 
-export const provideModuleRegistration = () => {
-  const modules = useMutableList<Module>()
-
-  return modules
-}
+export const provideModuleRegistration = () => useMutableList<Module>()
 
 export const useModuleRegistration = (module: Module) => {
-  const { addItem, removeItem, version, bumpVersion } = useContext(
-    ModuleRegistrationContext
-  )
+  const api = useContext(ModuleRegistrationContext)
 
+  /*
+  Every time the module changes, bump the version of the list.
+  */
   useLayoutEffect(() => {
-    bumpVersion()
-    return () => bumpVersion()
+    api.bumpVersion()
+    return () => api.bumpVersion()
   }, [module])
 
   /*
@@ -29,7 +26,7 @@ export const useModuleRegistration = (module: Module) => {
   useLayoutEffect(() => {
     if (!module) return
 
-    addItem(module)
-    return () => removeItem(module)
-  }, [version])
+    api.addItem(module)
+    return () => api.removeItem(module)
+  }, [api.version])
 }
