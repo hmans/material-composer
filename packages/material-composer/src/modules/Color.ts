@@ -6,10 +6,15 @@ export type ColorArgs = {
   color: Input<"vec3"> | ColorRepresentation
 }
 
-export const Color: ModuleFactory<ColorArgs> = ({ color }) => (state) => ({
-  ...state,
-  color:
+export const Color: ModuleFactory<ColorArgs> = ({ color }) => (state) => {
+  /* Determine new color */
+  const newColor =
     typeof color === "string" || typeof color === "number"
       ? new ColorImpl(color)
       : color
-})
+
+  return {
+    ...state,
+    color: newColor
+  }
+}

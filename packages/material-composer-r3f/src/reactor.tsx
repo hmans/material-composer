@@ -1,7 +1,6 @@
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { FC, useMemo } from "react"
-import { Input } from "shader-composer"
 import { useDetectShallowChange } from "./lib/use-detect-shallow-change"
 import { useModuleRegistration } from "./moduleRegistration"
 
@@ -9,9 +8,9 @@ type Modules = typeof Modules
 
 const cache = new Map<string, ModuleComponent<any>>()
 
-type ModuleComponentProps<K extends keyof Modules> = Parameters<
-  Modules[K]
->[0] & { blend?: Input<"float"> }
+type ModuleComponentProps<
+  K extends keyof Modules
+> = Modules[K] extends ModuleFactory<infer A> ? A : never
 
 type ModuleComponent<K extends keyof Modules> = FC<ModuleComponentProps<K>>
 
