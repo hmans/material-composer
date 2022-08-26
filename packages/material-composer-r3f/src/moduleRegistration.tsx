@@ -22,6 +22,9 @@ export const useModuleRegistration = (module: Module) => {
   )
 
   useLayoutEffect(() => {
+    if (!module) return
+    console.log("Registering new module!", JSON.stringify(module))
+
     bumpVersion()
     addItem(module)
 

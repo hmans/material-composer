@@ -18,10 +18,14 @@ export default function HelloWorld() {
           {/* Using a SC expression will be a new prop every render */}
           {/* <Modules.Color color={Mul(new Color("white"), Sin(Time()))} /> */}
 
-          <Modules.Color color="red" />
+          <Modules.Color color="blue" />
+
+          {/* <Layer mix={mix}>
+            <Modules.Color color="green" />
+          </Layer> */}
 
           <Layer mix={mix}>
-            <Modules.Color color="green" />
+            <Modules.Fresnel />
           </Layer>
         </ComposableMaterial>
       </mesh>
