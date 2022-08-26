@@ -14,6 +14,7 @@ import { Module, ModuleFactory } from ".."
 import { Heat, HeatOptions } from "../units"
 
 export * from "./Acceleration"
+export * from "./Alpha"
 export * from "./Billboard"
 export * from "./Color"
 export * from "./Fresnel"
@@ -24,13 +25,6 @@ export * from "./Scale"
 export * from "./Softness"
 export * from "./Translate"
 export * from "./Velocity"
-
-export const SetAlpha = ({ alpha }: { alpha: Input<"float"> }): Module => (
-  state
-) => ({
-  ...state,
-  alpha
-})
 
 export const CustomModule = ({ module }: { module: Module }): Module => module
 
