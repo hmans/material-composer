@@ -1,10 +1,9 @@
-import { Fresnel as FresnelUnit, FresnelProps, Mul } from "shader-composer"
-import { Color } from "three"
+import { Add, Fresnel as FresnelUnit, FresnelProps } from "shader-composer"
 import { ModuleFactory } from ".."
 
 export type FresnelArgs = FresnelProps
 
 export const Fresnel: ModuleFactory<FresnelArgs> = (props) => (state) => ({
   ...state,
-  color: Mul(new Color("white"), FresnelUnit(props))
+  color: Add(state.color, FresnelUnit(props))
 })
