@@ -12,7 +12,7 @@
     "@hmans/use-const": "^0.0.1",
     "@hmans/use-rerender": "^0.0.2",
     "@hmans/use-version": "^0.0.2",
-    "@react-three/drei": "^9.23.5",
+    "@react-three/drei": "^9.23.8",
     "@react-three/fiber": "^8.6.0",
     "leva": "^0.9.30",
     "material-composer": "^0.0.2",
@@ -37,7 +37,7 @@
     "@types/three": "^0.143.1",
     "@vitejs/plugin-react": "^2.0.1",
     "randomish": "^0.1.4",
-    "typescript": "^4.7.3",
+    "typescript": "^4.8.2",
     "vite": "^3.0.9"
   }
 }
