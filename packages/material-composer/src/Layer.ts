@@ -20,13 +20,13 @@ export const Blend: Record<BlendMode, BlendFunction> = {
 export type LayerArgs = {
   modules?: ModulePipe
   blendAmount?: Input<"float">
-  blend?: BlendFunction | BlendMode
+  blendFunction?: BlendFunction | BlendMode
 }
 
 export const Layer: ModuleFactory<LayerArgs> = ({
   modules = [],
   blendAmount = 1,
-  blend = Blend.normal
+  blendFunction: blend = Blend.normal
 }) => (state) => {
   /* Determine new state */
   const newState = pipeModules(state, ...modules)
