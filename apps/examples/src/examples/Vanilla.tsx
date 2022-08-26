@@ -25,9 +25,18 @@ const vanillaCode = (
   const time = Time()
 
   const modules = [
-    Modules.Color({ color: "hotpink" }),
-    Layer({ mix: 0.5, modules: [Modules.Fresnel({})] }),
-    Modules.Color({ color: "green" })
+    Layer({
+      modules: [Modules.Plasma({ offset: Mul(time, -0.2) })]
+    }),
+
+    Layer({
+      mix: NormalizePlusMinusOne(Sin(time)),
+      modules: [
+        Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
+        Modules.Lava({ offset: Mul(time, 0.2) }),
+        Modules.SetAlpha({ alpha: 1 })
+      ]
+    })
   ]
 
   const material = new ComposableMaterial({
