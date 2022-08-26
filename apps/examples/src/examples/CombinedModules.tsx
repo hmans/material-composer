@@ -71,7 +71,7 @@ export const FresnelLayer = (props: LayerProps) => {
   const power = useUniformUnit("float", controls.power)
 
   return (
-    <Layer opacity={mix} {...props}>
+    <Layer opacity={mix} blend="add" {...props}>
       <Modules.Fresnel intensity={intensity} power={power} />
     </Layer>
   )
