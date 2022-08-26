@@ -1,4 +1,4 @@
-import { $, Add, Input, Mix, Vec3 } from "shader-composer"
+import { $, Input, Mix, Vec3 } from "shader-composer"
 import { ModuleFactory, ModulePipe, pipeModules } from "."
 
 export type BlendFunction = (
