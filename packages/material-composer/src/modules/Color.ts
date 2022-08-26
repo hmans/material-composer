@@ -1,4 +1,4 @@
-import { Add, Input, vec3 } from "shader-composer"
+import { Add, Input } from "shader-composer"
 import { Color as ColorImpl, ColorRepresentation } from "three"
 import { ModuleFactory } from ".."
 
