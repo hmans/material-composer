@@ -1,8 +1,9 @@
 import { useControls } from "leva"
-import { ComposableMaterial, Modules } from "material-composer-r3f"
+import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
-import { useUniformUnit } from "shader-composer-r3f"
+import { Mul, Sin, Time } from "shader-composer"
 import { Color } from "three"
+import { useUniformUnit } from "./useUniformUnit"
 
 export default function HelloWorld() {
   const controls = useControls({ mix: { value: 0.5, min: 0, max: 1 } })
@@ -14,12 +15,14 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.Gradient
-            stops={[
-              [new Color("white"), 0],
-              [new Color("hotpink"), 1]
-            ]}
-          />
+          {/* Using a SC expression will be a new prop every render */}
+          {/* <Modules.Color color={Mul(new Color("white"), Sin(Time()))} /> */}
+
+          <Modules.Color color="blue" />
+
+          {/* <Layer mix={mix}>
+            <Modules.Color color="green" />
+          </Layer> */}
         </ComposableMaterial>
       </mesh>
 
