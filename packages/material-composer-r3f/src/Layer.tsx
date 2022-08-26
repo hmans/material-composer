@@ -1,5 +1,6 @@
 import { Layer as LayerImpl, LayerOptions } from "material-composer"
 import React, { ReactNode, useMemo } from "react"
+import { useDetectShallowChange } from "./lib/useDetectShallowChange"
 import {
   ModuleRegistrationContext,
   provideModuleRegistration,
@@ -14,7 +15,7 @@ export const Layer = ({ children, ...props }: LayerProps) => {
   /* Recreate the layer every time the props or modules change */
   const layer = useMemo(() => {
     return LayerImpl({ ...props, modules: modules.list })
-  }, [modules.version, ...Object.values(props)])
+  }, [modules.version, useDetectShallowChange(props)])
 
   /* Register it with the parent */
   useModuleRegistration(layer)

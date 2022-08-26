@@ -1,6 +1,7 @@
 import { useControls } from "leva"
 import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
+import { Sin, Time } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
 
 export default function HelloWorld() {
@@ -13,14 +14,18 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <ComposableMaterial>
-          <Modules.Color color="blue" />
+          <Modules.Color color="white" />
 
           <Layer mix={mix}>
             <Modules.Color color="green" />
           </Layer>
 
-          <Layer mix={0.3}>
+          <Layer mix={0.2}>
             <Modules.Fresnel />
+
+            <Layer mix={Sin(Time())}>
+              <Modules.Color color="hotpink" />
+            </Layer>
           </Layer>
         </ComposableMaterial>
       </mesh>
