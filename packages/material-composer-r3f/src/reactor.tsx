@@ -1,6 +1,6 @@
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
-import { FC, useMemo } from "react"
+import { FC, useMemo, useRef } from "react"
 import { Input } from "shader-composer"
 import { useModuleRegistration } from "./moduleRegistration"
 
@@ -20,12 +20,28 @@ type ModuleComponentProxy = {
     : never
 }
 
+const usePropsHaveChanged = (props: any) => {
+  const version = useRef(0)
+  const previousProps = useRef<any>()
+
+  const changed =
+    !previousProps.current ||
+    Object.keys(props).length !== Object.keys(previousProps.current).length ||
+    Object.keys(props).some((key) => {
+      return !Object.is(previousProps.current[key], props[key])
+    })
+
+  previousProps.current = props
+
+  return changed ? ++version.current : version
+}
+
 export const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
 ) => (props: P) => {
   const module = useMemo(() => {
     return fac(props)
-  }, [...Object.values(props)])
+  }, [usePropsHaveChanged(props)])
 
   useModuleRegistration(module)
 
