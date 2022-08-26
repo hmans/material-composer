@@ -3,21 +3,21 @@ import { initialModuleState, ModuleFactory, ModulePipe, pipeModules } from "."
 
 export type LayerOptions = {
   modules?: ModulePipe
-  blend?: Input<"float">
+  mix?: Input<"float">
 }
 
 export const Layer: ModuleFactory<LayerOptions> = ({
   modules = [],
-  blend = 1
+  mix = 1
 }) => (state) => {
   const newState = pipeModules(state, ...modules)
 
   return {
-    position: Mix(state.position, newState.position, blend),
-    normal: Mix(state.normal, newState.normal, blend),
-    alpha: Mix(state.alpha, newState.alpha, blend),
-    color: Mix(state.color, newState.color, blend),
-    metalness: Mix(state.metalness, newState.metalness, blend),
-    roughness: Mix(state.roughness, newState.roughness, blend)
+    position: Mix(state.position, newState.position, mix),
+    normal: Mix(state.normal, newState.normal, mix),
+    alpha: Mix(state.alpha, newState.alpha, mix),
+    color: Mix(state.color, newState.color, mix),
+    metalness: Mix(state.metalness, newState.metalness, mix),
+    roughness: Mix(state.roughness, newState.roughness, mix)
   }
 }

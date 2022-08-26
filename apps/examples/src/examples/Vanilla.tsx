@@ -26,7 +26,7 @@ const vanillaCode = (
 
   const modules = [
     Modules.Color({ color: "hotpink" }),
-    Layer({ blend: 0.5, modules: [Modules.Fresnel({})] }),
+    Layer({ mix: 0.5, modules: [Modules.Fresnel({})] }),
     Modules.Color({ color: "green" })
   ]
 
