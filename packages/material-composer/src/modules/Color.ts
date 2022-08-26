@@ -7,11 +7,12 @@ export type BlendFunction = (
   b: Input<"vec3">
 ) => Input<"vec3">
 
-export type BlendMode = "normal" | "add"
+export type BlendMode = "normal" | "add" | "discard"
 
 export const Blend: Record<BlendMode, BlendFunction> = {
   normal: (a, b) => b,
-  add: (a, b) => Add(a, b)
+  add: (a, b) => Add(a, b),
+  discard: (a, b) => a
 }
 
 export type ColorArgs = {

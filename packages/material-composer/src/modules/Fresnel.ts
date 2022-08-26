@@ -6,10 +6,11 @@ import { Color, ColorArgs } from "./Color"
 export type FresnelArgs = FresnelProps & ColorArgs
 
 export const Fresnel: ModuleFactory<FresnelArgs> = ({
-  color = "white",
+  color,
+  blend,
   ...props
 }) =>
   Layer({
     mix: FresnelUnit(props),
-    modules: [Color({ color })]
+    modules: [Color({ color, blend })]
   })

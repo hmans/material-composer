@@ -19,7 +19,7 @@ export default function HelloWorld() {
             <Modules.Color color="green" />
           </Layer>
 
-          <Modules.Fresnel color="white" />
+          <Modules.Fresnel color="white" blend="normal" />
 
           {/* <Layer mix={Fresnel()}>
             <Modules.Color color="white" />
