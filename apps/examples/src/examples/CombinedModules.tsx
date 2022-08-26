@@ -72,7 +72,7 @@ export const FresnelLayer = (props: LayerProps) => {
 
   return (
     <Layer mix={mix} {...props}>
-      <Modules.Fresnel intensity={intensity} power={power} color="white" />
+      <Modules.Fresnel intensity={intensity} power={power} />
     </Layer>
   )
 }
