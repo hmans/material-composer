@@ -26,7 +26,7 @@ export const makeModuleComponent = <P extends ModuleFactoryProps>(
   const module = useMemo(() => {
     console.log("Making new module because props have changed")
     return fac(props)
-  }, [props])
+  }, [...Object.values(props)])
 
   /* TODO: the above is very bad because it _will_ cause a rerender every frame */
 
