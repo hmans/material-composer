@@ -30,7 +30,7 @@ const vanillaCode = (
     }),
 
     Layer({
-      blendAmount: NormalizePlusMinusOne(Sin(time)),
+      opacity: NormalizePlusMinusOne(Sin(time)),
       modules: [
         Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
         Modules.Lava({ offset: Mul(time, 0.2) }),

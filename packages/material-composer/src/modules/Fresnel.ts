@@ -7,6 +7,6 @@ export type FresnelArgs = FresnelProps
 
 export const Fresnel: ModuleFactory<FresnelArgs> = (props) =>
   Layer({
-    blendAmount: FresnelUnit(props),
+    opacity: FresnelUnit(props),
     modules: [Color({ color: "white" })]
   })

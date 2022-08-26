@@ -16,15 +16,15 @@ export default function HelloWorld() {
         <ComposableMaterial>
           <Modules.Color color="red" />
 
-          <Layer blendAmount={mix} blendFunction="normal">
+          <Layer opacity={mix} blend="add">
             <Modules.Color color="blue" />
           </Layer>
 
-          <Layer blendFunction="add">
+          <Layer blend="add">
             <Modules.Fresnel />
           </Layer>
 
-          <Layer blendAmount={Fresnel()} blendFunction="add">
+          <Layer opacity={Fresnel()} blend="add">
             <Modules.Color color="white" />
           </Layer>
         </ComposableMaterial>
