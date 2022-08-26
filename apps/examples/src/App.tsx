@@ -35,7 +35,7 @@ export default () => (
 
       <Heading>Animations</Heading>
 
-      <Example path="translation" title="Translation">
+      <Example path="translate" title="Translate">
         <Translate />
       </Example>
 
