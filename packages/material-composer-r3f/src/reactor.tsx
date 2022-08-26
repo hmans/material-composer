@@ -1,10 +1,9 @@
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
-import React, { FC, useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Input } from "shader-composer"
-import { useModuleRegistration } from "./moduleRegistration"
 import { useDetectShallowChange } from "./lib/useDetectShallowChange"
-import { Layer, LayerProps } from "./Layer"
+import { useModuleRegistration } from "./moduleRegistration"
 
 type Modules = typeof Modules
 
@@ -21,18 +20,6 @@ type ModuleComponentProxy = {
     ? ModuleComponent<K>
     : never
 }
-
-const enableBlend = <P extends {}>(Component: FC<P>) => ({
-  blend,
-  ...props
-}: P & LayerProps) =>
-  blend ? (
-    <Layer blend={blend}>
-      <Component {...(props as P)} />
-    </Layer>
-  ) : (
-    <Component {...(props as P)} />
-  )
 
 export const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
@@ -52,7 +39,7 @@ export const ModuleReactor = new Proxy<ModuleComponentProxy>(
     get<N extends keyof Modules>(target: any, name: N) {
       if (!cache.has(name)) {
         // @ts-ignore
-        cache.set(name, enableBlend(makeModuleComponent(Modules[name])))
+        cache.set(name, makeModuleComponent(Modules[name]))
       }
       return cache.get(name)
     }
