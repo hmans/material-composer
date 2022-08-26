@@ -9,9 +9,7 @@ type Modules = typeof Modules
 
 const cache = new Map<string, ModuleComponent<any>>()
 
-type ModuleComponentProps<K extends keyof Modules> = Parameters<
-  Modules[K]
->[0] & { blend?: Input<"float"> }
+type ModuleComponentProps<K extends keyof Modules> = Parameters<Modules[K]>[0]
 
 type ModuleComponent<K extends keyof Modules> = FC<ModuleComponentProps<K>>
 
