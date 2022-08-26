@@ -1,7 +1,7 @@
 import { Fresnel as FresnelUnit, FresnelProps } from "shader-composer"
 import { ModuleFactory } from ".."
 import { Layer } from "../Layer"
-import { Color, ColorArgs } from "./Color"
+import { Color } from "./Color"
 
 export type FresnelArgs = FresnelProps
 
