@@ -28,8 +28,6 @@ export const makeModuleComponent = <P extends ModuleFactoryProps>(
     return fac(props)
   }, [...Object.values(props)])
 
-  /* TODO: the above is very bad because it _will_ cause a rerender every frame */
-
   useModuleRegistration(module)
 
   return null

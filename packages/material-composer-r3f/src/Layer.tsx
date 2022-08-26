@@ -13,9 +13,8 @@ export const Layer = ({ children, ...props }: LayerProps) => {
 
   /* Recreate the layer every time the props or modules change */
   const layer = useMemo(() => LayerImpl({ ...props, modules: modules.list }), [
-    modules.list,
     modules.version,
-    props
+    ...Object.values(props)
   ])
 
   /* Register it with the parent */
