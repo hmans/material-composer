@@ -1,13 +1,17 @@
 import { Module, ModuleFactory, ModuleFactoryProps } from "material-composer"
 import * as Modules from "material-composer/modules"
-import { FC, memo, useMemo } from "react"
+import { FC, useMemo } from "react"
+import { Input } from "shader-composer"
+import { useDetectShallowChange } from "./lib/use-detect-shallow-change"
 import { useModuleRegistration } from "./moduleRegistration"
 
 type Modules = typeof Modules
 
 const cache = new Map<string, ModuleComponent<any>>()
 
-type ModuleComponentProps<K extends keyof Modules> = Parameters<Modules[K]>[0]
+type ModuleComponentProps<K extends keyof Modules> = Parameters<
+  Modules[K]
+>[0] & { blend?: Input<"float"> }
 
 type ModuleComponent<K extends keyof Modules> = FC<ModuleComponentProps<K>>
 
@@ -19,12 +23,15 @@ type ModuleComponentProxy = {
 
 export const makeModuleComponent = <P extends ModuleFactoryProps>(
   fac: ModuleFactory<P>
-) =>
-  memo((props: P) => {
-    const module = useMemo(() => fac(props), [props])
-    useModuleRegistration(module)
-    return null
-  })
+) => (props: P) => {
+  const module = useMemo(() => {
+    return fac(props)
+  }, [useDetectShallowChange(props)])
+
+  useModuleRegistration(module)
+
+  return null
+}
 
 export const ModuleReactor = new Proxy<ModuleComponentProxy>(
   {} as ModuleComponentProxy,

@@ -37,12 +37,12 @@ export const ComposableMaterial = forwardRef<
 
   const material = useRef<ComposableMaterialImpl>(null!)
 
-  const [modules, api] = provideModuleRegistration()
+  const modules = provideModuleRegistration()
 
   /* Recompile on version change */
   useLayoutEffect(() => {
-    material.current.compileModules(modules)
-  }, [modules])
+    material.current.compileModules(modules.list)
+  }, [modules.version])
 
   /* Pass on the ref. */
   useImperativeHandle(ref, () => material.current)
@@ -60,7 +60,7 @@ export const ComposableMaterial = forwardRef<
       baseMaterial={baseMaterial}
       {...props}
     >
-      <ModuleRegistrationContext.Provider value={api}>
+      <ModuleRegistrationContext.Provider value={modules}>
         {children}
       </ModuleRegistrationContext.Provider>
     </composableMaterial>

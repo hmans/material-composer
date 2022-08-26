@@ -1,4 +1,12 @@
-import { Input, pipe } from "shader-composer"
+import {
+  $,
+  Float,
+  Input,
+  pipe,
+  Vec3,
+  VertexNormal,
+  VertexPosition
+} from "shader-composer"
 
 export * from "./ComposableMaterial"
 export * from "./Layer"
@@ -38,3 +46,12 @@ export type ModulePipe = Module[]
 
 export const pipeModules = (initial: ModuleState, ...modules: Module[]) =>
   pipe(initial, ...(modules as [Module]))
+
+export const initialModuleState = (): ModuleState => ({
+  position: VertexPosition,
+  normal: VertexNormal,
+  color: Vec3($`csm_DiffuseColor.rgb`),
+  alpha: Float($`csm_DiffuseColor.a`),
+  roughness: Float($`csm_Roughness`),
+  metalness: Float($`csm_Metalness`)
+})

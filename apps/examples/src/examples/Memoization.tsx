@@ -50,6 +50,7 @@ const MyMaterial = memo(({ mix }: { mix: Input<"float"> }) => {
       <Layer mix={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}>
         <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
         <Modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+        <Modules.SetAlpha alpha={1} />
       </Layer>
     </ComposableMaterial>
   )
