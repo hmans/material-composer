@@ -1,4 +1,3 @@
-import { useVersion } from "@hmans/use-version"
 import { extend, useFrame, useThree } from "@react-three/fiber"
 import { ComposableMaterial as ComposableMaterialImpl } from "material-composer"
 import React, {
