@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef } from "react"
+import { useRef } from "react"
 
 export const useDetectShallowChange = (props: { [key: string]: any }) => {
+  const version = useRef(0)
   const previousProps = useRef<any>()
 
   const changed =
@@ -14,9 +15,7 @@ export const useDetectShallowChange = (props: { [key: string]: any }) => {
     })
 
   /* Remember the props for the next render. */
-  useLayoutEffect(() => {
-    previousProps.current = props
-  })
+  previousProps.current = props
 
-  return changed ? Math.random() : -1
+  return changed ? ++version.current : version
 }
