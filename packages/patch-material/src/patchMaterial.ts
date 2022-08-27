@@ -11,6 +11,10 @@ export const prepend = (anchor: string) => ({
     source.replace(anchor, `${target}\n${anchor}`)
 })
 
+export const replace = (anchor: string) => ({
+  with: (target: string) => (source: string) => source.replace(anchor, target)
+})
+
 export const injectDefines = (material: Material) =>
   flow(
     prepend("void main() {").with(`
@@ -78,6 +82,24 @@ export const patchMaterial = <M extends Material>(
         )
       )
     }
+
+    shader.vertexShader = pipe(
+      shader.vertexShader,
+
+      extend("void main() {").with(`
+        vec3 csm_Position = position;
+        vec3 csm_Normal = normal;
+      `),
+
+      extend("#include <begin_vertex>").with("transformed = csm_Position;"),
+
+      replace("#include <beginnormal_vertex>").with(`
+        vec3 objectNormal = csm_Normal;
+        #ifdef USE_TANGENT
+          vec3 objectTangent = vec3( tangent.xyz );
+        #endif
+      `)
+    )
 
     shader.fragmentShader = pipe(
       shader.fragmentShader,

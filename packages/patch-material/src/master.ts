@@ -24,12 +24,12 @@ export const PatchedMaterialMaster = ({
   Master({
     name: "CustomShaderMaterial Master",
 
-    // vertex: {
-    //   body: $`
-    // 		${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
-    // 		${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
-    // 	`
-    // },
+    vertex: {
+      body: $`
+    		${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
+    		${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
+    	`
+    },
 
     fragment: {
       body: $`
