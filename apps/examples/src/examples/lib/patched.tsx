@@ -1,6 +1,6 @@
 import { patchMaterial } from "@material-composer/patch-material"
-import { applyProps, MaterialNode, Node } from "@react-three/fiber"
-import { useLayoutEffect, useMemo } from "react"
+import { MaterialNode } from "@react-three/fiber"
+import { DependencyList, useLayoutEffect, useMemo } from "react"
 import { IUniform, Material, MeshStandardMaterial } from "three"
 
 type Constructor<T> = new (...args: any[]) => T
@@ -24,21 +24,23 @@ const makePatchedMaterialComponent = <
   uniforms,
   ...props
 }: PatchedMaterialProps<C>) => {
-  const material = useMemo<M>(() => {
-    return patchMaterial(new ctor(...(args as any)), {
-      vertexShader,
-      fragmentShader,
-      uniforms
-    })
+  const material = useManagedInstance(() => {
+    const material = new ctor(...(args as any))
+    return patchMaterial(material, { vertexShader, fragmentShader, uniforms })
   }, [vertexShader, fragmentShader, uniforms])
 
-  useLayoutEffect(() => {
-    applyProps(material as any, props as any)
-  }, [material, props])
-
-  return <primitive object={material} />
+  return <primitive object={material} {...props} />
 }
 
 export const patched = {
   MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial)
+}
+
+const useManagedInstance = <T extends any>(
+  factory: () => T,
+  deps: DependencyList = []
+) => {
+  const instance = useMemo(() => factory(), deps)
+  useLayoutEffect(() => () => (instance as any).dispose?.(), [instance])
+  return instance
 }
