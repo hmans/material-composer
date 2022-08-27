@@ -1,5 +1,5 @@
 import { Material, MeshPhysicalMaterial, MeshStandardMaterial } from "three"
-import { pipe } from "fp-ts/function"
+import { flow, pipe } from "fp-ts/function"
 
 export const extend = (anchor: string) => ({
   with: (target: string) => (source: string) =>
@@ -11,18 +11,44 @@ export const prepend = (anchor: string) => ({
     source.replace(anchor, `${target}\n${anchor}`)
 })
 
-export const patchMaterial = (material: Material, fragmentShader: string) => {
-  const frag = parseProgram(fragmentShader)
+export const injectDefines = (material: Material) =>
+  flow(
+    prepend("void main() {").with(`
+      #define IS_${material.type.toUpperCase()};
+    `)
+  )
 
+export const injectProgram = (program: string | undefined) => (
+  source: string
+) => {
+  if (!program) return source
+
+  const parsed = parseProgram(program)
+  if (!parsed) return source
+
+  return pipe(
+    source,
+    prepend("void main() {").with(parsed.header),
+    extend("void main() {").with(parsed.body)
+  )
+}
+
+export type PatchedMaterialOptions = {
+  vertexShader?: string
+  fragmentShader?: string
+  uniforms?: { [key: string]: any }
+}
+
+export const patchMaterial = <M extends Material>(
+  material: M,
+  opts: PatchedMaterialOptions = {}
+) => {
   material.onBeforeCompile = (shader) => {
     /* Inject custom programs */
     shader.fragmentShader = pipe(
       shader.fragmentShader,
-      prepend("void main() {").with(`
-        #define IS_${material.type.toUpperCase()};
-        ${frag.header}
-      `),
-      extend("void main() {").with(frag.body)
+      injectDefines(material),
+      injectProgram(opts.fragmentShader)
     )
 
     if (

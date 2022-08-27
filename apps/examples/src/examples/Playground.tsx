@@ -3,6 +3,14 @@ import {
   patchMaterial
 } from "@material-composer/patch-material"
 import { useMemo } from "react"
+import {
+  Cos,
+  FragmentCoordinate,
+  ScreenUV,
+  Sin,
+  Time,
+  VertexPosition
+} from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 
@@ -10,9 +18,9 @@ export default function Playground() {
   const shader = useShader(() => {
     return PatchedMaterialMaster({
       diffuseColor: new Color("red"),
-      metalness: 1,
+      metalness: 0.5,
       roughness: 0.5,
-      alpha: 0.5
+      alpha: FragmentCoordinate.x
     })
   })
 
@@ -22,7 +30,7 @@ export default function Playground() {
         color: "hotpink",
         transparent: true
       }),
-      shader.fragmentShader
+      shader
     )
 
     return material
