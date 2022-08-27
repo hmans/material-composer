@@ -1,12 +1,8 @@
+import { extend } from "@material-composer/patch-material"
 import { patchMaterial } from "material-composer"
 import { useMemo } from "react"
-import { flow, pipe } from "shader-composer"
+import { pipe } from "shader-composer"
 import { MeshPhysicalMaterial, MeshStandardMaterial } from "three"
-
-const extend = (anchor: string) => ({
-  with: (target: string) => (source: string) =>
-    source.replace(anchor, `${anchor}\n${target}`)
-})
 
 export default function Playground() {
   const material = useMemo(() => {
