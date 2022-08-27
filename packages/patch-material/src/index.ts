@@ -6,8 +6,22 @@ export const extend = (anchor: string) => ({
     source.replace(anchor, `${anchor}\n${target}`)
 })
 
-export const patchMaterial = (material: Material) => {
+export const prepend = (anchor: string) => ({
+  with: (target: string) => (source: string) =>
+    source.replace(anchor, `${target}\n${anchor}`)
+})
+
+export const patchMaterial = (material: Material, fragmentShader: string) => {
+  const frag = parseProgram(fragmentShader)
+
   material.onBeforeCompile = (shader) => {
+    /* Inject custom programs */
+    shader.fragmentShader = pipe(
+      shader.fragmentShader,
+      prepend("void main() {").with(frag.header),
+      extend("void main() {").with(frag.body)
+    )
+
     if (
       material instanceof MeshStandardMaterial ||
       material instanceof MeshPhysicalMaterial
@@ -45,4 +59,18 @@ export const patchMaterial = (material: Material) => {
   }
 
   return material
+}
+
+const parseProgram = (program: string) => {
+  const r = new RegExp(/(.*)void\s+main\(\)\s+{(.*)}/s)
+  const matches = r.exec(program)
+
+  if (!matches) {
+    throw new Error("Could not parse shader program. Boo!")
+  }
+
+  return {
+    header: matches[1],
+    body: matches[2]
+  }
 }
