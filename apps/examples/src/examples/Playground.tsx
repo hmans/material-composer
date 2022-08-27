@@ -1,17 +1,18 @@
+import {
+  PatchedMaterialMaster,
+  patchMaterial
+} from "@material-composer/patch-material"
 import { useMemo } from "react"
-import { MeshStandardMaterial } from "three"
-import { patchMaterial } from "@material-composer/patch-material"
 import { useShader } from "shader-composer-r3f"
-import { $, Master, Unit } from "shader-composer"
+import { Color, MeshStandardMaterial } from "three"
 
 export default function Playground() {
   const shader = useShader(() => {
-    return Master({
-      fragment: {
-        body: $`
-          csm_DiffuseColor = vec3(0.0, 0.0, 1.0);
-        `
-      }
+    return PatchedMaterialMaster({
+      diffuseColor: new Color("red"),
+      metalness: 1,
+      roughness: 0.5,
+      alpha: 0.5
     })
   })
 
@@ -19,8 +20,7 @@ export default function Playground() {
     const material = patchMaterial(
       new MeshStandardMaterial({
         color: "hotpink",
-        metalness: 0.6,
-        roughness: 0.5
+        transparent: true
       }),
       shader.fragmentShader
     )
