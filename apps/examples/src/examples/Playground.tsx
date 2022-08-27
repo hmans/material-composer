@@ -6,6 +6,7 @@ import { useMemo } from "react"
 import { Lerp, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
+import { patched } from "./lib/patched"
 
 export default function Playground() {
   const shader = useShader(() => {
@@ -35,7 +36,8 @@ export default function Playground() {
 
   return (
     <group position-y={1.5}>
-      <mesh castShadow material={material}>
+      <mesh castShadow>
+        <patched.MeshStandardMaterial color="red" {...shader} />
         <sphereGeometry />
       </mesh>
     </group>
