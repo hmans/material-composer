@@ -7,7 +7,7 @@ import React, {
   useRef
 } from "react"
 import { MeshStandardMaterial } from "three"
-import { iCSMProps } from "three-custom-shader-material"
+import { iCSMParams } from "three-custom-shader-material"
 import {
   ModuleRegistrationContext,
   provideModuleRegistration
@@ -15,7 +15,10 @@ import {
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
-export type ComposableMaterialProps = Optional<iCSMProps, "baseMaterial">
+export type ComposableMaterialProps = Optional<iCSMParams, "baseMaterial"> & {
+  children?: React.ReactNode
+  attach?: string
+}
 
 extend({ ComposableMaterial: ComposableMaterialImpl })
 
@@ -54,10 +57,9 @@ export const ComposableMaterial = forwardRef<
 
   return (
     <composableMaterial
-      attach="material"
       // @ts-ignore
       ref={material}
-      baseMaterial={baseMaterial}
+      args={[{ baseMaterial, ...props }]}
       {...props}
     >
       <ModuleRegistrationContext.Provider value={modules}>

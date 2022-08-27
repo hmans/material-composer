@@ -57,6 +57,10 @@ export class ComposableMaterial extends CustomShaderMaterial {
     /* And finally compile a shader from the state. */
     const [shader, meta] = compileShader(this.shaderRoot)
 
+    if (this.isMeshDepthMaterial) {
+      shader.fragmentShader = ""
+    }
+
     /* And let CSM know that it was updated. */
     super.update({ ...shader, cacheKey: () => String(Math.random()) })
 
