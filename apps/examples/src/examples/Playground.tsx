@@ -23,7 +23,7 @@ export default function Playground() {
   return (
     <group position-y={1.5}>
       <mesh castShadow>
-        <patched.MeshPhysicalMaterial color="yellow" {...shader} />
+        <patched.MeshStandardMaterial color="yellow" {...shader} />
         <sphereGeometry />
       </mesh>
     </group>
