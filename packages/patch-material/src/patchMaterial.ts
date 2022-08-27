@@ -51,6 +51,12 @@ export const patchMaterial = <M extends Material>(
       injectProgram(opts.fragmentShader)
     )
 
+    shader.vertexShader = pipe(
+      shader.vertexShader,
+      injectDefines(material),
+      injectProgram(opts.vertexShader)
+    )
+
     if (
       material instanceof MeshStandardMaterial ||
       material instanceof MeshPhysicalMaterial
