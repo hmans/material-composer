@@ -18,7 +18,10 @@ export const patchMaterial = (material: Material, fragmentShader: string) => {
     /* Inject custom programs */
     shader.fragmentShader = pipe(
       shader.fragmentShader,
-      prepend("void main() {").with(frag.header),
+      prepend("void main() {").with(`
+        #define IS_${material.type.toUpperCase()};
+        ${frag.header}
+      `),
       extend("void main() {").with(frag.body)
     )
 
