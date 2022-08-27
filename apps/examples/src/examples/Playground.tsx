@@ -16,15 +16,14 @@ export default function Playground() {
         NormalizePlusMinusOne(Sin(Time()))
       ),
       metalness: 0.5,
-      roughness: 0.5,
-      alpha: 1
+      roughness: 0.5
     })
   }, [])
 
   return (
     <group position-y={1.5}>
       <mesh castShadow>
-        <patched.MeshStandardMaterial color="yellow" {...shader} />
+        <patched.MeshPhysicalMaterial color="yellow" {...shader} />
         <sphereGeometry />
       </mesh>
     </group>
