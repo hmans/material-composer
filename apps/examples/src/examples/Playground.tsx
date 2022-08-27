@@ -1,7 +1,7 @@
 import { patchMaterial } from "material-composer"
 import { useMemo } from "react"
-import { pipe } from "shader-composer"
-import { MeshStandardMaterial } from "three"
+import { flow, pipe } from "shader-composer"
+import { MeshPhysicalMaterial, MeshStandardMaterial } from "three"
 
 const extend = (anchor: string) => ({
   with: (target: string) => (source: string) =>
@@ -11,10 +11,36 @@ const extend = (anchor: string) => ({
 export default function Playground() {
   const material = useMemo(() => {
     const material = patchMaterial(
-      new MeshStandardMaterial({ color: "hotpink" })
+      new MeshStandardMaterial({
+        color: "hotpink",
+        metalness: 0.6,
+        roughness: 0.5
+      })
     )
 
     material.onBeforeCompile = (shader) => {
+      if (
+        material instanceof MeshStandardMaterial ||
+        material instanceof MeshPhysicalMaterial
+      ) {
+        shader.fragmentShader = pipe(
+          shader.fragmentShader,
+
+          extend("void main() {").with(`
+            float csm_Roughness = roughness;
+            float csm_Metalness = metalness;
+          `),
+
+          extend("#include <roughnessmap_fragment>").with(
+            "roughnessFactor = csm_Roughness;"
+          ),
+
+          extend("#include <metalnessmap_fragment>").with(
+            "metalnessFactor = csm_Metalness;"
+          )
+        )
+      }
+
       shader.fragmentShader = pipe(
         shader.fragmentShader,
 
@@ -25,10 +51,6 @@ export default function Playground() {
 
         extend("#include <color_fragment>").with(
           "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
-        ),
-
-        extend("#include <roughnessmap_fragment>").with(
-          "roughnessFactor = 0.5;"
         )
       )
     }
