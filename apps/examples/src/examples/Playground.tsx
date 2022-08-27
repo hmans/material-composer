@@ -2,7 +2,7 @@ import { PatchedMaterialMaster } from "@material-composer/patch-material"
 import { useControls } from "leva"
 import { Lerp, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Color, MeshPhysicalMaterial, MeshStandardMaterial } from "three"
+import { Color } from "three"
 import { patched } from "./lib/patched"
 
 export default function Playground() {
@@ -24,8 +24,10 @@ export default function Playground() {
     <group position-y={1.5}>
       <mesh castShadow>
         <patched.MeshStandardMaterial color="yellow" {...shader} />
+
         {/* <patched.MaterialInstance
-          instance={new MeshPhysicalMaterial()}
+          instance={new MeshStandardMaterial()}
+          {...shader}
         /> */}
         <sphereGeometry />
       </mesh>
