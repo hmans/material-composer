@@ -3,14 +3,18 @@ import {
   patchMaterial
 } from "@material-composer/patch-material"
 import { useMemo } from "react"
-import { Lerp, Time } from "shader-composer"
+import { Lerp, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 
 export default function Playground() {
   const shader = useShader(() => {
     return PatchedMaterialMaster({
-      diffuseColor: Lerp(new Color("red"), new Color("yellow"), Time()),
+      diffuseColor: Lerp(
+        new Color("red"),
+        new Color("yellow"),
+        NormalizePlusMinusOne(Sin(Time()))
+      ),
       metalness: 0.5,
       roughness: 0.5,
       alpha: 1
