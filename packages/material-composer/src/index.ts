@@ -10,7 +10,6 @@ import {
 
 export * from "./ComposableMaterial"
 export * from "./Layer"
-export * from "./lib/patchMaterial"
 
 /**
  * ModuleState describes the state going into a module (and returned by it.)

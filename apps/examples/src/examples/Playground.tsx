@@ -1,8 +1,6 @@
-import { extend } from "@material-composer/patch-material"
-import { patchMaterial } from "material-composer"
 import { useMemo } from "react"
-import { pipe } from "shader-composer"
-import { MeshPhysicalMaterial, MeshStandardMaterial } from "three"
+import { MeshStandardMaterial } from "three"
+import { patchMaterial } from "@material-composer/patch-material"
 
 export default function Playground() {
   const material = useMemo(() => {
@@ -13,43 +11,6 @@ export default function Playground() {
         roughness: 0.5
       })
     )
-
-    material.onBeforeCompile = (shader) => {
-      if (
-        material instanceof MeshStandardMaterial ||
-        material instanceof MeshPhysicalMaterial
-      ) {
-        shader.fragmentShader = pipe(
-          shader.fragmentShader,
-
-          extend("void main() {").with(`
-            float csm_Roughness = roughness;
-            float csm_Metalness = metalness;
-          `),
-
-          extend("#include <roughnessmap_fragment>").with(
-            "roughnessFactor = csm_Roughness;"
-          ),
-
-          extend("#include <metalnessmap_fragment>").with(
-            "metalnessFactor = csm_Metalness;"
-          )
-        )
-      }
-
-      shader.fragmentShader = pipe(
-        shader.fragmentShader,
-
-        extend("void main() {").with(`
-          vec3 csm_DiffuseColor = diffuse;
-          float csm_Alpha = opacity;
-        `),
-
-        extend("#include <color_fragment>").with(
-          "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
-        )
-      )
-    }
 
     return material
   }, [])
