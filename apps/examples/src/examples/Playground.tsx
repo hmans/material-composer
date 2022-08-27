@@ -111,9 +111,9 @@ export default function Playground() {
     uniforms: {
       diffuse: { value: new Color("hotpink") },
       emissive: { value: new Color("hotpink") },
-      specular: { value: new Color(0x111111) },
+      specular: { value: new Color("white") },
       shininess: { value: 1 },
-      opacity: { value: 0.5 }
+      opacity: { value: 1 }
     },
 
     transparent: true
