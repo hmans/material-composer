@@ -91,6 +91,8 @@ export const patchMaterial = <M extends Material>(
         "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
       )
     )
+
+    shader.uniforms = { ...shader.uniforms, ...opts.uniforms }
   }
 
   return material
