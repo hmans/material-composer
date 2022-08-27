@@ -1,5 +1,5 @@
 import { patchMaterial } from "@material-composer/patch-material"
-import { MaterialNode } from "@react-three/fiber"
+import { MaterialNode, Node } from "@react-three/fiber"
 import {
   IUniform,
   Material,
@@ -44,5 +44,14 @@ const makePatchedMaterialComponent = <
 
 export const patched = {
   MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial),
-  MeshPhysicalMaterial: makePatchedMaterialComponent(MeshPhysicalMaterial)
+  MeshPhysicalMaterial: makePatchedMaterialComponent(MeshPhysicalMaterial),
+
+  MaterialInstance: <M extends Material>({
+    instance,
+    ...props
+  }: {
+    instance: M
+  } & Node<M, any>) => {
+    return <primitive object={instance} {...props} />
+  }
 }
