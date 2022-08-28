@@ -16,10 +16,13 @@ type Constructor<T> = new (...args: any[]) => T
 
 type Uniforms = Record<string, IUniform<any>>
 
-type PatchedMaterialProps<C extends Constructor<Material>> = MaterialNode<
-  InstanceType<C>,
-  C
-> & { vertexShader?: string; fragmentShader?: string; uniforms?: Uniforms }
+export type PatchedMaterialProps<
+  C extends Constructor<Material>
+> = MaterialNode<InstanceType<C>, C> & {
+  vertexShader?: string
+  fragmentShader?: string
+  uniforms?: Uniforms
+}
 
 const makePatchedMaterialComponent = <
   C extends Constructor<M>,
