@@ -33,6 +33,7 @@ const makePatchedMaterialComponent = <
   uniforms,
   ...props
 }: PatchedMaterialProps<C>) => {
+  /* Create a new material instance any time the shader-related props change. */
   const material = useManagedInstance(
     () =>
       patchMaterial(new ctor(...(args as any)), {

@@ -80,7 +80,6 @@ const injectProgram = (program: string | undefined) => {
   if (!program) return identity
 
   const parsed = parseProgram(program)
-  if (!parsed) return identity
 
   return flow(
     prepend("void main() {").with(parsed.header),
