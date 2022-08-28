@@ -1,4 +1,4 @@
-import { flow, identity, pipe } from "fp-ts/function"
+import { flow, identity } from "fp-ts/function"
 import {
   IUniform,
   Material,
