@@ -1,7 +1,9 @@
 import { useControls } from "leva"
 import { Modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
+import { Mul, Time } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
+import { Color } from "three"
 import { composed } from "./lib/composed"
 
 export default function HelloWorld() {
@@ -14,7 +16,7 @@ export default function HelloWorld() {
         <sphereGeometry />
 
         <composed.MeshStandardMaterial>
-          <Modules.Color color="hotpink" />
+          <Modules.Color color={Mul(new Color("hotpink"), Time())} />
         </composed.MeshStandardMaterial>
       </mesh>
 
