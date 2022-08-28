@@ -76,14 +76,13 @@ const injectGlobalDefines = (material: Material) =>
     prepend("void main() {").with(`#define IS_${material.type.toUpperCase()};`)
   )
 
-const injectProgram = (program: string | undefined) => (source: string) => {
-  if (!program) return source
+const injectProgram = (program: string | undefined) => {
+  if (!program) return identity
 
   const parsed = parseProgram(program)
-  if (!parsed) return source
+  if (!parsed) return identity
 
-  return pipe(
-    source,
+  return flow(
     prepend("void main() {").with(parsed.header),
     extend("void main() {").with(parsed.body)
   )
