@@ -37,7 +37,6 @@ export const composed = new Proxy(patched, {
 
     return ({ children, ...props }: any) => {
       const modules = provideModuleRegistration()
-
       const shader = useModules(modules.list, [modules.version])
 
       return (
