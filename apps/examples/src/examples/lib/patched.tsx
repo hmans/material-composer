@@ -1,4 +1,7 @@
-import { patchMaterial } from "@material-composer/patch-material"
+import {
+  PatchedMaterialOptions,
+  patchMaterial
+} from "@material-composer/patch-material"
 import { MaterialNode, Node } from "@react-three/fiber"
 import { useLayoutEffect } from "react"
 import {
@@ -55,10 +58,8 @@ export const patched = {
     ...props
   }: {
     instance: M
-    vertexShader?: string
-    fragmentShader?: string
-    uniforms?: Uniforms
-  } & Node<M, any>) => {
+  } & Node<M, any> &
+    PatchedMaterialOptions) => {
     useLayoutEffect(() => {
       patchMaterial(instance, { vertexShader, fragmentShader, uniforms })
     }, [instance, vertexShader, fragmentShader, uniforms])

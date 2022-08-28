@@ -24,11 +24,6 @@ export default function Playground() {
     <group position-y={1.5}>
       <mesh castShadow>
         <patched.MeshStandardMaterial color="yellow" {...shader} />
-
-        {/* <patched.MaterialInstance
-          instance={new MeshStandardMaterial()}
-          {...shader}
-        /> */}
         <sphereGeometry />
       </mesh>
     </group>

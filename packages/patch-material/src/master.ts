@@ -22,7 +22,7 @@ export const PatchedMaterialMaster = ({
   alpha
 }: PatchedMaterialMasterProps = {}) =>
   Master({
-    name: "CustomShaderMaterial Master",
+    name: "PatchedMaterial Master",
 
     vertex: {
       body: $`

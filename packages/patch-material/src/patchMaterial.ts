@@ -1,10 +1,15 @@
-import { Material, MeshPhysicalMaterial, MeshStandardMaterial } from "three"
+import {
+  IUniform,
+  Material,
+  MeshPhysicalMaterial,
+  MeshStandardMaterial
+} from "three"
 import { flow, pipe } from "fp-ts/function"
 
 export type PatchedMaterialOptions = {
   vertexShader?: string
   fragmentShader?: string
-  uniforms?: { [key: string]: any }
+  uniforms?: { [key: string]: IUniform }
 }
 
 export const patchMaterial = <M extends Material>(
