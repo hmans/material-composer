@@ -16,47 +16,9 @@ export const patchMaterial = <M extends Material>(
   material: M,
   opts: PatchedMaterialOptions = {}
 ) => {
-  const injectPosition = flow(
-    extend("void main() {").with("vec3 csm_Position = position;"),
-    extend("#include <begin_vertex>").with("transformed = csm_Position;")
-  )
-
-  const injectNormal = flow(
-    extend("void main() {").with("vec3 csm_Normal = normal;"),
-    replace("#include <beginnormal_vertex>").with(`
-      vec3 objectNormal = csm_Normal;
-      #ifdef USE_TANGENT
-        vec3 objectTangent = vec3( tangent.xyz );
-      #endif
-    `)
-  )
-
-  const injectDiffuseAndAlpha = flow(
-    extend("void main() {").with(`
-      vec3 csm_DiffuseColor = diffuse;
-      float csm_Alpha = opacity;
-    `),
-    extend("#include <color_fragment>").with(
-      "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
-    )
-  )
-
   const supportsRoughnessAndMetalness =
     material instanceof MeshStandardMaterial ||
     material instanceof MeshPhysicalMaterial
-
-  const injectRoughnessAndMetalness = supportsRoughnessAndMetalness
-    ? flow(
-        extend("void main() {").with("float csm_Roughness = roughness;"),
-        extend("void main() {").with("float csm_Metalness = metalness;"),
-        extend("#include <roughnessmap_fragment>").with(
-          "roughnessFactor = csm_Roughness;"
-        ),
-        extend("#include <metalnessmap_fragment>").with(
-          "metalnessFactor = csm_Metalness;"
-        )
-      )
-    : identity
 
   const transformVertexShader = flow(
     injectGlobalDefines(material),
@@ -68,7 +30,7 @@ export const patchMaterial = <M extends Material>(
   const transformFragmentShader = flow(
     injectGlobalDefines(material),
     injectProgram(opts.fragmentShader),
-    injectRoughnessAndMetalness,
+    supportsRoughnessAndMetalness ? injectRoughnessAndMetalness : identity,
     injectDiffuseAndAlpha
   )
 
@@ -130,3 +92,39 @@ export const injectProgram = (program: string | undefined) => (
     extend("void main() {").with(parsed.body)
   )
 }
+
+const injectPosition = flow(
+  extend("void main() {").with("vec3 csm_Position = position;"),
+  extend("#include <begin_vertex>").with("transformed = csm_Position;")
+)
+
+const injectNormal = flow(
+  extend("void main() {").with("vec3 csm_Normal = normal;"),
+  replace("#include <beginnormal_vertex>").with(`
+    vec3 objectNormal = csm_Normal;
+    #ifdef USE_TANGENT
+      vec3 objectTangent = vec3( tangent.xyz );
+    #endif
+  `)
+)
+
+const injectDiffuseAndAlpha = flow(
+  extend("void main() {").with(`
+    vec3 csm_DiffuseColor = diffuse;
+    float csm_Alpha = opacity;
+  `),
+  extend("#include <color_fragment>").with(
+    "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
+  )
+)
+
+const injectRoughnessAndMetalness = flow(
+  extend("void main() {").with("float csm_Roughness = roughness;"),
+  extend("void main() {").with("float csm_Metalness = metalness;"),
+  extend("#include <roughnessmap_fragment>").with(
+    "roughnessFactor = csm_Roughness;"
+  ),
+  extend("#include <metalnessmap_fragment>").with(
+    "metalnessFactor = csm_Metalness;"
+  )
+)
