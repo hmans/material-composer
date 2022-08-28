@@ -14,7 +14,7 @@ export type PatchedMaterialOptions = {
 
 export const patchMaterial = <M extends Material>(
   material: M,
-  opts: PatchedMaterialOptions = {}
+  { vertexShader, fragmentShader, uniforms = {} }: PatchedMaterialOptions = {}
 ) => {
   const supportsRoughnessAndMetalness =
     material instanceof MeshStandardMaterial ||
@@ -22,14 +22,14 @@ export const patchMaterial = <M extends Material>(
 
   const transformVertexShader = flow(
     injectGlobalDefines(material),
-    injectProgram(opts.vertexShader),
+    vertexShader ? injectProgram(vertexShader) : identity,
     injectPosition,
     injectNormal
   )
 
   const transformFragmentShader = flow(
     injectGlobalDefines(material),
-    injectProgram(opts.fragmentShader),
+    fragmentShader ? injectProgram(fragmentShader) : identity,
     supportsRoughnessAndMetalness ? injectRoughnessAndMetalness : identity,
     injectDiffuseAndAlpha
   )
@@ -37,7 +37,7 @@ export const patchMaterial = <M extends Material>(
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = transformVertexShader(shader.vertexShader)
     shader.fragmentShader = transformFragmentShader(shader.fragmentShader)
-    shader.uniforms = { ...shader.uniforms, ...opts.uniforms }
+    shader.uniforms = { ...shader.uniforms, ...uniforms }
   }
 
   return material
@@ -76,9 +76,7 @@ const injectGlobalDefines = (material: Material) =>
     prepend("void main() {").with(`#define IS_${material.type.toUpperCase()};`)
   )
 
-const injectProgram = (program: string | undefined) => {
-  if (!program) return identity
-
+const injectProgram = (program: string) => {
   const parsed = parseProgram(program)
 
   return flow(
