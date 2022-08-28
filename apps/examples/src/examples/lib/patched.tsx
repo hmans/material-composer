@@ -69,4 +69,4 @@ export const patched = {
 
     return <primitive object={instance} {...props} />
   }
-}
+} as const
