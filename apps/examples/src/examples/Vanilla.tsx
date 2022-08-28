@@ -32,7 +32,7 @@ import {
 } from "three"
 import { loop } from "./lib/loop"
 
-const compileModules = (modules: ModulePipe) => {
+export const compileModules = (modules: ModulePipe) => {
   /* Transform state with given modules. */
   const { color, ...state } = pipeModules(
     initialModuleState(),

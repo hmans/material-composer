@@ -3,7 +3,7 @@ import {
   patchMaterial
 } from "@material-composer/patch-material"
 import { MaterialNode, Node } from "@react-three/fiber"
-import { useLayoutEffect } from "react"
+import { forwardRef, useImperativeHandle, useLayoutEffect } from "react"
 import {
   IUniform,
   Material,
@@ -26,26 +26,25 @@ const makePatchedMaterialComponent = <
   M extends Material
 >(
   ctor: C
-) => ({
-  args = [],
-  vertexShader,
-  fragmentShader,
-  uniforms,
-  ...props
-}: PatchedMaterialProps<C>) => {
-  /* Create a new material instance any time the shader-related props change. */
-  const material = useManagedInstance(
-    () =>
-      patchMaterial(new ctor(...(args as any)), {
-        vertexShader,
-        fragmentShader,
-        uniforms
-      }),
-    [vertexShader, fragmentShader, uniforms]
-  )
+) =>
+  forwardRef<M, PatchedMaterialProps<C>>(
+    ({ args = [], vertexShader, fragmentShader, uniforms, ...props }, ref) => {
+      /* Create a new material instance any time the shader-related props change. */
+      const material = useManagedInstance(
+        () =>
+          patchMaterial(new ctor(...(args as any)), {
+            vertexShader,
+            fragmentShader,
+            uniforms
+          }),
+        [vertexShader, fragmentShader, uniforms]
+      )
 
-  return <primitive object={material} {...props} />
-}
+      useImperativeHandle(ref, () => material)
+
+      return <primitive object={material} {...props} />
+    }
+  )
 
 export const patched = {
   MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial),

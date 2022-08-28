@@ -50,8 +50,8 @@ export const pipeModules = (initial: ModuleState, ...modules: Module[]) =>
 export const initialModuleState = (): ModuleState => ({
   position: VertexPosition,
   normal: VertexNormal,
-  color: Vec3($`csm_DiffuseColor.rgb`),
-  alpha: Float($`csm_DiffuseColor.a`),
+  color: Vec3($`csm_DiffuseColor`),
+  alpha: Float($`csm_Alpha`),
   roughness: Float($`csm_Roughness`),
   metalness: Float($`csm_Metalness`)
 })

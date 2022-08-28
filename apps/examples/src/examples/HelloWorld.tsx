@@ -1,8 +1,35 @@
+import { patchMaterial } from "@material-composer/patch-material"
 import { useControls } from "leva"
-import { Blend } from "material-composer"
-import { ComposableMaterial, Layer, Modules } from "material-composer-r3f"
+import { Layer } from "material-composer"
+import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
+import { ReactNode, useLayoutEffect, useRef } from "react"
 import { useUniformUnit } from "shader-composer-r3f"
+import { MeshStandardMaterial } from "three"
+import { patched } from "./lib/patched"
+import { compileModules } from "./Vanilla"
+
+export const composed = {
+  MeshStandardMaterial: ({ children }: { children?: ReactNode }) => {
+    const material = useRef<MeshStandardMaterial>(null!)
+
+    useLayoutEffect(() => {
+      const modules = [
+        Modules.Color({ color: "hotpink" }),
+        Layer({ opacity: 0.5, modules: [Modules.Fresnel({})] })
+      ]
+
+      const [shader, meta] = compileModules(modules)
+      patchMaterial(material.current, shader)
+    }, [])
+
+    return (
+      <patched.MeshStandardMaterial ref={material}>
+        {children}
+      </patched.MeshStandardMaterial>
+    )
+  }
+}
 
 export default function HelloWorld() {
   const controls = useControls({ mix: { value: 0.5, min: 0, max: 1 } })
@@ -13,17 +40,9 @@ export default function HelloWorld() {
       <mesh position-y={1.5}>
         <sphereGeometry />
 
-        <ComposableMaterial>
-          <Modules.Color color="red" />
-
-          <Layer opacity={mix}>
-            <Modules.Color color="blue" />
-          </Layer>
-
-          <Layer blend={Blend.add}>
-            <Modules.Fresnel power={3} intensity={1.2} />
-          </Layer>
-        </ComposableMaterial>
+        <composed.MeshStandardMaterial>
+          {/* <Modules.Color color="hotpink" /> */}
+        </composed.MeshStandardMaterial>
       </mesh>
 
       <Description>
