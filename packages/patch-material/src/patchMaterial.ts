@@ -1,10 +1,10 @@
+import { flow, identity, pipe } from "fp-ts/function"
 import {
   IUniform,
   Material,
   MeshPhysicalMaterial,
   MeshStandardMaterial
 } from "three"
-import { flow, identity, pipe } from "fp-ts/function"
 
 export type PatchedMaterialOptions = {
   vertexShader?: string
@@ -16,24 +16,13 @@ export const patchMaterial = <M extends Material>(
   material: M,
   opts: PatchedMaterialOptions = {}
 ) => {
-  const injectVertexMain = flow(
-    injectGlobalDefines(material),
-    injectProgram(opts.vertexShader)
+  const injectPosition = flow(
+    extend("void main() {").with("vec3 csm_Position = position;"),
+    extend("#include <begin_vertex>").with("transformed = csm_Position;")
   )
 
-  const injectFragmentMain = flow(
-    injectGlobalDefines(material),
-    injectProgram(opts.fragmentShader)
-  )
-
-  const injectPositionAndNormal = flow(
-    extend("void main() {").with(`
-      vec3 csm_Position = position;
-      vec3 csm_Normal = normal;
-    `),
-
-    extend("#include <begin_vertex>").with("transformed = csm_Position;"),
-
+  const injectNormal = flow(
+    extend("void main() {").with("vec3 csm_Normal = normal;"),
     replace("#include <beginnormal_vertex>").with(`
       vec3 objectNormal = csm_Normal;
       #ifdef USE_TANGENT
@@ -47,37 +36,38 @@ export const patchMaterial = <M extends Material>(
       vec3 csm_DiffuseColor = diffuse;
       float csm_Alpha = opacity;
     `),
-
     extend("#include <color_fragment>").with(
       "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
     )
   )
 
-  const supportsRoughnessAndMetalness = (material: Material) =>
+  const supportsRoughnessAndMetalness =
     material instanceof MeshStandardMaterial ||
     material instanceof MeshPhysicalMaterial
 
-  const injectRoughnessAndMetalness = supportsRoughnessAndMetalness(material)
+  const injectRoughnessAndMetalness = supportsRoughnessAndMetalness
     ? flow(
-        extend("void main() {").with(`
-          float csm_Roughness = roughness;
-          float csm_Metalness = metalness;
-        `),
-
+        extend("void main() {").with("float csm_Roughness = roughness;"),
+        extend("void main() {").with("float csm_Metalness = metalness;"),
         extend("#include <roughnessmap_fragment>").with(
           "roughnessFactor = csm_Roughness;"
         ),
-
         extend("#include <metalnessmap_fragment>").with(
           "metalnessFactor = csm_Metalness;"
         )
       )
     : identity
 
-  const transformVertexShader = flow(injectVertexMain, injectPositionAndNormal)
+  const transformVertexShader = flow(
+    injectGlobalDefines(material),
+    injectProgram(opts.vertexShader),
+    injectPosition,
+    injectNormal
+  )
 
   const transformFragmentShader = flow(
-    injectFragmentMain,
+    injectGlobalDefines(material),
+    injectProgram(opts.fragmentShader),
     injectRoughnessAndMetalness,
     injectDiffuseAndAlpha
   )
