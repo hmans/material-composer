@@ -1,16 +1,13 @@
-import {
-  PatchedMaterialOptions,
-  patchMaterial
-} from "@material-composer/patch-material"
 import { MaterialNode, Node } from "@react-three/fiber"
-import { forwardRef, useImperativeHandle, useLayoutEffect } from "react"
+import React, { forwardRef, useImperativeHandle, useLayoutEffect } from "react"
 import {
   IUniform,
   Material,
   MeshPhysicalMaterial,
   MeshStandardMaterial
 } from "three"
-import { useManagedInstance } from "./useManagedInstance"
+import { useManagedInstance } from "./lib/useManagedInstance"
+import { PatchedMaterialOptions, patchMaterial } from "./patchMaterial"
 
 type Constructor<T> = new (...args: any[]) => T
 
