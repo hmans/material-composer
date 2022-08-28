@@ -20,13 +20,13 @@ export const patchMaterial = <M extends Material>(
     /* Inject custom programs */
     shader.fragmentShader = pipe(
       shader.fragmentShader,
-      injectDefines(material),
+      injectGlobalDefines(material),
       injectProgram(opts.fragmentShader)
     )
 
     shader.vertexShader = pipe(
       shader.vertexShader,
-      injectDefines(material),
+      injectGlobalDefines(material),
       injectProgram(opts.vertexShader)
     )
 
@@ -117,7 +117,7 @@ export const replace = (anchor: string) => ({
   with: (target: string) => (source: string) => source.replace(anchor, target)
 })
 
-export const injectDefines = (material: Material) =>
+export const injectGlobalDefines = (material: Material) =>
   flow(
     prepend("void main() {").with(`
       #define IS_${material.type.toUpperCase()};
