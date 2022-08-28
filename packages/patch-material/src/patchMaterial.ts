@@ -4,7 +4,7 @@ import {
   MeshPhysicalMaterial,
   MeshStandardMaterial
 } from "three"
-import { flow, pipe } from "fp-ts/function"
+import { flow, identity, pipe } from "fp-ts/function"
 
 export type PatchedMaterialOptions = {
   vertexShader?: string
@@ -16,27 +16,49 @@ export const patchMaterial = <M extends Material>(
   material: M,
   opts: PatchedMaterialOptions = {}
 ) => {
-  material.onBeforeCompile = (shader) => {
-    /* Inject custom programs */
-    shader.fragmentShader = pipe(
-      shader.fragmentShader,
-      injectGlobalDefines(material),
-      injectProgram(opts.fragmentShader)
+  const injectVertexMain = flow(
+    injectGlobalDefines(material),
+    injectProgram(opts.vertexShader)
+  )
+
+  const injectFragmentMain = flow(
+    injectGlobalDefines(material),
+    injectProgram(opts.fragmentShader)
+  )
+
+  const injectPositionAndNormal = flow(
+    extend("void main() {").with(`
+      vec3 csm_Position = position;
+      vec3 csm_Normal = normal;
+    `),
+
+    extend("#include <begin_vertex>").with("transformed = csm_Position;"),
+
+    replace("#include <beginnormal_vertex>").with(`
+      vec3 objectNormal = csm_Normal;
+      #ifdef USE_TANGENT
+        vec3 objectTangent = vec3( tangent.xyz );
+      #endif
+    `)
+  )
+
+  const injectDiffuseAndAlpha = flow(
+    extend("void main() {").with(`
+      vec3 csm_DiffuseColor = diffuse;
+      float csm_Alpha = opacity;
+    `),
+
+    extend("#include <color_fragment>").with(
+      "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
     )
+  )
 
-    shader.vertexShader = pipe(
-      shader.vertexShader,
-      injectGlobalDefines(material),
-      injectProgram(opts.vertexShader)
-    )
+  const supportsRoughnessAndMetalness = (material: Material) =>
+    material instanceof MeshStandardMaterial ||
+    material instanceof MeshPhysicalMaterial
 
-    if (
-      material instanceof MeshStandardMaterial ||
-      material instanceof MeshPhysicalMaterial
-    ) {
-      shader.fragmentShader = pipe(
-        shader.fragmentShader,
-
+  const injectRoughnessAndMetalness = supportsRoughnessAndMetalness(material)
+    ? flow(
         extend("void main() {").with(`
           float csm_Roughness = roughness;
           float csm_Metalness = metalness;
@@ -50,39 +72,19 @@ export const patchMaterial = <M extends Material>(
           "metalnessFactor = csm_Metalness;"
         )
       )
-    }
+    : identity
 
-    shader.vertexShader = pipe(
-      shader.vertexShader,
+  const transformVertexShader = flow(injectVertexMain, injectPositionAndNormal)
 
-      extend("void main() {").with(`
-        vec3 csm_Position = position;
-        vec3 csm_Normal = normal;
-      `),
+  const transformFragmentShader = flow(
+    injectFragmentMain,
+    injectRoughnessAndMetalness,
+    injectDiffuseAndAlpha
+  )
 
-      extend("#include <begin_vertex>").with("transformed = csm_Position;"),
-
-      replace("#include <beginnormal_vertex>").with(`
-        vec3 objectNormal = csm_Normal;
-        #ifdef USE_TANGENT
-          vec3 objectTangent = vec3( tangent.xyz );
-        #endif
-      `)
-    )
-
-    shader.fragmentShader = pipe(
-      shader.fragmentShader,
-
-      extend("void main() {").with(`
-        vec3 csm_DiffuseColor = diffuse;
-        float csm_Alpha = opacity;
-      `),
-
-      extend("#include <color_fragment>").with(
-        "diffuseColor = vec4(csm_DiffuseColor, csm_Alpha);"
-      )
-    )
-
+  material.onBeforeCompile = (shader) => {
+    shader.vertexShader = transformVertexShader(shader.vertexShader)
+    shader.fragmentShader = transformFragmentShader(shader.fragmentShader)
     shader.uniforms = { ...shader.uniforms, ...opts.uniforms }
   }
 
