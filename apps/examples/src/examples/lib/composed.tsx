@@ -5,7 +5,6 @@ import {
   provideModuleRegistration
 } from "material-composer-r3f/src/moduleRegistration"
 import { DependencyList, useMemo } from "react"
-import { compileShader } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { patched } from "./patched"
 
@@ -21,17 +20,13 @@ const useModules = (modules: Module[], deps?: DependencyList) => {
     )
 
     /* Construct a shader master unit */
-    const root = PatchedMaterialMaster({
+    return PatchedMaterialMaster({
       ...state,
       diffuseColor: color
     })
-
-    return root
   }, deps)
 
-  const shader = useShader(() => root, [root])
-
-  return shader
+  return useShader(() => root, [root])
 }
 
 export const composed = new Proxy(patched, {
