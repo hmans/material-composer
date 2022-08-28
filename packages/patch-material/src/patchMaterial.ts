@@ -57,13 +57,6 @@ const parseProgram = (program: string) => {
   }
 }
 
-export const injectGlobalDefines = (material: Material) =>
-  flow(
-    prepend("void main() {").with(`
-      #define IS_${material.type.toUpperCase()};
-    `)
-  )
-
 export const extend = (anchor: string) => ({
   with: (target: string) => (source: string) =>
     source.replace(anchor, `${anchor}\n${target}`)
@@ -78,9 +71,12 @@ export const replace = (anchor: string) => ({
   with: (target: string) => (source: string) => source.replace(anchor, target)
 })
 
-export const injectProgram = (program: string | undefined) => (
-  source: string
-) => {
+const injectGlobalDefines = (material: Material) =>
+  flow(
+    prepend("void main() {").with(`#define IS_${material.type.toUpperCase()};`)
+  )
+
+const injectProgram = (program: string | undefined) => (source: string) => {
   if (!program) return source
 
   const parsed = parseProgram(program)
