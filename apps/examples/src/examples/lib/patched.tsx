@@ -62,6 +62,7 @@ export const patched = {
     useLayoutEffect(() => {
       patchMaterial(instance, { vertexShader, fragmentShader, uniforms })
     }, [instance, vertexShader, fragmentShader, uniforms])
+
     return <primitive object={instance} {...props} />
   }
 }

@@ -1,42 +1,6 @@
 import { Material, MeshPhysicalMaterial, MeshStandardMaterial } from "three"
 import { flow, pipe } from "fp-ts/function"
 
-export const extend = (anchor: string) => ({
-  with: (target: string) => (source: string) =>
-    source.replace(anchor, `${anchor}\n${target}`)
-})
-
-export const prepend = (anchor: string) => ({
-  with: (target: string) => (source: string) =>
-    source.replace(anchor, `${target}\n${anchor}`)
-})
-
-export const replace = (anchor: string) => ({
-  with: (target: string) => (source: string) => source.replace(anchor, target)
-})
-
-export const injectDefines = (material: Material) =>
-  flow(
-    prepend("void main() {").with(`
-      #define IS_${material.type.toUpperCase()};
-    `)
-  )
-
-export const injectProgram = (program: string | undefined) => (
-  source: string
-) => {
-  if (!program) return source
-
-  const parsed = parseProgram(program)
-  if (!parsed) return source
-
-  return pipe(
-    source,
-    prepend("void main() {").with(parsed.header),
-    extend("void main() {").with(parsed.body)
-  )
-}
-
 export type PatchedMaterialOptions = {
   vertexShader?: string
   fragmentShader?: string
@@ -132,4 +96,40 @@ const parseProgram = (program: string) => {
     header: matches[1],
     body: matches[2]
   }
+}
+
+export const extend = (anchor: string) => ({
+  with: (target: string) => (source: string) =>
+    source.replace(anchor, `${anchor}\n${target}`)
+})
+
+export const prepend = (anchor: string) => ({
+  with: (target: string) => (source: string) =>
+    source.replace(anchor, `${target}\n${anchor}`)
+})
+
+export const replace = (anchor: string) => ({
+  with: (target: string) => (source: string) => source.replace(anchor, target)
+})
+
+export const injectDefines = (material: Material) =>
+  flow(
+    prepend("void main() {").with(`
+      #define IS_${material.type.toUpperCase()};
+    `)
+  )
+
+export const injectProgram = (program: string | undefined) => (
+  source: string
+) => {
+  if (!program) return source
+
+  const parsed = parseProgram(program)
+  if (!parsed) return source
+
+  return pipe(
+    source,
+    prepend("void main() {").with(parsed.header),
+    extend("void main() {").with(parsed.body)
+  )
 }
