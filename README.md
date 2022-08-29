@@ -15,6 +15,13 @@ This project provides multiple packages. Please refer to each individual package
 - **[material-composer-r3f](https://github.com/hmans/material-composer/tree/main/packages/material-composer-r3f)**  
   Bindings for react-three-fiber.
 
+It also provides a couple of micropackages that are used by the packages listed above, but can also be used independently where needed:
+
+- **[@material-composer/patch-material](https://github.com/hmans/material-composer/tree/main/packages/material-composer-patch-material)**  
+  Provides `patchMaterial`, a function that can patch an existing material instance with a user-provided shader, as well as a `PatchedMaterialMaster` for use with [Shader Composer].
+- **[@material-composer/patched](https://github.com/hmans/material-composer/tree/main/packages/material-composer-patched)**  
+  Provides `patched`, a React component proxy that can be used to wrap any material component with a `patchMaterial` call.
+
 ### Projects using Material Composer
 
 - **[VFX Composer](https://github.com/hmans/vfx-composer)**  
