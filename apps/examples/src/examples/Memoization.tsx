@@ -13,6 +13,8 @@ import {
 } from "shader-composer"
 import { useUniformUnit } from "shader-composer-r3f"
 import { DoubleSide } from "three"
+import { Lava } from "./Fireball"
+import { Plasma } from "./PlasmaBall"
 
 export default function MemoizationExample() {
   const controls = useControls("Layers", {
@@ -45,13 +47,13 @@ const MyMaterial = memo(({ mix }: { mix: Input<"float"> }) => {
 
   return (
     <composable.MeshStandardMaterial transparent side={DoubleSide}>
-      <modules.Plasma offset={Mul(time, -0.3)} />
+      <Plasma offset={Mul(time, -0.3)} />
 
       <Layer
         opacity={Smoothstep(Sub(mix, 0.1), Add(mix, 0.1), VertexPosition.x)}
       >
         <modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.3} />
-        <modules.Lava offset={Mul(time, 0.5)} scale={0.3} />
+        <Lava offset={Mul(time, 0.5)} scale={0.3} />
         <modules.Alpha alpha={1} />
       </Layer>
     </composable.MeshStandardMaterial>

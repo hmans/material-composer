@@ -1,17 +1,6 @@
-import {
-  Add,
-  Gradient,
-  Input,
-  Mul,
-  OneMinus,
-  pipe,
-  Smoothstep,
-  Unit
-} from "shader-composer"
+import { Add, Input, Mul, pipe } from "shader-composer"
 import { PSRDNoise3D } from "shader-composer-toybox"
-import * as THREE from "three"
 import { Module, ModuleFactory } from ".."
-import { Heat, HeatOptions } from "../units"
 
 export * from "./Acceleration"
 export * from "./Alpha"
