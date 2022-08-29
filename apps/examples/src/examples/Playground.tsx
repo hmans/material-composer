@@ -1,8 +1,6 @@
-import {
-  patched,
-  PatchedMaterialMaster
-} from "@material-composer/patch-material"
+import { PatchedMaterialMaster } from "@material-composer/patch-material"
 import { useControls } from "leva"
+import { patched } from "material-composer-r3f"
 import { Lerp, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color } from "three"
