@@ -2011,33 +2011,10 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.5.2.tgz#cce1b03afbafb23edfb9cd8c517cc7462abffb65"
   integrity sha512-n/wBRSHPqTmEd4BFWY6TeR1o/UY+3ujoqMxLjqy90CcY/ozJzDRuREL3c+pxMeTF2+B7dX33dTPCtFMX51nbxg==
 
-"@react-three/drei@^9.23.5":
-  version "9.23.5"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.23.5.tgz#cebdb123b37a022fdb842299b20de7703d78cd21"
-  integrity sha512-S5bRewh75KNii4MLGrpxEl2yn4eF68pMc2qmZL9jOAGFXMqWoI5ZYjsR3Xc2hWufRVm4JsT2Dg6yt6HOxj99AA==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@react-spring/three" "^9.3.1"
-    "@use-gesture/react" "^10.2.0"
-    detect-gpu "^4.0.36"
-    glsl-noise "^0.0.0"
-    lodash.omit "^4.5.0"
-    lodash.pick "^4.4.0"
-    meshline "^2.0.4"
-    react-composer "^5.0.3"
-    react-merge-refs "^1.1.0"
-    stats.js "^0.17.0"
-    suspend-react "^0.0.8"
-    three-mesh-bvh "^0.5.15"
-    three-stdlib "^2.14.2"
-    troika-three-text "^0.46.4"
-    utility-types "^3.10.0"
-    zustand "^3.5.13"
-
-"@react-three/drei@^9.23.8":
-  version "9.23.8"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.23.8.tgz#3c5db65c18bf90a789fa60098977736f8ac1080d"
-  integrity sha512-KHnerAS4P8FffbwZdXWZIgLImAB/OHWE9XaqBZUbkgxbzEZM3Iu7M6BB5V0yil0WRKcL0WRXzD9ToA4jk6TKAg==
+"@react-three/drei@^9.23.5", "@react-three/drei@^9.24.4":
+  version "9.24.4"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.24.4.tgz#8d0de5b7fca72907f46896ef024c55e0bd5f72f5"
+  integrity sha512-f4v3PxPZf3pKd2nCJjFlM3JNvPqdQ2mML3s6yMk7eCwBGRVO/AuITSa7LxIAyCH+NEfmvrWRPZRPpGcD4km5vw==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "^9.3.1"
@@ -6936,22 +6913,6 @@ three-mesh-bvh@^0.5.15:
   version "0.5.15"
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.15.tgz#bcf681d784d8988618344a5e11e7ded7e76ee86a"
   integrity sha512-jxE5iGjcoEMiyxUs7hMeZL6jBXBz9973ilqhXPhKlA1f7eitjIxRTtu7UWVQy+PhxXTsknmPzWmN5c+uAa/anA==
-
-three-stdlib@^2.14.2:
-  version "2.14.2"
-  resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.14.2.tgz#a7d71bc8e5e5e4c1c19b2861fa51538fd13da72b"
-  integrity sha512-b/NzE1AiUvsgyoCRS5plIunaRfGKIYqqj24t//6Va1vSi50mSB45THZjAJl2b1vTjNM7vWV1FDNz9TKGaf6p6Q==
-  dependencies:
-    "@babel/runtime" "^7.16.7"
-    "@webgpu/glslang" "^0.0.15"
-    chevrotain "^10.1.2"
-    draco3d "^1.4.1"
-    fflate "^0.6.9"
-    ktx-parse "^0.4.5"
-    mmd-parser "^1.0.4"
-    opentype.js "^1.3.3"
-    potpack "^1.0.1"
-    zstddec "^0.0.2"
 
 three-stdlib@^2.14.3:
   version "2.14.3"
