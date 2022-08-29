@@ -7,14 +7,14 @@
 
 ```tsx
 <Layer blend={Blend.add}>
-  <Modules.Fresnel />
+  <modules.Fresnel />
 </Layer>
 
 <Layer opacity={Fresnel()} blend="add">
-  <Modules.Color color="white" />
+  <modules.Color color="white" />
 </Layer>
 
 <Layer blend={(a, b) => Add(a, Mul(b, Fresnel()))}>
-  <Modules.Color color="white" />
+  <modules.Color color="white" />
 </Layer>
 ```

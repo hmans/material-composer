@@ -11,5 +11,5 @@ Modules.Color({ color: "hotpink" })
 Or in JSX:
 
 ```jsx
-<Modules.Color color="hotpink">
+<modules.Color color="hotpink">
 ```

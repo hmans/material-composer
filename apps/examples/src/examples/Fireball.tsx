@@ -1,4 +1,4 @@
-import { composable, Modules } from "material-composer-r3f"
+import { composable, modules } from "material-composer-r3f"
 import { Mul, Time, vec3 } from "shader-composer"
 
 export default function FireballExample() {
@@ -12,9 +12,9 @@ export default function FireballExample() {
         <icosahedronGeometry args={[1, 8]} />
 
         <composable.MeshStandardMaterial>
-          <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
+          <modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
 
-          <Modules.Lava
+          <modules.Lava
             offset={Mul(vec3(0.1, 0.2, 0.5), time)}
             scale={0.3}
             octaves={5}

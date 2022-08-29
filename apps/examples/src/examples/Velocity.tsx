@@ -1,4 +1,4 @@
-import { composable, Modules } from "material-composer-r3f"
+import { composable, modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useMemo } from "react"
 import { Time } from "shader-composer"
@@ -13,7 +13,7 @@ export default function Velocity() {
         <sphereGeometry />
 
         <composable.MeshStandardMaterial>
-          <Modules.Velocity velocity={new Vector3(0.15, 0, 0)} time={time} />
+          <modules.Velocity velocity={new Vector3(0.15, 0, 0)} time={time} />
         </composable.MeshStandardMaterial>
       </mesh>
 

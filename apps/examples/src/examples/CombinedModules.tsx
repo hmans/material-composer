@@ -1,5 +1,5 @@
 import { useControls } from "leva"
-import { composable, Layer, LayerProps, Modules } from "material-composer-r3f"
+import { composable, Layer, LayerProps, modules } from "material-composer-r3f"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
 
@@ -14,7 +14,7 @@ export const ColorLayer = (props: LayerProps) => {
 
   return (
     <Layer opacity={mix} {...props}>
-      <Modules.Color color={color} />
+      <modules.Color color={color} />
     </Layer>
   )
 }
@@ -42,7 +42,7 @@ export const GradientLayer = (props: LayerProps) => {
 
   return (
     <Layer opacity={mix} {...props}>
-      <Modules.Gradient
+      <modules.Gradient
         stops={[
           [colorA, stopA],
           [colorB, stopB],
@@ -67,7 +67,7 @@ export const FresnelLayer = (props: LayerProps) => {
 
   return (
     <Layer opacity={mix} blend="add" {...props}>
-      <Modules.Fresnel intensity={intensity} power={power} />
+      <modules.Fresnel intensity={intensity} power={power} />
     </Layer>
   )
 }

@@ -1,4 +1,4 @@
-import { composable, Modules } from "material-composer-r3f"
+import { composable, modules } from "material-composer-r3f"
 import { Cos, Mul, Time } from "shader-composer"
 import { DoubleSide } from "three"
 
@@ -13,11 +13,11 @@ export default function PlasmaBallExample() {
         <icosahedronGeometry args={[1, 8]} />
 
         <composable.MeshStandardMaterial transparent side={DoubleSide}>
-          <Modules.DistortSurface
+          <modules.DistortSurface
             offset={Mul(time, 0.5)}
             amplitude={Mul(Cos(time), 0.2)}
           />
-          <Modules.Plasma offset={Mul(time, 0.3)} />
+          <modules.Plasma offset={Mul(time, 0.3)} />
         </composable.MeshStandardMaterial>
       </mesh>
     </group>

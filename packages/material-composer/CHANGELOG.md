@@ -11,7 +11,7 @@
   `view` - The vector or offset is in view space.
 
   ```tsx
-  <Modules.Translate
+  <modules.Translate
     offset={Mul(new Vector3(1, 0, 0), Sin(time))}
     space="view"
   />
@@ -29,15 +29,15 @@
 
   ```tsx
   <Layer blend={Blend.add}>
-    <Modules.Fresnel />
+    <modules.Fresnel />
   </Layer>
 
   <Layer opacity={Fresnel()} blend="add">
-    <Modules.Color color="white" />
+    <modules.Color color="white" />
   </Layer>
 
   <Layer blend={(a, b) => Add(a, Mul(b, Fresnel()))}>
-    <Modules.Color color="white" />
+    <modules.Color color="white" />
   </Layer>
   ```
 
@@ -50,7 +50,7 @@
   Or in JSX:
 
   ```jsx
-  <Modules.Color color="hotpink">
+  <modules.Color color="hotpink">
   ```
 
 - 890f011: Refactored `ComposableMaterial.compileModules()` to take the new modules as an argument, and return early if the object is equal to the last list of modules that were used. This fixes some unwanted recompiles in React scenarios.

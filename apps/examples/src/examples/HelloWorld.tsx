@@ -1,5 +1,5 @@
 import { useControls } from "leva"
-import { composable, Layer, Modules } from "material-composer-r3f"
+import { composable, Layer, modules } from "material-composer-r3f"
 import { Description } from "r3f-stage"
 import { useUniformUnit } from "shader-composer-r3f"
 
@@ -13,12 +13,12 @@ export default function HelloWorld() {
         <sphereGeometry args={[1, 64, 64]} />
 
         <composable.MeshStandardMaterial>
-          <Modules.Color color="#d62828" />
+          <modules.Color color="#d62828" />
           <Layer opacity={mix}>
-            <Modules.Color color="#003049" />
+            <modules.Color color="#003049" />
           </Layer>
 
-          <Modules.Fresnel intensity={0.2} />
+          <modules.Fresnel intensity={0.2} />
         </composable.MeshStandardMaterial>
       </mesh>
 

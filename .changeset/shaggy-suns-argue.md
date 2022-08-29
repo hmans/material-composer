@@ -9,5 +9,5 @@
 `view` - The vector or offset is in view space.
 
 ```tsx
-<Modules.Translate offset={Mul(new Vector3(1, 0, 0), Sin(time))} space="view" />
+<modules.Translate offset={Mul(new Vector3(1, 0, 0), Sin(time))} space="view" />
 ```
