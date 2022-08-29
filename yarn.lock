@@ -2035,9 +2035,9 @@
     zustand "^3.5.13"
 
 "@react-three/drei@^9.23.8":
-  version "9.23.8"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.23.8.tgz#3c5db65c18bf90a789fa60098977736f8ac1080d"
-  integrity sha512-KHnerAS4P8FffbwZdXWZIgLImAB/OHWE9XaqBZUbkgxbzEZM3Iu7M6BB5V0yil0WRKcL0WRXzD9ToA4jk6TKAg==
+  version "9.24.4"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.24.4.tgz#8d0de5b7fca72907f46896ef024c55e0bd5f72f5"
+  integrity sha512-f4v3PxPZf3pKd2nCJjFlM3JNvPqdQ2mML3s6yMk7eCwBGRVO/AuITSa7LxIAyCH+NEfmvrWRPZRPpGcD4km5vw==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "^9.3.1"
@@ -3322,9 +3322,9 @@ dequal@^2.0.2:
   integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
 
 detect-gpu@^4.0.36:
-  version "4.0.36"
-  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-4.0.36.tgz#65927d8c8700ab28920eada9a68eb8c80cfea8c4"
-  integrity sha512-er7wefPzC4uJNsH3nDW0r2A/QB3+qAB0ln4gL9XuJebi/UPH8wSFaTBaRIfV4qAzqzyQaYmcxm3qRgnLQW6qXw==
+  version "4.0.37"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-4.0.37.tgz#94a95ed400dae3f69b4df0ae76e8d2cdf12a3510"
+  integrity sha512-m0ETW+Wkqo86IfaS1Xelx07NhFh7d3mOK+wkAQOjYzO8juFc3ocA0nPkqFMCnCjbvcYG8yky/vIFh3n7Gs16Uw==
   dependencies:
     webgl-constants "^1.1.1"
 
