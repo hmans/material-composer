@@ -58,17 +58,5 @@
   },
   "peerDependencies": {
     "three": ">=0.141.0"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      [
-        "@babel/preset-typescript",
-        {
-          "isTSX": true,
-          "allExtensions": true
-        }
-      ]
-    ]
   }
 }
