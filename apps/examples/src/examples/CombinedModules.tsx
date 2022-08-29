@@ -1,10 +1,5 @@
 import { useControls } from "leva"
-import {
-  ComposableMaterial,
-  Layer,
-  LayerProps,
-  Modules
-} from "material-composer-r3f"
+import { composable, Layer, LayerProps, Modules } from "material-composer-r3f"
 import { useUniformUnit } from "shader-composer-r3f"
 import { Color } from "three"
 
@@ -83,11 +78,11 @@ export default function CombinedModules() {
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <ComposableMaterial>
+        <composable.MeshStandardMaterial>
           <ColorLayer />
           <GradientLayer />
           <FresnelLayer />
-        </ComposableMaterial>
+        </composable.MeshStandardMaterial>
       </mesh>
     </group>
   )

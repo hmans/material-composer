@@ -1,5 +1,5 @@
 import { useControls } from "leva"
-import { ComposableMaterial, Modules } from "material-composer-r3f"
+import { composable, Modules } from "material-composer-r3f"
 import { Space } from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useMemo } from "react"
@@ -18,12 +18,12 @@ export default function Translate() {
       <mesh position-y={1.5} rotation-z={Math.PI / 2}>
         <sphereGeometry />
 
-        <ComposableMaterial>
+        <composable.MeshStandardMaterial>
           <Modules.Translate
             offset={Mul(new Vector3(1, 0, 0), Sin(time))}
             space={controls.space as Space}
           />
-        </ComposableMaterial>
+        </composable.MeshStandardMaterial>
       </mesh>
 
       <Description>
