@@ -31,10 +31,8 @@ For the imperative world, the library provides `compileModules` and `patchMateri
 
 ```js
 const material = new MeshStandardMaterial({})
-
-/* The return values match the return values of Shader Composer's
-`compileShader` function: */
-const [shader, shaderMeta] = compileModules(modules)
+const root = compileModules(modules)
+const [shader, shaderMeta] = compileShader(root)
 patchMaterial(material, shader)
 ```
 

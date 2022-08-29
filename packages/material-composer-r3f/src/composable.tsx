@@ -1,6 +1,5 @@
-import { PatchedMaterialMaster } from "@material-composer/patch-material"
 import { patched } from "@material-composer/patched"
-import { initialModuleState, Module, pipeModules } from "material-composer"
+import { compileModules, Module } from "material-composer"
 import React, { DependencyList, useMemo } from "react"
 import { useShader } from "shader-composer-r3f"
 import {
@@ -12,14 +11,10 @@ const hasKey = <T extends object>(obj: T, k: keyof any): k is keyof T =>
   k in obj
 
 export const useModules = (modules: Module[], deps?: DependencyList) => {
-  const root = useMemo(() => {
-    /* Transform state with given modules. */
-    const state = pipeModules(initialModuleState(), ...(modules || []))
+  /* Compile modules into a shader graph */
+  const root = useMemo(() => compileModules(modules), deps)
 
-    /* Construct a shader master unit */
-    return PatchedMaterialMaster(state)
-  }, deps)
-
+  /* Return shader compiled from graph */
   return useShader(() => root, [root])
 }
 

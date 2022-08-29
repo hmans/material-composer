@@ -3,7 +3,13 @@ import { compileModules, Layer, patchMaterial } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
-import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
+import {
+  compileShader,
+  Mul,
+  NormalizePlusMinusOne,
+  Sin,
+  Time
+} from "shader-composer"
 import {
   DoubleSide,
   Group,
@@ -44,8 +50,7 @@ const vanillaCode = (
     transparent: true,
     side: DoubleSide
   })
-
-  const [shader, shaderMeta] = compileModules(modules)
+  const [shader, shaderMeta] = compileShader(compileModules(modules))
   patchMaterial(material, shader)
 
   const sphere = new Mesh(new SphereGeometry(), material)

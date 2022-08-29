@@ -1,15 +1,17 @@
 import { PatchedMaterialMaster } from "@material-composer/patch-material"
-import { flow } from "fp-ts/function"
-import { compileShader } from "shader-composer"
-import { initialModuleState, Module } from "."
+import { initialModuleState, Module, pipeModules } from "."
 
+/**
+ * Compiles a list of Material Composer modules into a shader graph that
+ * can be consumed by Shader Composer's `composeShader` function.
+ *
+ * @param modules A list of Material Composer modules (see `Module`)
+ * @returns A shader master node that can be passed to `compileShader`
+ */
 export const compileModules = (modules: Module[]) => {
   /* Transform state with given modules. */
-  const state = flow(...(modules as [Module]))(initialModuleState())
+  const state = pipeModules(initialModuleState(), ...modules)
 
   /* Construct a shader master unit */
-  const root = PatchedMaterialMaster(state)
-
-  /* And finally compile a shader from the state. */
-  return compileShader(root)
+  return PatchedMaterialMaster(state)
 }
