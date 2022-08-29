@@ -10,7 +10,7 @@ export default function HelloWorld() {
   return (
     <group>
       <mesh position-y={1.5} castShadow>
-        <sphereGeometry />
+        <sphereGeometry args={[1, 64, 64]} />
 
         <composable.MeshStandardMaterial>
           <Modules.Color color="#d62828" />
