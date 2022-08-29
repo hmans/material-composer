@@ -29,7 +29,7 @@ export const useModules = (modules: Module[], deps?: DependencyList) => {
   return useShader(() => root, [root])
 }
 
-export const composed = new Proxy(patched, {
+export const composable = new Proxy(patched, {
   get: (target, key) => {
     if (!hasKey(target, key)) return
 
