@@ -3,9 +3,8 @@ import { $, Input, Master } from "shader-composer"
 export type PatchedMaterialMasterProps = {
   position?: Input<"vec3">
   normal?: Input<"vec3">
-  diffuseColor?: Input<"vec3">
+  color?: Input<"vec3">
   emissiveColor?: Input<"vec3">
-  fragColor?: Input<"vec3">
   alpha?: Input<"float">
   roughness?: Input<"float">
   metalness?: Input<"float">
@@ -14,9 +13,8 @@ export type PatchedMaterialMasterProps = {
 export const PatchedMaterialMaster = ({
   position,
   normal,
-  diffuseColor,
+  color,
   emissiveColor,
-  fragColor,
   roughness,
   metalness,
   alpha
@@ -26,31 +24,24 @@ export const PatchedMaterialMaster = ({
 
     vertex: {
       body: $`
-        ${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
-        ${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
+        ${position !== undefined ? $`patched_Position.xyz = ${position};` : ""}
+        ${normal !== undefined ? $`patched_Normal = ${normal};` : ""}
       `
     },
 
     fragment: {
       body: $`
-        ${alpha !== undefined ? $`csm_Alpha = ${alpha};` : ""}
+        ${alpha !== undefined ? $`patched_Alpha = ${alpha};` : ""}
+        ${color !== undefined ? $`patched_Color = ${color};` : ""}
         ${
-          diffuseColor !== undefined
-            ? $`csm_DiffuseColor = ${diffuseColor};`
-            : ""
-        }
-        ${
-          emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""
-        }
-        ${
-          fragColor !== undefined
-            ? $`csm_FragColor = vec4(${fragColor}, ${alpha});`
+          emissiveColor !== undefined
+            ? $`patched_Emissive = ${emissiveColor};`
             : ""
         }
 
         #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
-          ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
-          ${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
+          ${roughness !== undefined ? $`patched_Roughness = ${roughness};` : ""}
+          ${metalness !== undefined ? $`patched_Metalness = ${metalness};` : ""}
         #endif
       `
     }

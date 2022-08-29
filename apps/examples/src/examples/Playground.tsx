@@ -10,7 +10,7 @@ export default function Playground() {
 
   const shader = useShader(() => {
     return PatchedMaterialMaster({
-      diffuseColor: Lerp(
+      color: Lerp(
         new Color("white"),
         new Color("blue"),
         NormalizePlusMinusOne(Sin(Time()))

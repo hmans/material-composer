@@ -5,15 +5,10 @@ import { initialModuleState, Module } from "."
 
 export const compileModules = (modules: Module[]) => {
   /* Transform state with given modules. */
-  const { color, ...state } = flow(...(modules as [Module]))(
-    initialModuleState()
-  )
+  const state = flow(...(modules as [Module]))(initialModuleState())
 
   /* Construct a shader master unit */
-  const root = PatchedMaterialMaster({
-    ...state,
-    diffuseColor: color
-  })
+  const root = PatchedMaterialMaster(state)
 
   /* And finally compile a shader from the state. */
   return compileShader(root)

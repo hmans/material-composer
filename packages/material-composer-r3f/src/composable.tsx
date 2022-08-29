@@ -14,16 +14,10 @@ const hasKey = <T extends object>(obj: T, k: keyof any): k is keyof T =>
 export const useModules = (modules: Module[], deps?: DependencyList) => {
   const root = useMemo(() => {
     /* Transform state with given modules. */
-    const { color, ...state } = pipeModules(
-      initialModuleState(),
-      ...(modules || [])
-    )
+    const state = pipeModules(initialModuleState(), ...(modules || []))
 
     /* Construct a shader master unit */
-    return PatchedMaterialMaster({
-      ...state,
-      diffuseColor: color
-    })
+    return PatchedMaterialMaster(state)
   }, deps)
 
   return useShader(() => root, [root])

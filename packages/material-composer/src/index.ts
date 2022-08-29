@@ -47,10 +47,10 @@ export const pipeModules = (initial: ModuleState, ...modules: Module[]) =>
 export const initialModuleState = (): ModuleState => ({
   position: VertexPosition,
   normal: VertexNormal,
-  color: Vec3($`csm_DiffuseColor`),
-  alpha: Float($`csm_Alpha`),
-  roughness: Float($`csm_Roughness`),
-  metalness: Float($`csm_Metalness`)
+  color: Vec3($`patched_Color`),
+  alpha: Float($`patched_Alpha`),
+  roughness: Float($`patched_Roughness`),
+  metalness: Float($`patched_Metalness`)
 })
 
 export * from "@material-composer/patch-material"
