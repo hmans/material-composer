@@ -8,8 +8,7 @@ import {
 } from "three"
 import { useManagedInstance } from "./lib/useManagedInstance"
 import { PatchedMaterialOptions, patchMaterial } from "./patchMaterial"
-
-type Constructor<T> = new (...args: any[]) => T
+import { Constructor } from "@hmans/types"
 
 export type PatchedMaterialProps<
   C extends Constructor<Material>
