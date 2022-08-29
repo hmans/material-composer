@@ -1,5 +1,6 @@
+import { Constructor } from "@hmans/types"
 import { MaterialNode, Node } from "@react-three/fiber"
-import React, { forwardRef, useImperativeHandle, useLayoutEffect } from "react"
+import React, { forwardRef, useLayoutEffect } from "react"
 import {
   IUniform,
   Material,
@@ -8,17 +9,18 @@ import {
 } from "three"
 import { useManagedInstance } from "./lib/useManagedInstance"
 import { PatchedMaterialOptions, patchMaterial } from "./patchMaterial"
-import { Constructor } from "@hmans/types"
 
-export type PatchedMaterialProps<
-  C extends Constructor<Material>
-> = MaterialNode<InstanceType<C>, C> & {
+export type ShaderProps = {
   vertexShader?: string
   fragmentShader?: string
   uniforms?: Record<string, IUniform<any>>
 }
 
-const makePatchedMaterialComponent = <
+export type PatchedMaterialProps<
+  C extends Constructor<Material>
+> = MaterialNode<InstanceType<C>, C> & ShaderProps
+
+export const makePatchedMaterialComponent = <
   C extends Constructor<M>,
   M extends Material
 >(
@@ -27,19 +29,22 @@ const makePatchedMaterialComponent = <
   forwardRef<M, PatchedMaterialProps<C>>(
     ({ args = [], vertexShader, fragmentShader, uniforms, ...props }, ref) => {
       /* Create a new material instance any time the shader-related props change. */
-      const material = useManagedInstance(
-        () =>
-          patchMaterial(new ctor(...(args as any)), {
-            vertexShader,
-            fragmentShader,
-            uniforms
-          }),
-        [vertexShader, fragmentShader, uniforms]
-      )
+      const material = useManagedInstance(() => new ctor(...(args as any)), [
+        vertexShader,
+        fragmentShader,
+        uniforms
+      ])
 
-      useImperativeHandle(ref, () => material)
+      /* Patch newly created materials */
+      useLayoutEffect(() => {
+        patchMaterial(material, {
+          vertexShader,
+          fragmentShader,
+          uniforms
+        })
+      }, [material])
 
-      return <primitive object={material} {...props} />
+      return <primitive object={material} ref={ref} {...props} />
     }
   )
 

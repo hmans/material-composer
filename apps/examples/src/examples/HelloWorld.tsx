@@ -12,11 +12,11 @@ export default function HelloWorld() {
 
   return (
     <group>
-      <mesh position-y={1.5}>
+      <mesh position-y={1.5} castShadow>
         <sphereGeometry />
 
         <composed.MeshStandardMaterial>
-          <Modules.Color color={Mul(new Color("blue"), Time())} />
+          <Modules.Color color={Mul(new Color("green"), Time())} />
         </composed.MeshStandardMaterial>
       </mesh>
 
