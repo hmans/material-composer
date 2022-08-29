@@ -21,7 +21,9 @@ import {
   SphereGeometry,
   WebGLRenderer
 } from "three"
+import { LavaModule } from "./Fireball"
 import { loop } from "./lib/loop"
+import { PlasmaModule } from "./PlasmaBall"
 
 const vanillaCode = (
   parent: Object3D,
@@ -40,13 +42,14 @@ const vanillaCode = (
   /* Create a shader graph from a list of modules */
   const graph = compileModules([
     Layer({
-      modules: [modules.Plasma({ offset: Mul(time, -0.2) })]
+      modules: [PlasmaModule({ offset: Mul(time, -0.2) })]
     }),
 
     Layer({
       opacity: NormalizePlusMinusOne(Sin(time)),
       modules: [
         modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
+        LavaModule({}),
         modules.Alpha({ alpha: 1 })
       ]
     })

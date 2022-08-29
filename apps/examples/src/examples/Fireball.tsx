@@ -1,3 +1,4 @@
+import { ModuleFactory } from "material-composer"
 import { composable, modules } from "material-composer-r3f"
 import { moduleComponent } from "material-composer-r3f/src/reactor"
 import { Heat, HeatOptions } from "material-composer/units"
@@ -7,7 +8,7 @@ import * as THREE from "three"
 
 export type LavaProps = HeatOptions
 
-export const Lava = moduleComponent<LavaProps>((props) => (state) => ({
+export const LavaModule: ModuleFactory<LavaProps> = (props) => (state) => ({
   ...state,
   color: Gradient(
     Heat(state.position, props),
@@ -20,7 +21,9 @@ export const Lava = moduleComponent<LavaProps>((props) => (state) => ({
     [new THREE.Color("white").multiplyScalar(2), 0.99],
     [new THREE.Color("white").multiplyScalar(2), 1]
   )
-}))
+})
+
+export const Lava = moduleComponent(LavaModule)
 
 export default function FireballExample() {
   const time = Time()

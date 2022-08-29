@@ -28,33 +28,6 @@ export * from "./Velocity"
 
 export const CustomModule = ({ module }: { module: Module }): Module => module
 
-export type PlasmaProps = HeatOptions & {
-  color?: (heat: Input<"float">) => Unit<"vec3">
-}
-
-export const Plasma: ModuleFactory<PlasmaProps> = ({
-  color = (heat: Input<"float">) =>
-    Gradient(
-      heat,
-      [new THREE.Color("#457b9d"), 0.85],
-      [new THREE.Color("#a2d2ff"), 0.95],
-      [new THREE.Color("white").multiplyScalar(3), 0.975]
-    ),
-  offset,
-  scale = 0.5,
-  octaves = 3,
-  power = 1
-}) => (state) => {
-  const heat = OneMinus(Heat(state.position, { offset, scale, octaves, power }))
-  const alpha = Smoothstep(0.7, 0.9, heat)
-
-  return {
-    ...state,
-    alpha,
-    color: color(heat)
-  }
-}
-
 export type DistortSurfaceProps = {
   offset?: Input<"vec3" | "float">
   amplitude?: Input<"float">
