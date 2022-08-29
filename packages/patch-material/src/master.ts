@@ -26,17 +26,23 @@ export const PatchedMaterialMaster = ({
 
     vertex: {
       body: $`
-    		${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
-    		${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
-    	`
+        ${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
+        ${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
+      `
     },
 
     fragment: {
       body: $`
-  			${alpha !== undefined ? $`csm_Alpha = ${alpha};` : ""}
-				${diffuseColor !== undefined ? $`csm_DiffuseColor = ${diffuseColor};` : ""}
-				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}
-				${
+        ${alpha !== undefined ? $`csm_Alpha = ${alpha};` : ""}
+        ${
+          diffuseColor !== undefined
+            ? $`csm_DiffuseColor = ${diffuseColor};`
+            : ""
+        }
+        ${
+          emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""
+        }
+        ${
           fragColor !== undefined
             ? $`csm_FragColor = vec4(${fragColor}, ${alpha});`
             : ""
@@ -46,6 +52,6 @@ export const PatchedMaterialMaster = ({
           ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
           ${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
         #endif
-			`
+      `
     }
   })
