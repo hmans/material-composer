@@ -41,7 +41,7 @@ export default function PlasmaBallExample() {
         <icosahedronGeometry args={[1, 8]} />
 
         <composable.MeshStandardMaterial transparent side={DoubleSide}>
-          <modules.DistortSurface
+          <modules.SurfaceWobble
             offset={Mul(time, 0.5)}
             amplitude={Mul(Cos(time), 0.2)}
           />
