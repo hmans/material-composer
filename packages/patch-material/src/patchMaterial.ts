@@ -39,8 +39,6 @@ export const patchMaterial = <M extends Material>(
     shader.fragmentShader = transformFragmentShader(shader.fragmentShader)
     shader.uniforms = { ...shader.uniforms, ...uniforms }
   }
-
-  return material
 }
 
 const parseProgram = (program: string) => {
