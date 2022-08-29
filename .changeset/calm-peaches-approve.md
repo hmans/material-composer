@@ -1,0 +1,41 @@
+---
+"material-composer": minor
+"material-composer-r3f": minor
+"@material-composer/patch-material": patch
+"@material-composer/patched": patch
+---
+
+**Breaking Change:** Refactored the way Material Composer hooks into Three.js materials. This library now no longer uses three-custom-shader-material, but its own implementation of a similar concept. This gives allows the library to live a little closer to the metal, providing added flexibility, and to provide a neat new API for composable materials. In JSX, you can now do the following:
+
+```jsx
+<composable.MeshStandardMaterial>
+  {/* Modules */}
+</composable.MeshStandardMaterial>
+```
+
+This proxies all available Three.js material types. Here's an example using `THREE.MeshPhysicalMaterial`:
+
+```jsx
+<composable.MeshPhysicalMaterial>
+  {/* Modules */}
+</composable.MeshPhysicalMaterial>
+```
+
+If you already have a material instance, you can use `composable.Material`:
+
+```jsx
+<composable.Material instance={myMaterial}>{/* Modules */}</composable.Material>
+```
+
+For the imperative world, the library provides `compileModules` and `patchMaterial` functions that can be used like this:
+
+```js
+const material = new MeshStandardMaterial({})
+
+/* The return values match the return values of Shader Composer's
+`compileShader` function: */
+const [shader, shaderMeta] = compileModules(modules)
+patchMaterial(material, shader)
+```
+
+These APIs should be considered work-in-progress; future changes are likely.
