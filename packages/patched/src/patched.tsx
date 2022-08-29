@@ -7,9 +7,24 @@ import { MaterialNode, Node } from "@react-three/fiber"
 import React, { forwardRef, useLayoutEffect } from "react"
 import {
   IUniform,
+  LineBasicMaterial,
+  LineDashedMaterial,
   Material,
+  MeshBasicMaterial,
+  MeshDepthMaterial,
+  MeshDistanceMaterial,
+  MeshLambertMaterial,
+  MeshMatcapMaterial,
+  MeshNormalMaterial,
+  MeshPhongMaterial,
   MeshPhysicalMaterial,
-  MeshStandardMaterial
+  MeshStandardMaterial,
+  MeshToonMaterial,
+  PointsMaterial,
+  RawShaderMaterial,
+  ShaderMaterial,
+  ShadowMaterial,
+  SpriteMaterial
 } from "three"
 import { useManagedPrimitive } from "./lib/useManagedInstance"
 
@@ -52,10 +67,35 @@ export const makePatchedMaterialComponent = <
   )
 
 export const patched = {
-  MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial),
+  LineBasicMaterial: makePatchedMaterialComponent(LineBasicMaterial),
+  LineDashedMaterial: makePatchedMaterialComponent(LineDashedMaterial),
+  MeshBasicMaterial: makePatchedMaterialComponent(MeshBasicMaterial),
+  MeshDepthMaterial: makePatchedMaterialComponent(MeshDepthMaterial),
+  MeshDistanceMaterial: makePatchedMaterialComponent(MeshDistanceMaterial),
+  MeshLambertMaterial: makePatchedMaterialComponent(MeshLambertMaterial),
+  MeshMatcapMaterial: makePatchedMaterialComponent(MeshMatcapMaterial),
+  MeshNormalMaterial: makePatchedMaterialComponent(MeshNormalMaterial),
+  MeshPhongMaterial: makePatchedMaterialComponent(MeshPhongMaterial),
   MeshPhysicalMaterial: makePatchedMaterialComponent(MeshPhysicalMaterial),
+  MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial),
+  MeshToonMaterial: makePatchedMaterialComponent(MeshToonMaterial),
+  PointsMaterial: makePatchedMaterialComponent(PointsMaterial),
+  RawShaderMaterial: makePatchedMaterialComponent(RawShaderMaterial),
+  ShaderMaterial: makePatchedMaterialComponent(ShaderMaterial),
+  ShadowMaterial: makePatchedMaterialComponent(ShadowMaterial),
+  SpriteMaterial: makePatchedMaterialComponent(SpriteMaterial),
 
-  MaterialInstance: <M extends Material>({
+  /**
+   * Use `patched.Material` when you already have an instance of a material
+   * that you want to patch (eg. a material loded from a GLTF, or one that uses
+   * a custom material class.)
+   *
+   * @example
+   * ```jsx
+   * <patched.Material instance={myMaterial} {...shader} />
+   * ```
+   */
+  Material: <M extends Material>({
     instance,
     vertexShader,
     fragmentShader,
