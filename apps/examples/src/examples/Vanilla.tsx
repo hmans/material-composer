@@ -1,24 +1,9 @@
-import {
-  PatchedMaterialMaster,
-  patchMaterial
-} from "@material-composer/patch-material"
 import { useThree } from "@react-three/fiber"
-import {
-  initialModuleState,
-  Layer,
-  ModulePipe,
-  pipeModules
-} from "material-composer"
+import { compileModules, Layer, patchMaterial } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
-import {
-  compileShader,
-  Mul,
-  NormalizePlusMinusOne,
-  Sin,
-  Time
-} from "shader-composer"
+import { Mul, NormalizePlusMinusOne, Sin, Time } from "shader-composer"
 import {
   DoubleSide,
   Group,
@@ -31,23 +16,6 @@ import {
   WebGLRenderer
 } from "three"
 import { loop } from "./lib/loop"
-
-export const compileModules = (modules: ModulePipe) => {
-  /* Transform state with given modules. */
-  const { color, ...state } = pipeModules(
-    initialModuleState(),
-    ...(modules || [])
-  )
-
-  /* Construct a shader master unit */
-  const root = PatchedMaterialMaster({
-    ...state,
-    diffuseColor: color
-  })
-
-  /* And finally compile a shader from the state. */
-  return compileShader(root)
-}
 
 const vanillaCode = (
   parent: Object3D,

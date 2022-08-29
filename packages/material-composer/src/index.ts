@@ -8,9 +8,6 @@ import {
   VertexPosition
 } from "shader-composer"
 
-export * from "./ComposableMaterial"
-export * from "./Layer"
-
 /**
  * ModuleState describes the state going into a module (and returned by it.)
  * Modules are encouraged to change the values they're interested in, but can
@@ -55,3 +52,8 @@ export const initialModuleState = (): ModuleState => ({
   roughness: Float($`csm_Roughness`),
   metalness: Float($`csm_Metalness`)
 })
+
+export * from "@material-composer/patch-material"
+export * from "./compileModules"
+export * from "./ComposableMaterial"
+export * from "./Layer"
