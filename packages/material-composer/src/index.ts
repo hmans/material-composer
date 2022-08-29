@@ -45,12 +45,12 @@ export const pipeModules = (initial: ModuleState, ...modules: Module[]) =>
   pipe(initial, ...(modules as [Module]))
 
 export const initialModuleState = (): ModuleState => ({
-  position: VertexPosition,
-  normal: VertexNormal,
-  color: Vec3($`patched_Color`),
-  alpha: Float($`patched_Alpha`),
-  roughness: Float($`patched_Roughness`),
-  metalness: Float($`patched_Metalness`)
+  position: Vec3(VertexPosition, { name: "Final Position" }),
+  normal: Vec3(VertexNormal, { name: "Final Normal " }),
+  color: Vec3($`patched_Color`, { name: "Final Color" }),
+  alpha: Float($`patched_Alpha`, { name: "Final Alpha" }),
+  roughness: Float($`patched_Roughness`, { name: "Final Roughness" }),
+  metalness: Float($`patched_Metalness`, { name: "Final Metalness" })
 })
 
 export * from "@material-composer/patch-material"
