@@ -1,5 +1,5 @@
 import { useThree } from "@react-three/fiber"
-import { ComposableMaterial, Layer } from "material-composer"
+import { compileModules, Layer, patchMaterial } from "material-composer"
 import * as Modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
@@ -8,6 +8,7 @@ import {
   DoubleSide,
   Group,
   Mesh,
+  MeshStandardMaterial,
   Object3D,
   PerspectiveCamera,
   Scene,
@@ -39,11 +40,13 @@ const vanillaCode = (
     })
   ]
 
-  const material = new ComposableMaterial({
-    modules,
+  const material = new MeshStandardMaterial({
     transparent: true,
     side: DoubleSide
   })
+
+  const [shader, shaderMeta] = compileModules(modules)
+  patchMaterial(material, shader)
 
   const sphere = new Mesh(new SphereGeometry(), material)
   sphere.position.y = 1.5
@@ -51,7 +54,7 @@ const vanillaCode = (
 
   /* Create mesh and add it to the scene. */
   const stopLoop = loop((dt) => {
-    material.tick(dt, camera, scene, renderer)
+    shaderMeta.update(dt, camera, scene, renderer)
   })
 
   return () => {
@@ -60,6 +63,7 @@ const vanillaCode = (
     parent.remove(sphere)
     sphere.geometry.dispose()
     material.dispose()
+    shaderMeta.dispose()
   }
 }
 

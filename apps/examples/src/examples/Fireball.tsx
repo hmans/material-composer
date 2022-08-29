@@ -1,6 +1,5 @@
+import { composable, Modules } from "material-composer-r3f"
 import { Mul, Time, vec3 } from "shader-composer"
-import { MeshStandardMaterial } from "three"
-import { Modules, ComposableMaterial } from "material-composer-r3f"
 
 export default function FireballExample() {
   const time = Time()
@@ -12,7 +11,7 @@ export default function FireballExample() {
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <ComposableMaterial baseMaterial={MeshStandardMaterial}>
+        <composable.MeshStandardMaterial>
           <Modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
 
           <Modules.Lava
@@ -21,7 +20,7 @@ export default function FireballExample() {
             octaves={5}
             power={1}
           />
-        </ComposableMaterial>
+        </composable.MeshStandardMaterial>
       </mesh>
     </group>
   )

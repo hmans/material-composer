@@ -5,6 +5,10 @@ import react from "@vitejs/plugin-react"
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ["material-composer", "material-composer-r3f"]
+    exclude: [
+      "material-composer",
+      "material-composer-r3f",
+      "@material-composer/patch-material"
+    ]
   }
 })

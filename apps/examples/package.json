@@ -12,6 +12,7 @@
     "@hmans/use-const": "^0.0.1",
     "@hmans/use-rerender": "^0.0.2",
     "@hmans/use-version": "^0.0.2",
+    "@material-composer/patch-material": "^0.1.0",
     "@react-three/drei": "^9.23.8",
     "@react-three/fiber": "^8.6.0",
     "leva": "^0.9.30",
@@ -27,7 +28,6 @@
     "shader-composer-toybox": "^0.1.1",
     "statery": "^0.6.0-next.2",
     "three": "^0.143.0",
-    "three-custom-shader-material": "^4.0.0",
     "timeline-composer": "^0.1.5",
     "wouter": "^2.8.0-alpha.2"
   },

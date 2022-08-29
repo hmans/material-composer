@@ -1321,6 +1321,11 @@
     react-merge-refs "^2.0.1"
     statery "^0.6.0-next.2"
 
+"@hmans/types@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@hmans/types/-/types-0.0.3.tgz#306dbd0db934aeac389633e71c6e0bc4f3b16443"
+  integrity sha512-oRQnsCCz0OovTTn7Kya9KcdpAsHwBqwzGI9XA/9i/9f1EMP/QPQ8YYy5JbnIsOfs4ZFlPBb1fBw409E0V42pZw==
+
 "@hmans/use-const@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@hmans/use-const/-/use-const-0.0.1.tgz#5e1c798918d923bc27145d2073adbf2ce51ca409"
@@ -3861,7 +3866,7 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-fp-ts@^2.12.1:
+fp-ts@^2.12.1, fp-ts@^2.12.2:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.12.2.tgz#a191db2dbbb04f48a0e75050b94f57cc876c7b40"
   integrity sha512-v8J7ud+nTkP5Zz17GhpCsY19wiRbB9miuj61nBcCJyDpu52zs9Z4O7OLDfYoKFQMJ9EsSZA7W1vRgC1d3jy5qw==
