@@ -28,33 +28,6 @@ export * from "./Velocity"
 
 export const CustomModule = ({ module }: { module: Module }): Module => module
 
-export type LavaProps = HeatOptions & {
-  color?: (heat: Input<"float">) => Unit<"vec3">
-}
-
-export const Lava: ModuleFactory<LavaProps> = ({
-  color = (heat) =>
-    Gradient(
-      heat,
-      [new THREE.Color("#03071E"), 0],
-      [new THREE.Color("#03071E"), 0.1],
-      [new THREE.Color("#DC2F02"), 0.5],
-      [new THREE.Color("#E85D04"), 0.6],
-      [new THREE.Color("#FFBA08").multiplyScalar(2), 0.65],
-      [new THREE.Color("white").multiplyScalar(2), 0.97],
-      [new THREE.Color("white").multiplyScalar(2), 0.99],
-      [new THREE.Color("white").multiplyScalar(2), 1]
-    ),
-  ...opts
-}) => (state) => {
-  const heat = Heat(state.position, opts)
-
-  return {
-    ...state,
-    color: color(heat)
-  }
-}
-
 export type PlasmaProps = HeatOptions & {
   color?: (heat: Input<"float">) => Unit<"vec3">
 }

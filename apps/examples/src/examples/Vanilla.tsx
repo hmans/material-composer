@@ -47,7 +47,6 @@ const vanillaCode = (
       opacity: NormalizePlusMinusOne(Sin(time)),
       modules: [
         modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
-        modules.Lava({ offset: Mul(time, 0.2) }),
         modules.Alpha({ alpha: 1 })
       ]
     })
