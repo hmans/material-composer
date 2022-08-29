@@ -30,7 +30,7 @@ export const patchMaterial = <M extends Material>(
   const transformFragmentShader = flow(
     injectGlobalDefines(material),
     fragmentShader ? injectProgram(fragmentShader) : identity,
-    supportsRoughnessAndMetalness ? injectRoughnessAndMetalness : identity,
+    injectRoughnessAndMetalness,
     injectDiffuseAndAlpha
   )
 
@@ -100,8 +100,14 @@ const injectNormal = flow(
 
 const injectDiffuseAndAlpha = flow(
   extend("void main() {").with(`
+    #if defined IS_SHADERMATERIAL || defined IS_MESHDEPTHMATERIAL || defined IS_MESHNORMALMATERIAL
+    vec3 patched_Color = vec3(1.0, 0.0, 0.0);
+    float patched_Alpha = 1.0;
+    #else
     vec3 patched_Color = diffuse;
     float patched_Alpha = opacity;
+    #endif
+
   `),
   extend("#include <color_fragment>").with(
     "diffuseColor = vec4(patched_Color, patched_Alpha);"
@@ -109,8 +115,15 @@ const injectDiffuseAndAlpha = flow(
 )
 
 const injectRoughnessAndMetalness = flow(
-  extend("void main() {").with("float patched_Roughness = roughness;"),
-  extend("void main() {").with("float patched_Metalness = metalness;"),
+  extend("void main() {").with(`
+    #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
+    float patched_Roughness = roughness;
+    float patched_Metalness = metalness;
+    #else
+    float patched_Roughness = 0.0;
+    float patched_Metalness = 0.0;
+    #endif
+  `),
   extend("#include <roughnessmap_fragment>").with(
     "roughnessFactor = patched_Roughness;"
   ),
