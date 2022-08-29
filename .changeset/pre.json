@@ -4,15 +4,23 @@
   "initialVersions": {
     "examples": "0.0.0",
     "material-composer": "0.0.2",
-    "material-composer-r3f": "0.0.2"
+    "material-composer-r3f": "0.0.2",
+    "@material-composer/patch-material": "0.1.0",
+    "@material-composer/patched": "0.1.0"
   },
   "changesets": [
+    "big-boats-pump",
     "big-kiwis-drop",
     "breezy-guests-approve",
+    "calm-peaches-approve",
     "fresh-terms-accept",
+    "gorgeous-dryers-unite",
     "great-phones-count",
     "plenty-worms-invite",
+    "purple-apricots-fry",
+    "rich-turtles-sit",
     "shaggy-suns-argue",
+    "slimy-flies-retire",
     "slow-pears-arrive"
   ]
 }

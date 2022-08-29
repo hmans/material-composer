@@ -7,7 +7,7 @@
     "url": "https://hendrik.mans.de"
   },
   "description": "",
-  "version": "0.1.0",
+  "version": "0.1.1-next.0",
   "main": "dist/material-composer-patched.cjs.js",
   "module": "dist/material-composer-patched.esm.js",
   "types": "dist/material-composer-patched.cjs.d.ts",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@hmans/types": "^0.0.3",
-    "@material-composer/patch-material": "^0.1.0",
+    "@material-composer/patch-material": "^0.1.1-next.0",
     "fp-ts": "^2.12.2"
   }
 }
