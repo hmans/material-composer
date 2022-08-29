@@ -72,16 +72,35 @@ export const FresnelLayer = (props: LayerProps) => {
   )
 }
 
+export const WobbleLayer = (props: LayerProps) => {
+  const controls = useControls("Wobble", {
+    mix: { value: 0.1, min: 0, max: 1 },
+    amplitude: { value: 0.5, min: 0, max: 1 },
+    offset: { value: 0, step: 0.01 }
+  })
+
+  const mix = useUniformUnit("float", controls.mix)
+  const amplitude = useUniformUnit("float", controls.amplitude)
+  const offset = useUniformUnit("float", controls.offset)
+
+  return (
+    <Layer opacity={mix} {...props}>
+      <modules.SurfaceWobble amplitude={amplitude} offset={offset} />
+    </Layer>
+  )
+}
+
 export default function CombinedModules() {
   return (
     <group position-y={1.5}>
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <composable.MeshStandardMaterial>
+        <composable.MeshStandardMaterial autoShadow>
           <ColorLayer />
           <GradientLayer />
           <FresnelLayer />
+          <WobbleLayer />
         </composable.MeshStandardMaterial>
       </mesh>
     </group>
