@@ -1,6 +1,6 @@
 import { DependencyList, useLayoutEffect, useMemo } from "react"
 
-export const useManagedInstance = <T extends any>(
+export const useManagedPrimitive = <T extends any>(
   factory: () => T,
   deps: DependencyList = []
 ) => {

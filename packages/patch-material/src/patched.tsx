@@ -7,7 +7,7 @@ import {
   MeshPhysicalMaterial,
   MeshStandardMaterial
 } from "three"
-import { useManagedInstance } from "./lib/useManagedInstance"
+import { useManagedPrimitive } from "./lib/useManagedInstance"
 import { PatchedMaterialOptions, patchMaterial } from "./patchMaterial"
 
 export type ShaderProps = {
@@ -29,7 +29,7 @@ export const makePatchedMaterialComponent = <
   forwardRef<M, PatchedMaterialProps<C>>(
     ({ args = [], vertexShader, fragmentShader, uniforms, ...props }, ref) => {
       /* Create a new material instance any time the shader-related props change. */
-      const material = useManagedInstance(() => new ctor(...(args as any)), [
+      const material = useManagedPrimitive(() => new ctor(...(args as any)), [
         vertexShader,
         fragmentShader,
         uniforms
