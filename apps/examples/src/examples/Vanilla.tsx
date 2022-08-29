@@ -1,6 +1,6 @@
 import { useThree } from "@react-three/fiber"
 import { compileModules, Layer, patchMaterial } from "material-composer"
-import * as Modules from "material-composer/modules"
+import * as modules from "material-composer/modules"
 import { Description } from "r3f-stage"
 import { useEffect, useRef } from "react"
 import {
@@ -31,26 +31,32 @@ const vanillaCode = (
 ) => {
   const time = Time()
 
-  const modules = [
+  /* Create a material instance */
+  const material = new MeshStandardMaterial({
+    transparent: true,
+    side: DoubleSide
+  })
+
+  /* Create a shader graph from a list of modules */
+  const graph = compileModules([
     Layer({
-      modules: [Modules.Plasma({ offset: Mul(time, -0.2) })]
+      modules: [modules.Plasma({ offset: Mul(time, -0.2) })]
     }),
 
     Layer({
       opacity: NormalizePlusMinusOne(Sin(time)),
       modules: [
-        Modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
-        Modules.Lava({ offset: Mul(time, 0.2) }),
-        Modules.Alpha({ alpha: 1 })
+        modules.DistortSurface({ offset: Mul(time, 0.4), amplitude: 0.3 }),
+        modules.Lava({ offset: Mul(time, 0.2) }),
+        modules.Alpha({ alpha: 1 })
       ]
     })
-  ]
+  ])
 
-  const material = new MeshStandardMaterial({
-    transparent: true,
-    side: DoubleSide
-  })
-  const [shader, shaderMeta] = compileShader(compileModules(modules))
+  /* Compile the shader graph into an actual shader */
+  const [shader, shaderMeta] = compileShader(graph)
+
+  /* Apply the shader to the material */
   patchMaterial(material, shader)
 
   const sphere = new Mesh(new SphereGeometry(), material)
