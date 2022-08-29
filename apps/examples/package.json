@@ -28,7 +28,6 @@
     "shader-composer-toybox": "^0.1.1",
     "statery": "^0.6.0-next.2",
     "three": "^0.143.0",
-    "three-custom-shader-material": "^4.0.0",
     "timeline-composer": "^0.1.5",
     "wouter": "^2.8.0-alpha.2"
   },

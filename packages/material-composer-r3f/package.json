@@ -58,8 +58,7 @@
     "@material-composer/patched": "^0.1.0",
     "material-composer": "^0.1.0-next.0",
     "shader-composer": "0.3.1",
-    "shader-composer-r3f": "^0.2.0",
-    "three-custom-shader-material": "^4.0.0"
+    "shader-composer-r3f": "^0.2.0"
   },
   "peerDependencies": {
     "@react-three/fiber": ">=8.0.27",

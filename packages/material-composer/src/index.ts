@@ -55,5 +55,4 @@ export const initialModuleState = (): ModuleState => ({
 
 export * from "@material-composer/patch-material"
 export * from "./compileModules"
-export * from "./ComposableMaterial"
 export * from "./Layer"
