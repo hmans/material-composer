@@ -5,42 +5,22 @@ import {
 } from "@material-composer/patch-material"
 import { MaterialNode, Node } from "@react-three/fiber"
 import React, { forwardRef, useLayoutEffect } from "react"
-import {
-  IUniform,
-  LineBasicMaterial,
-  LineDashedMaterial,
-  Material,
-  MeshBasicMaterial,
-  MeshDepthMaterial,
-  MeshDistanceMaterial,
-  MeshLambertMaterial,
-  MeshMatcapMaterial,
-  MeshNormalMaterial,
-  MeshPhongMaterial,
-  MeshPhysicalMaterial,
-  MeshStandardMaterial,
-  MeshToonMaterial,
-  PointsMaterial,
-  RawShaderMaterial,
-  ShaderMaterial,
-  ShadowMaterial,
-  SpriteMaterial
-} from "three"
+import * as THREE from "three"
 import { useManagedPrimitive } from "./lib/useManagedInstance"
 
 export type ShaderProps = {
   vertexShader?: string
   fragmentShader?: string
-  uniforms?: Record<string, IUniform<any>>
+  uniforms?: Record<string, THREE.IUniform<any>>
 }
 
 export type PatchedMaterialProps<
-  C extends Constructor<Material>
+  C extends Constructor<THREE.Material>
 > = MaterialNode<InstanceType<C>, C> & ShaderProps
 
 export const makePatchedMaterialComponent = <
   C extends Constructor<M>,
-  M extends Material
+  M extends THREE.Material
 >(
   ctor: C
 ) =>
@@ -67,23 +47,29 @@ export const makePatchedMaterialComponent = <
   )
 
 export const patched = {
-  LineBasicMaterial: makePatchedMaterialComponent(LineBasicMaterial),
-  LineDashedMaterial: makePatchedMaterialComponent(LineDashedMaterial),
-  MeshBasicMaterial: makePatchedMaterialComponent(MeshBasicMaterial),
-  MeshDepthMaterial: makePatchedMaterialComponent(MeshDepthMaterial),
-  MeshDistanceMaterial: makePatchedMaterialComponent(MeshDistanceMaterial),
-  MeshLambertMaterial: makePatchedMaterialComponent(MeshLambertMaterial),
-  MeshMatcapMaterial: makePatchedMaterialComponent(MeshMatcapMaterial),
-  MeshNormalMaterial: makePatchedMaterialComponent(MeshNormalMaterial),
-  MeshPhongMaterial: makePatchedMaterialComponent(MeshPhongMaterial),
-  MeshPhysicalMaterial: makePatchedMaterialComponent(MeshPhysicalMaterial),
-  MeshStandardMaterial: makePatchedMaterialComponent(MeshStandardMaterial),
-  MeshToonMaterial: makePatchedMaterialComponent(MeshToonMaterial),
-  PointsMaterial: makePatchedMaterialComponent(PointsMaterial),
-  RawShaderMaterial: makePatchedMaterialComponent(RawShaderMaterial),
-  ShaderMaterial: makePatchedMaterialComponent(ShaderMaterial),
-  ShadowMaterial: makePatchedMaterialComponent(ShadowMaterial),
-  SpriteMaterial: makePatchedMaterialComponent(SpriteMaterial),
+  LineBasicMaterial: makePatchedMaterialComponent(THREE.LineBasicMaterial),
+  LineDashedMaterial: makePatchedMaterialComponent(THREE.LineDashedMaterial),
+  MeshBasicMaterial: makePatchedMaterialComponent(THREE.MeshBasicMaterial),
+  MeshDepthMaterial: makePatchedMaterialComponent(THREE.MeshDepthMaterial),
+  MeshDistanceMaterial: makePatchedMaterialComponent(
+    THREE.MeshDistanceMaterial
+  ),
+  MeshLambertMaterial: makePatchedMaterialComponent(THREE.MeshLambertMaterial),
+  MeshMatcapMaterial: makePatchedMaterialComponent(THREE.MeshMatcapMaterial),
+  MeshNormalMaterial: makePatchedMaterialComponent(THREE.MeshNormalMaterial),
+  MeshPhongMaterial: makePatchedMaterialComponent(THREE.MeshPhongMaterial),
+  MeshPhysicalMaterial: makePatchedMaterialComponent(
+    THREE.MeshPhysicalMaterial
+  ),
+  MeshStandardMaterial: makePatchedMaterialComponent(
+    THREE.MeshStandardMaterial
+  ),
+  MeshToonMaterial: makePatchedMaterialComponent(THREE.MeshToonMaterial),
+  PointsMaterial: makePatchedMaterialComponent(THREE.PointsMaterial),
+  RawShaderMaterial: makePatchedMaterialComponent(THREE.RawShaderMaterial),
+  ShaderMaterial: makePatchedMaterialComponent(THREE.ShaderMaterial),
+  ShadowMaterial: makePatchedMaterialComponent(THREE.ShadowMaterial),
+  SpriteMaterial: makePatchedMaterialComponent(THREE.SpriteMaterial),
 
   /**
    * Use `patched.Material` when you already have an instance of a material
@@ -95,7 +81,7 @@ export const patched = {
    * <patched.Material instance={myMaterial} {...shader} />
    * ```
    */
-  Material: <M extends Material>({
+  Material: <M extends THREE.Material>({
     instance,
     vertexShader,
     fragmentShader,
