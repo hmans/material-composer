@@ -22,10 +22,12 @@ It also provides a couple of micropackages that are used by the packages listed 
 - **[@material-composer/patched](https://github.com/hmans/material-composer/tree/main/packages/material-composer-patched)**  
   Provides `patched`, a React component proxy that can be used to wrap any material component with a `patchMaterial` call.
 
-### Projects using Material Composer
+### Related Projects
 
 - **[VFX Composer](https://github.com/hmans/vfx-composer)**  
   A high-performance GPU particle engine for Three.js.
+- **[Shader Composer]**  
+  Compiles shaders from trees of JavaScript objects. All of Material Composer's modules are written using Shader Composer, and you can customize them with Shader Composer subtrees.
 
 ## License
 
