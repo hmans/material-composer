@@ -5,7 +5,6 @@ import { Heat, HeatOptions } from "material-composer/units"
 import { Description } from "r3f-stage"
 import { Gradient, Mul, Time, vec3 } from "shader-composer"
 import * as THREE from "three"
-import { RGBADepthPacking } from "three"
 
 export type LavaProps = HeatOptions
 
@@ -36,7 +35,7 @@ export default function FireballExample() {
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <composable.MeshStandardMaterial>
+        <composable.MeshStandardMaterial autoShadow>
           <modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
 
           <Lava
@@ -46,13 +45,6 @@ export default function FireballExample() {
             power={1}
           />
         </composable.MeshStandardMaterial>
-
-        <composable.MeshDepthMaterial
-          attach="customDepthMaterial"
-          depthPacking={RGBADepthPacking}
-        >
-          <modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
-        </composable.MeshDepthMaterial>
       </mesh>
 
       <Description>
