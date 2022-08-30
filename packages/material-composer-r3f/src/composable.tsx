@@ -1,7 +1,6 @@
 import { patched } from "@material-composer/patched"
-import { compileModules, Module } from "material-composer"
+import { compileModules } from "material-composer"
 import React, {
-  DependencyList,
   forwardRef,
   FunctionComponent,
   useImperativeHandle,
@@ -44,14 +43,14 @@ export const composable = new Proxy<Composable>(patched, {
           return compileModules(modules.list)
         }, [modules.version])
 
-        /* Return shader compiled from graph */
-        const shader = useShader(() => root, [root])
-
         /* Register shader root for this material */
         useLayoutEffect(() => {
           materialShaderRoots.set(material.current, root)
           return () => void materialShaderRoots.delete(material.current)
         }, [root])
+
+        /* Return shader compiled from graph */
+        const shader = useShader(() => root, [root])
 
         useImperativeHandle(ref, () => material.current)
 
