@@ -1,5 +1,11 @@
 # material-composer-r3f
 
+## 0.1.0-next.3
+
+### Patch Changes
+
+- 560e5d7: Make `composed.*` return `forwardRef`-enabled components.
+
 ## 0.1.0-next.2
 
 ### Patch Changes
