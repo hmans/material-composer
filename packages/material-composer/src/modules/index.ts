@@ -11,6 +11,7 @@ export * from "./Rotate"
 export * from "./Scale"
 export * from "./Softness"
 export * from "./SurfaceWobble"
+export * from "./Texture"
 export * from "./Translate"
 export * from "./Velocity"
 
