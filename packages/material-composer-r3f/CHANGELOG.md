@@ -1,5 +1,11 @@
 # material-composer-r3f
 
+## 0.1.0-next.2
+
+### Patch Changes
+
+- 49579c2: Added `getShaderRootForMaterial`, which will return the shader graph root unit that was used to patch a given material instance.
+
 ## 0.1.0-next.1
 
 ### Minor Changes
