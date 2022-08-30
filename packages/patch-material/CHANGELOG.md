@@ -1,5 +1,11 @@
 # @material-composer/patch-material
 
+## 0.1.1-next.1
+
+### Patch Changes
+
+- 0613874: Diffuse maps on materials are no longer discarded.
+
 ## 0.1.1-next.0
 
 ### Patch Changes

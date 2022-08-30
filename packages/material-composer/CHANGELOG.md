@@ -1,5 +1,13 @@
 # material-composer
 
+## 0.1.0-next.3
+
+### Patch Changes
+
+- 0613874: Added `Texture` module which, unsurprisingly, applies a texture to the material.
+- Updated dependencies [0613874]
+  - @material-composer/patch-material@0.1.1-next.1
+
 ## 0.1.0-next.2
 
 ### Minor Changes
