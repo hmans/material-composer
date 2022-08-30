@@ -12,6 +12,7 @@ import HelloWorld from "./examples/HelloWorld"
 import MemoizationExample from "./examples/Memoization"
 import PlasmaBallExample from "./examples/PlasmaBall"
 import Playground from "./examples/Playground"
+import Textures from "./examples/Textures"
 import Translate from "./examples/Translate"
 import Vanilla from "./examples/Vanilla"
 import Velocity from "./examples/Velocity"
@@ -27,6 +28,10 @@ export default () => (
 
       <Example path="vanilla" title="Vanilla Three.js">
         <Vanilla />
+      </Example>
+
+      <Example path="textures" title="Textures" makeDefault>
+        <Textures />
       </Example>
 
       <Example path="modules" title="Modules!" makeDefault>
