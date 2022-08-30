@@ -31,7 +31,7 @@ export const patchMaterial = <M extends Material>(
     injectGlobalDefines(material),
     fragmentShader ? injectProgram(fragmentShader) : identity,
     injectRoughnessAndMetalness,
-    injectDiffuseAndAlpha
+    injectColorAndAlpha
   )
 
   material.onBeforeCompile = (shader) => {
@@ -98,7 +98,7 @@ const injectNormal = flow(
   `)
 )
 
-const injectDiffuseAndAlpha = flow(
+const injectColorAndAlpha = flow(
   extend("void main() {").with(`
     #if defined IS_SHADERMATERIAL || defined IS_MESHDEPTHMATERIAL || defined IS_MESHNORMALMATERIAL
     vec3 patched_Color = vec3(1.0, 0.0, 0.0);
