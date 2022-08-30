@@ -1,8 +1,15 @@
 import { patched } from "@material-composer/patched"
 import { compileModules, Module } from "material-composer"
-import React, { DependencyList, FunctionComponent, useMemo } from "react"
+import React, {
+  DependencyList,
+  FunctionComponent,
+  useLayoutEffect,
+  useMemo,
+  useRef
+} from "react"
+import { Unit } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { RGBADepthPacking } from "three"
+import { Material, RGBADepthPacking } from "three"
 import {
   ModuleRegistrationContext,
   provideModuleRegistration
@@ -10,14 +17,6 @@ import {
 
 const hasKey = <T extends object>(obj: T, k: keyof any): k is keyof T =>
   k in obj
-
-export const useModules = (modules: Module[], deps?: DependencyList) => {
-  /* Compile modules into a shader graph */
-  const root = useMemo(() => compileModules(modules), deps)
-
-  /* Return shader compiled from graph */
-  return useShader(() => root, [root])
-}
 
 type Patched = typeof patched
 
@@ -34,12 +33,26 @@ export const composable = new Proxy<Composable>(patched, {
     const Component = target[key]
 
     return ({ children, autoShadow = false, ...props }: any) => {
+      const material = useRef<any>()
       const modules = provideModuleRegistration()
-      const shader = useModules(modules.list, [modules.version])
+
+      /* Compile modules into a shader graph */
+      const root = useMemo(() => {
+        return compileModules(modules.list)
+      }, [modules.version])
+
+      /* Return shader compiled from graph */
+      const shader = useShader(() => root, [root])
+
+      /* Register shader root for this material */
+      useLayoutEffect(() => {
+        materialShaderRoots.set(material.current, root)
+        return () => void materialShaderRoots.delete(material.current)
+      }, [root])
 
       return (
         <>
-          <Component {...props} {...shader}>
+          <Component ref={material} {...props} {...shader}>
             <ModuleRegistrationContext.Provider value={modules}>
               {children}
             </ModuleRegistrationContext.Provider>
@@ -58,3 +71,17 @@ export const composable = new Proxy<Composable>(patched, {
     }
   }
 })
+
+const materialShaderRoots = new Map<Material, Unit>()
+
+/**
+ * A somewhat experimental, possibly temporary API to retrieve the Shader Composer
+ * shader graph for a given material. This allows interested parties (like VFX
+ * Composer's Particles class) to inspect the shader graph that was compiled for
+ * the given material.
+ *
+ * @param material A Material instance
+ * @returns The root unit of the Shader Composer graph for the given material
+ */
+export const getShaderRootForMaterial = (material: Material) =>
+  materialShaderRoots.get(material)
