@@ -2,7 +2,9 @@ import { patched } from "@material-composer/patched"
 import { compileModules, Module } from "material-composer"
 import React, {
   DependencyList,
+  forwardRef,
   FunctionComponent,
+  useImperativeHandle,
   useLayoutEffect,
   useMemo,
   useRef
@@ -32,43 +34,47 @@ export const composable = new Proxy<Composable>(patched, {
 
     const Component = target[key]
 
-    return ({ children, autoShadow = false, ...props }: any) => {
-      const material = useRef<any>()
-      const modules = provideModuleRegistration()
+    return forwardRef(
+      ({ children, autoShadow = false, ...props }: any, ref) => {
+        const material = useRef<any>()
+        const modules = provideModuleRegistration()
 
-      /* Compile modules into a shader graph */
-      const root = useMemo(() => {
-        return compileModules(modules.list)
-      }, [modules.version])
+        /* Compile modules into a shader graph */
+        const root = useMemo(() => {
+          return compileModules(modules.list)
+        }, [modules.version])
 
-      /* Return shader compiled from graph */
-      const shader = useShader(() => root, [root])
+        /* Return shader compiled from graph */
+        const shader = useShader(() => root, [root])
 
-      /* Register shader root for this material */
-      useLayoutEffect(() => {
-        materialShaderRoots.set(material.current, root)
-        return () => void materialShaderRoots.delete(material.current)
-      }, [root])
+        /* Register shader root for this material */
+        useLayoutEffect(() => {
+          materialShaderRoots.set(material.current, root)
+          return () => void materialShaderRoots.delete(material.current)
+        }, [root])
 
-      return (
-        <>
-          <Component ref={material} {...props} {...shader}>
-            <ModuleRegistrationContext.Provider value={modules}>
-              {children}
-            </ModuleRegistrationContext.Provider>
-          </Component>
+        useImperativeHandle(ref, () => material.current)
 
-          {autoShadow && (
-            <composable.MeshDepthMaterial
-              attach="customDepthMaterial"
-              depthPacking={RGBADepthPacking}
-            >
-              {children}
-            </composable.MeshDepthMaterial>
-          )}
-        </>
-      )
-    }
+        return (
+          <>
+            <Component ref={material} {...props} {...shader}>
+              <ModuleRegistrationContext.Provider value={modules}>
+                {children}
+              </ModuleRegistrationContext.Provider>
+            </Component>
+
+            {autoShadow && (
+              <composable.MeshDepthMaterial
+                attach="customDepthMaterial"
+                depthPacking={RGBADepthPacking}
+              >
+                {children}
+              </composable.MeshDepthMaterial>
+            )}
+          </>
+        )
+      }
+    )
   }
 })
 
