@@ -1,5 +1,11 @@
 # @material-composer/patched
 
+## 0.1.1-next.1
+
+### Patch Changes
+
+- 8084ceb: Bump `patched` package.
+
 ## 0.1.1-next.0
 
 ### Patch Changes

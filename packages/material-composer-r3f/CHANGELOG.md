@@ -1,5 +1,13 @@
 # material-composer-r3f
 
+## 0.1.0-next.4
+
+### Patch Changes
+
+- 38a07d6: Bump r3f. I wish Changesets hadn't randomly stopped bumping dependents for some reason.
+- Updated dependencies [8084ceb]
+  - @material-composer/patched@0.1.1-next.1
+
 ## 0.1.0-next.3
 
 ### Patch Changes
