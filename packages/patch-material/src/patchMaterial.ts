@@ -1,10 +1,5 @@
 import { flow, identity } from "fp-ts/function"
-import {
-  IUniform,
-  Material,
-  MeshPhysicalMaterial,
-  MeshStandardMaterial
-} from "three"
+import { IUniform, Material } from "three"
 
 export type PatchedMaterialOptions = {
   vertexShader?: string
