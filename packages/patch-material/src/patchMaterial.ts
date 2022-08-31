@@ -32,7 +32,8 @@ export const patchMaterial = <M extends Material>(
   }
 
   /* TODO: Be smarter about the cache key :D */
-  material.customProgramCacheKey = () => String(Math.random())
+  const cacheKey = String(Math.random())
+  material.customProgramCacheKey = () => cacheKey
 }
 
 const parseProgram = (program: string) => {
