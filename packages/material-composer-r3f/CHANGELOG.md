@@ -1,5 +1,11 @@
 # material-composer-r3f
 
+## 0.1.1
+
+### Patch Changes
+
+- 4f81eb9: Change `material-composer` to a peer dependency.
+
 ## 0.1.0
 
 ### Minor Changes
