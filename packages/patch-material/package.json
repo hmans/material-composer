@@ -7,7 +7,7 @@
     "url": "https://hendrik.mans.de"
   },
   "description": "",
-  "version": "0.1.1-next.1",
+  "version": "0.1.1-next.2",
   "main": "dist/material-composer-patch-material.cjs.js",
   "module": "dist/material-composer-patch-material.esm.js",
   "types": "dist/material-composer-patch-material.cjs.d.ts",
