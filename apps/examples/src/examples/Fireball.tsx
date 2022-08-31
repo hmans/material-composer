@@ -35,7 +35,7 @@ export default function FireballExample() {
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <composable.MeshStandardMaterial autoShadow>
+        <composable.meshStandardMaterial autoShadow>
           <modules.SurfaceWobble offset={Mul(time, 0.4)} amplitude={0.1} />
 
           <Lava
@@ -44,7 +44,7 @@ export default function FireballExample() {
             octaves={5}
             power={1}
           />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
 
       <Description>

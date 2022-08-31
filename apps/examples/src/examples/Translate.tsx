@@ -18,12 +18,12 @@ export default function Translate() {
       <mesh position-y={1.5} rotation-z={Math.PI / 2}>
         <sphereGeometry />
 
-        <composable.MeshStandardMaterial>
+        <composable.meshStandardMaterial>
           <modules.Translate
             offset={Mul(new Vector3(1, 0, 0), Sin(time))}
             space={controls.space as Space}
           />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
 
       <Description>

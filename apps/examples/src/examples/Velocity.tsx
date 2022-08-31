@@ -12,9 +12,9 @@ export default function Velocity() {
       <mesh position-y={1.5} castShadow>
         <sphereGeometry />
 
-        <composable.MeshStandardMaterial autoShadow>
+        <composable.meshStandardMaterial autoShadow>
           <modules.Velocity velocity={new Vector3(0.15, 0, 0)} time={time} />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
 
       <Description>

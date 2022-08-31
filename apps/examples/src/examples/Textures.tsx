@@ -18,11 +18,11 @@ export default function Textures() {
       <mesh position-y={1.5} castShadow>
         <sphereGeometry args={[1, 64, 64]} />
 
-        <composable.MeshStandardMaterial color="hotpink">
+        <composable.meshStandardMaterial color="hotpink">
           <Layer opacity={mix}>
             <modules.Texture texture={texture} />
           </Layer>
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
 
       <Description>

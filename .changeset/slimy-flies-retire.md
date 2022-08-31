@@ -10,7 +10,7 @@ Example:
 <mesh castShadow>
   <icosahedronGeometry args={[1, 8]} />
 
-  <composable.MeshStandardMaterial autoShadow>
+  <composable.meshStandardMaterial autoShadow>
     <modules.DistortSurface offset={Mul(time, 0.4)} amplitude={0.1} />
 
     <Lava
@@ -19,7 +19,7 @@ Example:
       octaves={5}
       power={1}
     />
-  </composable.MeshStandardMaterial>
+  </composable.meshStandardMaterial>
 </mesh>
 ```
 

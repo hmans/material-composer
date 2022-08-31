@@ -46,7 +46,7 @@ const MyMaterial = memo(({ mix }: { mix: Input<"float"> }) => {
   const time = useMemo(() => Time(), [])
 
   return (
-    <composable.MeshStandardMaterial transparent side={DoubleSide}>
+    <composable.meshStandardMaterial transparent side={DoubleSide}>
       <Plasma offset={Mul(time, -0.3)} />
 
       <Layer
@@ -56,6 +56,6 @@ const MyMaterial = memo(({ mix }: { mix: Input<"float"> }) => {
         <Lava offset={Mul(time, 0.5)} scale={0.3} />
         <modules.Alpha alpha={1} />
       </Layer>
-    </composable.MeshStandardMaterial>
+    </composable.meshStandardMaterial>
   )
 })
