@@ -1,5 +1,11 @@
 # @material-composer/patch-material
 
+## 0.1.1-next.2
+
+### Patch Changes
+
+- a53f7db: Fixes Three.js material caching by setting a randomized cache key value every time a material is patched. (We will probably revisit this in the future to allow Three.js to reuse compiled programs more efficiently.)
+
 ## 0.1.1-next.1
 
 ### Patch Changes
