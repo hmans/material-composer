@@ -20,12 +20,55 @@ export default function Playground() {
     })
   }, [])
 
+  const otherShader = useShader(() => {
+    return PatchedMaterialMaster({
+      color: Lerp(
+        new Color("red"),
+        new Color("green"),
+        NormalizePlusMinusOne(Sin(Time()))
+      ),
+      metalness: 0.5,
+      roughness: 0.5
+    })
+  }, [])
+
   return (
     <group position-y={1.5}>
-      <mesh castShadow>
-        <patched.MeshStandardMaterial color="yellow" {...shader} />
+      <mesh castShadow position-x={-1.5}>
+        <patched.MeshStandardMaterial {...shader} />
+        <sphereGeometry />
+      </mesh>
+
+      <mesh castShadow position-x={+1.5}>
+        <patched.MeshStandardMaterial {...otherShader} />
         <sphereGeometry />
       </mesh>
     </group>
   )
 }
+
+// import { useControls } from "leva"
+// import { composable, modules } from "material-composer-r3f"
+// import { ModuleRegistrationContext } from "material-composer-r3f/src/moduleRegistration"
+
+// export default function Playground() {
+//   useControls({ foo: { value: 1, min: 0, max: 2 } })
+
+//   return (
+//     <group position-y={1.5}>
+//       <mesh castShadow position-x={-1.5}>
+//         <composable.MeshStandardMaterial>
+//           <modules.Color color="yellow" />
+//         </composable.MeshStandardMaterial>
+//         <sphereGeometry />
+//       </mesh>
+
+//       <mesh castShadow position-x={+1.5}>
+//         <composable.MeshStandardMaterial>
+//           <modules.Color color="red" />
+//         </composable.MeshStandardMaterial>
+//         <sphereGeometry />
+//       </mesh>
+//     </group>
+//   )
+// }

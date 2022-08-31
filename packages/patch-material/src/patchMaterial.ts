@@ -39,6 +39,9 @@ export const patchMaterial = <M extends Material>(
     shader.fragmentShader = transformFragmentShader(shader.fragmentShader)
     shader.uniforms = { ...shader.uniforms, ...uniforms }
   }
+
+  /* TODO: Be smarter about the cache key :D */
+  material.customProgramCacheKey = () => String(Math.random())
 }
 
 const parseProgram = (program: string) => {
