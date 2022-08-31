@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-typescript": "^7.17.12",
     "@testing-library/jest-dom": "^5.16.5",
-    "@types/jest": "^28.1.8",
+    "@types/jest": "^29.0.0",
     "@types/three": "^0.143.1",
     "jest": "^29.0.1",
     "jest-environment-jsdom": "^29.0.1",
@@ -54,7 +54,7 @@
   "dependencies": {
     "@material-composer/patch-material": "^0.1.1-next.2",
     "fp-ts": "^2.12.2",
-    "shader-composer": "0.3.1",
+    "shader-composer": "0.3.3",
     "shader-composer-toybox": "^0.1.1"
   },
   "peerDependencies": {
