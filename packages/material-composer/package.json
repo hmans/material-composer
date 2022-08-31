@@ -55,7 +55,7 @@
     "@material-composer/patch-material": "^0.1.1",
     "fp-ts": "^2.12.2",
     "shader-composer": "0.3.3",
-    "shader-composer-toybox": "^0.1.1"
+    "shader-composer-toybox": "^0.1.2"
   },
   "peerDependencies": {
     "three": ">=0.141.0"

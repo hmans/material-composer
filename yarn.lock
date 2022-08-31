@@ -6537,7 +6537,7 @@ shader-composer-r3f@^0.2.0:
     shader-composer "^0.3.0"
     three-custom-shader-material "^4.0.0"
 
-shader-composer-toybox@^0.1.1:
+shader-composer-toybox@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/shader-composer-toybox/-/shader-composer-toybox-0.1.2.tgz#0833651f5484e3c6d79075413609d84fc51d9b9d"
   integrity sha512-R3aw2DFZfvcoCKp0dWsDdNUs/fzBIsLh1E6LP/qkyPiYd9ObLN8i53huu24iKA0k6roNP3aXfzEkE6Ox/lInng==
