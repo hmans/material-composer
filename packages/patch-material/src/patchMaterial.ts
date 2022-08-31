@@ -16,10 +16,6 @@ export const patchMaterial = <M extends Material>(
   material: M,
   { vertexShader, fragmentShader, uniforms = {} }: PatchedMaterialOptions = {}
 ) => {
-  const supportsRoughnessAndMetalness =
-    material instanceof MeshStandardMaterial ||
-    material instanceof MeshPhysicalMaterial
-
   const transformVertexShader = flow(
     injectGlobalDefines(material),
     vertexShader ? injectProgram(vertexShader) : identity,
