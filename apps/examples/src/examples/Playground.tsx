@@ -35,12 +35,12 @@ export default function Playground() {
   return (
     <group position-y={1.5}>
       <mesh castShadow position-x={-1.5}>
-        <patched.MeshStandardMaterial {...shader} />
+        <patched.meshStandardMaterial {...shader} />
         <sphereGeometry />
       </mesh>
 
       <mesh castShadow position-x={+1.5}>
-        <patched.MeshStandardMaterial {...otherShader} />
+        <patched.meshStandardMaterial {...otherShader} />
         <sphereGeometry />
       </mesh>
     </group>
@@ -57,16 +57,16 @@ export default function Playground() {
 //   return (
 //     <group position-y={1.5}>
 //       <mesh castShadow position-x={-1.5}>
-//         <composable.MeshStandardMaterial>
+//         <composable.meshStandardMaterial>
 //           <modules.Color color="yellow" />
-//         </composable.MeshStandardMaterial>
+//         </composable.meshStandardMaterial>
 //         <sphereGeometry />
 //       </mesh>
 
 //       <mesh castShadow position-x={+1.5}>
-//         <composable.MeshStandardMaterial>
+//         <composable.meshStandardMaterial>
 //           <modules.Color color="red" />
-//         </composable.MeshStandardMaterial>
+//         </composable.meshStandardMaterial>
 //         <sphereGeometry />
 //       </mesh>
 //     </group>

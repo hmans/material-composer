@@ -96,12 +96,12 @@ export default function CombinedModules() {
       <mesh castShadow>
         <icosahedronGeometry args={[1, 8]} />
 
-        <composable.MeshStandardMaterial autoShadow>
+        <composable.meshStandardMaterial autoShadow>
           <ColorLayer />
           <GradientLayer />
           <FresnelLayer />
           <WobbleLayer />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
     </group>
   )

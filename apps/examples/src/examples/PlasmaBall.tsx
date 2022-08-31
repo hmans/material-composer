@@ -40,13 +40,13 @@ export default function PlasmaBallExample() {
       <mesh>
         <icosahedronGeometry args={[1, 8]} />
 
-        <composable.MeshStandardMaterial transparent side={DoubleSide}>
+        <composable.meshStandardMaterial transparent side={DoubleSide}>
           <modules.SurfaceWobble
             offset={Mul(time, 0.5)}
             amplitude={Mul(Cos(time), 0.2)}
           />
           <Plasma offset={Mul(time, 0.3)} />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
     </group>
   )

@@ -63,12 +63,12 @@ export const composable = new Proxy<Composable>(patched, {
             </Component>
 
             {autoShadow && (
-              <composable.MeshDepthMaterial
+              <composable.meshDepthMaterial
                 attach="customDepthMaterial"
                 depthPacking={RGBADepthPacking}
               >
                 {children}
-              </composable.MeshDepthMaterial>
+              </composable.meshDepthMaterial>
             )}
           </>
         )

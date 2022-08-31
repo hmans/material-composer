@@ -12,14 +12,14 @@ export default function HelloWorld() {
       <mesh position-y={1.5} castShadow>
         <sphereGeometry args={[1, 64, 64]} />
 
-        <composable.MeshStandardMaterial>
+        <composable.meshStandardMaterial>
           <modules.Color color="#d62828" />
           <Layer opacity={mix}>
             <modules.Color color="#003049" />
           </Layer>
 
           <modules.Fresnel intensity={0.2} />
-        </composable.MeshStandardMaterial>
+        </composable.meshStandardMaterial>
       </mesh>
 
       <Description>

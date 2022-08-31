@@ -46,30 +46,29 @@ export const makePatchedMaterialComponent = <
     }
   )
 
+/* Here's our fake proxy. We'll eventually replace it with a real proxy! */
 export const patched = {
-  LineBasicMaterial: makePatchedMaterialComponent(THREE.LineBasicMaterial),
-  LineDashedMaterial: makePatchedMaterialComponent(THREE.LineDashedMaterial),
-  MeshBasicMaterial: makePatchedMaterialComponent(THREE.MeshBasicMaterial),
-  MeshDepthMaterial: makePatchedMaterialComponent(THREE.MeshDepthMaterial),
-  MeshDistanceMaterial: makePatchedMaterialComponent(
+  lineBasicMaterial: makePatchedMaterialComponent(THREE.LineBasicMaterial),
+  lineDashedMaterial: makePatchedMaterialComponent(THREE.LineDashedMaterial),
+  meshBasicMaterial: makePatchedMaterialComponent(THREE.MeshBasicMaterial),
+  meshDepthMaterial: makePatchedMaterialComponent(THREE.MeshDepthMaterial),
+  meshDistanceMaterial: makePatchedMaterialComponent(
     THREE.MeshDistanceMaterial
   ),
-  MeshLambertMaterial: makePatchedMaterialComponent(THREE.MeshLambertMaterial),
-  MeshMatcapMaterial: makePatchedMaterialComponent(THREE.MeshMatcapMaterial),
-  MeshNormalMaterial: makePatchedMaterialComponent(THREE.MeshNormalMaterial),
-  MeshPhongMaterial: makePatchedMaterialComponent(THREE.MeshPhongMaterial),
-  MeshPhysicalMaterial: makePatchedMaterialComponent(
+  meshLambertMaterial: makePatchedMaterialComponent(THREE.MeshLambertMaterial),
+  meshMatcapMaterial: makePatchedMaterialComponent(THREE.MeshMatcapMaterial),
+  meshNormalMaterial: makePatchedMaterialComponent(THREE.MeshNormalMaterial),
+  meshPhongMaterial: makePatchedMaterialComponent(THREE.MeshPhongMaterial),
+  meshPhysicalMaterial: makePatchedMaterialComponent(
     THREE.MeshPhysicalMaterial
   ),
-  MeshStandardMaterial: makePatchedMaterialComponent(
+  meshStandardMaterial: makePatchedMaterialComponent(
     THREE.MeshStandardMaterial
   ),
-  MeshToonMaterial: makePatchedMaterialComponent(THREE.MeshToonMaterial),
-  PointsMaterial: makePatchedMaterialComponent(THREE.PointsMaterial),
-  RawShaderMaterial: makePatchedMaterialComponent(THREE.RawShaderMaterial),
-  ShaderMaterial: makePatchedMaterialComponent(THREE.ShaderMaterial),
-  ShadowMaterial: makePatchedMaterialComponent(THREE.ShadowMaterial),
-  SpriteMaterial: makePatchedMaterialComponent(THREE.SpriteMaterial),
+  meshToonMaterial: makePatchedMaterialComponent(THREE.MeshToonMaterial),
+  pointsMaterial: makePatchedMaterialComponent(THREE.PointsMaterial),
+  shadowMaterial: makePatchedMaterialComponent(THREE.ShadowMaterial),
+  spriteMaterial: makePatchedMaterialComponent(THREE.SpriteMaterial),
 
   /**
    * Use `patched.Material` when you already have an instance of a material
@@ -81,7 +80,7 @@ export const patched = {
    * <patched.Material instance={myMaterial} {...shader} />
    * ```
    */
-  Material: <M extends THREE.Material>({
+  material: <M extends THREE.Material>({
     instance,
     vertexShader,
     fragmentShader,
