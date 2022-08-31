@@ -1,5 +1,11 @@
 # material-composer
 
+## 0.1.1
+
+### Patch Changes
+
+- fc0f16c: Bump `shader-composer-toybox` dependency.
+
 ## 0.1.0
 
 ### Minor Changes
